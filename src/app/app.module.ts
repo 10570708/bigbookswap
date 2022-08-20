@@ -27,9 +27,8 @@ import { appRoutes } from './routes';
 import { AuthService } from './user/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatAlertComponent } from './nav/mat-alert.component';
-import { APIService } from './books/shared/api.service';
-import { BookLookupComponent } from './books/book-lookup.component';
-import { SwapDetailsComponent } from './swaps/swap-details.component';
+import { APIService } from './books/shared/index';
+import { BookLookupComponent } from './books/book-lookup/book-lookup.component';
 import { SwapListComponent } from './swaps/swap-list.component';
 import { BooksPickComponent } from './books/books-pick.component';
 
@@ -59,7 +58,7 @@ declare let JQuery:any;
     CollapsibleWellComponent,
     MatAlertComponent,
     BookLookupComponent,
-    SwapDetailsComponent,
+    BookDetailsComponent,
     SwapListComponent,
     BooksPickComponent
   ],

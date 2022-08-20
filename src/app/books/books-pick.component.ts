@@ -1,8 +1,8 @@
 import { Component, Inject, Input } from '@angular/core'
-import { BookService } from './shared/book.service';
+import { BookService, SwapService } from './shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IBook, SwapService } from './shared';
+import { IBook } from './shared/index';
 import { SwapListComponent } from '../swaps/swap-list.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -161,6 +161,7 @@ export class BooksPickComponent implements OnInit {
 
    }
 
+   close() { this.dialogRef.close(true); }
 
 
 

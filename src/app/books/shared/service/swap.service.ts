@@ -1,8 +1,8 @@
 import { Injectable, EventEmitter, ɵsetCurrentInjector } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { BooksListComponent } from "../books-list.component";
-import { IBook, ConditionType, OptionType } from "./book.model";
-import { ISwap, StatusType } from "./swap.model";
+import { BooksListComponent } from "../../book-list/books-list.component";
+import { IBook, ConditionType, OptionType } from "../model/book.model";
+import { ISwap, StatusType } from "../model/swap.model";
 
 @Injectable()
 export class SwapService {

@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { BookLookupComponent } from "./book-lookup.component";
-import { BookService, ConditionType, IBook, OptionType } from "./shared";
-import { APIService } from "./shared/api.service";
+import { BookLookupComponent } from "../book-lookup/book-lookup.component";
+import { ConditionType, IBook, OptionType } from "../shared/index";
+import { APIService,BookService } from "../shared/index";
 
 @Component({
 

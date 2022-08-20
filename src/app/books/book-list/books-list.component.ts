@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core'
-import { BookService } from './shared/book.service';
+import { BookService } from '../shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IBook } from './shared';
+import { IBook } from '../shared/index';
 
 
 @Component({

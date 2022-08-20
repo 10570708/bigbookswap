@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { BookService, IBook } from "../books";
+import { BookService, IBook } from "../books/shared/index";
 import { AuthService } from "../user/auth.service";
 import { Router} from '@angular/router'
 import { NodeWithI18n } from "@angular/compiler";
@@ -67,6 +67,13 @@ openDialog() {
         // this.bookService.setSearchTerm(searchTerm);
         // this.searchTerm = '';
         this.router.navigate([newHref]);
+    }
+    setUp(path:string)
+    {
+        //var newHref = '/books/';
+        // this.bookService.setSearchTerm(searchTerm);
+        // this.searchTerm = '';
+        this.router.navigate([path]);
     }
 
 }

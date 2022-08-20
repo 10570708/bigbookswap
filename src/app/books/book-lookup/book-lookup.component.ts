@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { ConditionType, IBook, OptionType } from "./shared";
-import { APIService } from "./shared/api.service";
+import { ConditionType, IBook, OptionType } from "../shared/index";
+import { APIService } from "../shared/index";
 
 @Component({
     templateUrl: './book-lookup.component.html',

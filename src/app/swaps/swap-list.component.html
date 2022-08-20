@@ -1,4 +1,4 @@
-<div style="background-color:white;"> 
+<div style="background-color:white;">
 
     <!-- <ul>
     <li *ngFor="let book of allbooks">{{book.id}}</li>
@@ -7,43 +7,77 @@
         style="padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
         <div class="row" style="margin-bottom:10px;margin-left:10px;">
 
-      
+
         </div>
+    </div>
+
+    <div class="grey bottom" style="color: #5090cc;">
+        <div class="col-md-2 grey bottom" style="text-align:center;"><strong>Cover</strong></div>
+        <div class="col-md-2 grey bottom"><strong>Title</strong></div>
+        <div class="col-md-2 grey bottom"><strong>Date</strong></div>
+        <div class="col-md-2 grey bottom"><strong>Status</strong></div>
+        <div class="col-md-4 grey bottom"><strong>Options</strong></div>
+
     </div>
 
     <div class="row" style="margin-top:5px;padding-left:15px;padding-right:15px;">
-        
-        <div style="color: #5090cc" *ngFor="let swap of visibleSwaps" class="col-md-12" style="padding-left:1px;padding-right:1px;">
-                <img *ngIf="(  getCover(swap.offerBookId).length > 0)" style="margin-bottom:10px;" src="https://covers.openlibrary.org/b/id/{{getCover(swap.offerBookId)}}-S.jpg" class="image-fluid">
-                <img *ngIf="(getCover(swap.offerBookId).length == 0)" style="margin-bottom:10px;width:37px" src="./assets/images/generic.jpg" class="image-fluid">
-                <span style="color: #5090cc;vertical-align: top;">   <a [routerLink]="['/swap/' , swap.id]"> {{ getTitle(swap.offerBookId) }}  </a></span>
-                <span style="color: #5090cc;vertical-align: top;"> {{ swap.createDate | date: 'dd-MM-yyyy' }}   </span>
-                <span style="color: #5090cc;vertical-align: top;"> {{ swap.status }}   </span>
-                <button *ngIf="swap.status === 'Request Made'" (click)="openViewAvailableSwapBooksDialog(swap.offerOwnerId,swap.id)">View Books Available</button>
-                <button *ngIf="swap.status === 'Request Accepted'" (click)="completeSwap(swap.id)">Mark Swap Done</button>
 
-            
-            
-            
+        <div style="color: #5090cc" *ngFor="let swap of visibleSwaps" class="col-md-12"
+            style="padding-left:15px;padding-right:15px;">
+
+
+
+
+            <div class="row" style="color: #5090cc">
+                <div class="col-md-2" style="text-align:center;"><img *ngIf="(  getCover(swap.offerBookId).length > 0)"
+                        style="margin-bottom:10px;"
+                        src="https://covers.openlibrary.org/b/id/{{getCover(swap.offerBookId)}}-S.jpg"
+                        class="image-fluid">
+                    <img *ngIf="(getCover(swap.offerBookId).length == 0)" style="margin-bottom:10px;width:37px"
+                        src="./assets/images/generic.jpg" class="image-fluid">
+                </div>
+                <div class="col-md-2"><strong><span style="color: #5090cc;vertical-align: top;"> <a
+                                [routerLink]="['/swap/' , swap.id]"> {{ getTitle(swap.offerBookId) }}
+                            </a></span></strong></div>
+                <div class="col-md-2"><strong><span style="color: #5090cc;vertical-align: top;"> {{ swap.createDate |
+                            date: 'dd-MM-yyyy' }} </span></strong></div>
+                <div class="col-md-2"><strong><span style="color: #5090cc;vertical-align: top;"> {{ swap.status }}
+                        </span></strong></div>
+                <button *ngIf="swap.status === 'Request Made'"
+                    (click)="openViewAvailableSwapBooksDialog(swap.offerOwnerId,swap.id)">View Books Available</button>
+                <button *ngIf="swap.status === 'Request Accepted'" (click)="completeSwap(swap.id)">Mark Swap
+                    Done</button>
+            </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
     </div>
+</div>
 
 
-    <div *ngIf="visibleSwaps.length === 0" class="container-fluid"
+<div *ngIf="visibleSwaps.length === 0" class="container-fluid"
     style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
     <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
 
         <p style="margin-top:30px">
-        <span style="color:grey;margin-top:30px;">There were no search results found. Try again</span>
+            <span style="color:grey;margin-top:30px;">There were no search results found. Try again</span>
         </p>
         <p style="margin-top:30px">
-        <img margin:auto  src="./assets/images/oops.gif" width="100%" style="max-width: 400px;">
+            <img margin:auto src="./assets/images/oops.gif" width="100%" style="max-width: 400px;">
         </p>
 
 
     </div>
 </div>
-    <!-- <h3>{{thumbnail.someProperty}}</h3> -->
-    <!-- <button class="btn btn-primary" (click)="thumbnail.logFoo()">Log Foo</button> -->
-    <!-- (eventClick)="handleEventClicked($event)" -->
-</div>
+<!-- <h3>{{thumbnail.someProperty}}</h3> -->
+<!-- <button class="btn btn-primary" (click)="thumbnail.logFoo()">Log Foo</button> -->
+<!-- (eventClick)="handleEventClicked($event)" -->

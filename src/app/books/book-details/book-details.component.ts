@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IBook, ISwap, SwapService } from "../shared";
-import { BookService } from "../shared/book.service";
+import { IBook, ISwap  } from "../shared/index";
+import { BookService, SwapService } from "../shared/index";
 
 @Component({
-    templateUrl: './book-details.component.html'
+    templateUrl: './book-details.component.html',
+    styleUrls: ['./book-details.component.style.css']
 
 })
 

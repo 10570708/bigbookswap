@@ -1,16 +1,16 @@
-em{
+em {
     float: right;
     color: #ca121e;
     padding-left: 10px;
-    padding-bottom:10px;
+    padding-bottom: 10px;
 }
 
-#newbookbox
-{    border-radius: 25px;
+#newbookbox {
+    border-radius: 25px;
     border: 2px solid #5090cc;
-    padding: 20px; 
-   background-color: #fafafa;
-   box-shadow: 5px 10px 8px 10px #aeb2eb;
+    padding: 20px;
+    background-color: #fafafa;
+    box-shadow: 5px 10px 8px 10px #aeb2eb;
 }
 
 .error input {
@@ -22,14 +22,15 @@ em{
 }
 
 
-#thumb1{
-    float:right;
-    margin-right:10px;  
-     height: 150px;
-    
-    }
-#thumb1:hover{
-height:400px;
+#thumb1 {
+    float: right;
+    margin-right: 10px;
+    height: 150px;
+
+}
+
+#thumb1:hover {
+    height: 400px;
 
 }
 
@@ -45,10 +46,16 @@ height:400px;
     color: #999;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
     background-color: #449d44 !important;
-  }
+}
 
-  .btn-default, .btn-default:hover, .btn-default:active, .btn-default:visited {
+.btn-default,
+.btn-default:hover,
+.btn-default:active,
+.btn-default:visited {
     background-color: #d3d9d3 !important;
-  } 
+}

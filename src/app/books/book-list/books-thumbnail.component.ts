@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output,  } from "@angular/core";
-import { IBook } from "./shared";
+import { IBook } from "../shared/index";
 
 @Component({
     selector: 'books-thumbnail',

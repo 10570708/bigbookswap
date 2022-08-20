@@ -1,8 +1,8 @@
 import { Conditional } from "@angular/compiler";
 import { Injectable, EventEmitter, ɵsetCurrentInjector } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { BooksListComponent } from "../books-list.component";
-import { IBook, ConditionType, OptionType } from "./book.model";
+import { BooksListComponent } from "../../book-list/books-list.component";
+import { IBook, ConditionType, OptionType } from "../model/book.model";
 
 @Injectable()
 export class BookService {
