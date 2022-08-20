@@ -61,4 +61,12 @@ openDialog() {
 
     }
 
+    searchSwaps(searchTerm:string)
+    {
+        var newHref = '/swaps/'+searchTerm; 
+        // this.bookService.setSearchTerm(searchTerm);
+        // this.searchTerm = '';
+        this.router.navigate([newHref]);
+    }
+
 }

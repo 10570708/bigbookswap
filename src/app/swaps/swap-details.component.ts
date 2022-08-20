@@ -18,8 +18,8 @@ export class SwapDetailsComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.book = this.bookService.getBook(+this.route.snapshot.params['id']) as IBook;
-        this.Swaps = this.swapService.getAllSwaps();
+        this.swap = this.swapService.getSwap(+this.route.snapshot.params['id']) as ISwap;
+        //this.Swaps = this.swapService.getAllSwaps();
        
         console.log('Swaps  ' + this.Swaps);
     }

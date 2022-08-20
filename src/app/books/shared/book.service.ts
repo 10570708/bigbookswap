@@ -46,6 +46,19 @@ export class BookService {
     }
     
 
+    searchAvailableSwapBooks(searchTerm:number){
+      //console.log('Calling search Books with ' + searchTerm);
+      var results: IBook[] = []; 
+
+        console.log('Looking for owner ' + searchTerm);
+          results = BOOKS.filter( book =>
+              book.ownerId == 4 && book.status === 'available'
+             
+             
+              );
+      return results;
+          }
+
     searchBooks(searchTerm:string){
       //console.log('Calling search Books with ' + searchTerm);
       var search = searchTerm.toLocaleLowerCase();
@@ -139,7 +152,7 @@ removeBook(id: number){
 
         },       { 
             id: 4,
-          ownerId: 2, addedDate: new Date('9/26/2019'), isbn: 123456789,
+          ownerId: 4, addedDate: new Date('9/26/2019'), isbn: 123456789,
             status: 'available',
             title: 'Diary of a Wimpy Kid 1',
             author: 'John Joe',
@@ -152,7 +165,7 @@ removeBook(id: number){
 
         },       { 
             id: 5,
-          ownerId: 2, addedDate: new Date('9/26/2019'), isbn: 123456789,
+          ownerId: 4, addedDate: new Date('9/26/2019'), isbn: 123456789,
             status: 'available',
             title: 'Diary of a Wimpy Kid 1',
             author: 'John Joe',
@@ -165,7 +178,7 @@ removeBook(id: number){
 
         },       { 
             id: 6,
-          ownerId: 2, addedDate: new Date('9/26/2019'), isbn: 123456789,
+          ownerId: 4, addedDate: new Date('9/26/2019'), isbn: 123456789,
             status: 'available',
             title: 'Diary of a Wimpy Kid 1',
             author: 'John Joe',

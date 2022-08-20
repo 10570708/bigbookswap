@@ -18,9 +18,13 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><a [routerLink]="['swaps']">All </a></li>
-            <li><a [routerLink]="['swaps/req']">RequestSwap</a></li>
-            <li><a [routerLink]="['swaps/rec']">My Offers </a></li>
+            <li><a (click)="searchSwaps('')" [routerLink]="['swaps']">All </a></li>
+            <li><a (click)="searchSwaps('sent')" [routerLink]="['swaps', 'sent']">Sent</a></li>
+            <li><a (click)="searchSwaps('received')" [routerLink]="['swaps', 'received']">Received </a></li>
+            <li><a (click)="searchSwaps('pending')" [routerLink]="['swaps', 'pending']">Pending </a></li>
+            <li><a (click)="searchSwaps('done')" [routerLink]="['swaps', 'done']">Completed </a></li>
+
+
           </ul>
         </li>
       </ul>

@@ -7,16 +7,18 @@ import {
     BookListResolver
 } from './books/index'
 
-import {
-    SwapDetailsComponent } from './swaps/swap-details.component';
+import { SwapDetailsComponent } from './swaps/swap-details.component';
+
 
 
 import { Error404Component } from "./errors/404.component";
+import { SwapListComponent } from "./swaps/swap-list.component";
 
 export const appRoutes:Routes= [
-    { path: 'swaps', component: SwapDetailsComponent},
-    { path: 'swaps/req', component: SwapDetailsComponent},
-    { path: 'swaps/rec', component: SwapDetailsComponent},
+    { path: 'swaps', component: SwapListComponent},
+    { path: 'swaps/:filter', component: SwapListComponent},
+
+    { path: 'swap/:id', component: SwapDetailsComponent},
     { path: 'books/:search', component: BooksListComponent, resolve: {allbooks:BookListResolver} },
     { path: 'books', component: BooksListComponent, resolve: {allbooks:BookListResolver} },
     { path: 'book/new', component: CreateBookComponent, canDeactivate: ['canDeactivateCreateBook']},

@@ -30,6 +30,8 @@ import { MatAlertComponent } from './nav/mat-alert.component';
 import { APIService } from './books/shared/api.service';
 import { BookLookupComponent } from './books/book-lookup.component';
 import { SwapDetailsComponent } from './swaps/swap-details.component';
+import { SwapListComponent } from './swaps/swap-list.component';
+import { BooksPickComponent } from './books/books-pick.component';
 
 declare let toastr:Toastr 
 declare let JQuery:any;
@@ -57,7 +59,9 @@ declare let JQuery:any;
     CollapsibleWellComponent,
     MatAlertComponent,
     BookLookupComponent,
-    SwapDetailsComponent
+    SwapDetailsComponent,
+    SwapListComponent,
+    BooksPickComponent
   ],
   providers: [
     BookService,
