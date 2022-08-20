@@ -1,0 +1,135 @@
+<div class="container-fluid" style="background-color: white;color:#5090cc">
+
+  <div class="row" style="margin-top:30px;margin-bottom: 30px;">
+    <div class="col-md-2 hidden-xs hidden-sm" style="background-color: white;"></div>
+
+    <div class="col-md-8" id="newbookbox">
+
+      <h1>
+        Add New Book
+        <!-- <img *ngIf="loadForm" float:right id="thumb1"
+          src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg"> -->
+          <span *ngIf="manualLoad">ISBN: {{ bookDisplay.isbn }}</span>
+      </h1>
+      <hr>
+
+      <div *ngIf="loadForm && foundIsbn" class="formgroup">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img style="height:150px;" src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg" class="image-fluid">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h2 class="card-title">{{ bookDisplay.title}}</h2>
+                <h3>by: {{ bookDisplay.author }}</h3>
+                  <p  class="card-text">Published By: {{ bookDisplay.publisher }}</p>
+                  <p  class="card-text"># Pages: {{ bookDisplay.numPages }}</p>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+
+     
+      <form [formGroup]="form" (ngSubmit)="saveBook()" autocomplete="off" novalidate>
+        <div *ngIf="!loadForm" class="form-group" [ngClass]="{'error': f['isbn'].errors && f['isbn'].dirty}">
+          <label for="isbn">Search by Book ISBN:</label>
+          <div *ngIf="f['isbn'].errors && !f['isbn'].valid && f['isbn'].dirty">
+            <em *ngIf="f['isbn'].errors['required']">You must try and search for your book</em>
+            <em *ngIf="f['isbn'].errors['pattern'] || f['isbn'].errors['minlength'] || f['isbn'].errors['maxlength']">A
+              Valid ISBN is either 10 or 12 numbers in length</em>
+          </div>
+
+          <div>
+            <input style="width:80%;display:inline" formControlName="isbn" (ngModel)="book.isbn" type="text"
+              class="form-control" placeholder="ISBN of your book..." />
+            <button style="width:20%;display:inline" type="button" [disabled]="f['isbn'].errors" class="btn btn-default"
+              (click)="openNewBookDialog()">Find My Book</button>
+          </div>
+
+        </div>
+
+
+
+
+        <div *ngIf="loadForm && !foundIsbn" class="form-group"
+          [ngClass]="{'error': f['title'].errors && !f['title'].untouched}">
+          <label for="title">Book Title:</label>
+          <div *ngIf="f['title'].errors && !f['title'].valid && !f['title'].untouched">
+            <em *ngIf="f['title'].errors['required']">Required</em>
+            <em *ngIf="f['title'].errors['pattern']">Invalid Book Title</em>
+            <em *ngIf="f['title'].errors['minlength'] || f['title'].errors['maxlength']">Title should be 2 to 30
+              characters</em>
+          </div>
+          <input formControlName="title" (ngModel)="bookDisplay.title" type="text" class="form-control"
+            placeholder="Title of your book..." />
+        </div>
+
+
+
+
+
+        <div *ngIf="loadForm && !foundIsbn" class="form-group"
+          [ngClass]="{'error': f['author'].errors && !f['author'].untouched}">
+          <label for="author">Author:</label>
+          <div *ngIf="f['author'].errors && !f['author'].valid && !f['author'].untouched">
+            <em *ngIf="f['author'].errors['required']">Required</em>
+            <em *ngIf="f['author'].errors['pattern']">Letters and Spaces only </em>
+            <em *ngIf="f['author'].errors['minlength'] || f['author'].errors['maxlength']">Author Name 10 to 40
+              characters.</em>
+          </div>
+          <input formControlName="author" (ngModel)="bookDisplay.author" type="text" class="form-control"
+            placeholder="Author Name..." />
+        </div>
+
+
+
+
+        <div *ngIf="loadForm" class="form-group"
+          [ngClass]="{'error': f['condition'].errors && !f['condition'].untouched}">
+          <label for="condition">Condition:</label>
+          <div *ngIf="f['condition'].errors && !f['condition'].valid && !f['condition'].untouched">
+            <em *ngIf="f['condition'].errors['required']">Required</em>
+          </div>
+          <select formControlName="condition" (ngModel)="bookDisplay.condition" class="form-control">
+            <option value="">Select condition .....</option>
+            <option *ngFor="let condition of econdition | keyvalue" [ngValue]="condition.value">{{condition.value}}
+            </option>
+          </select>
+        </div>
+
+        <div *ngIf="loadForm" class="form-group" [ngClass]="{'error': f['option'].errors && !f['option'].untouched}">
+          <label for="option">List Book as:</label>
+          <div *ngIf="f['option'].errors && !f['option'].valid && !f['option'].untouched">
+            <em *ngIf="f['option'].errors['required']">Required</em>
+          </div>
+          <select formControlName="option" (ngModel)="bookDisplay.option" class="form-control">
+            <option value="">Select listing type.....</option>
+            <option *ngFor="let option of eoption | keyvalue" [ngValue]="option.value">{{option.value}}</option>
+          </select>
+        </div>
+
+        <div *ngIf="loadForm" style="text-align: center;">
+          <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+          <button *ngIf="loadForm" type="button" class="btn btn-default" (click)="clear()">Clear</button>
+
+        </div>
+
+        <!-- [disabled]="form.invalid" -->
+      </form>
+
+      
+
+    </div>
+    <div class="col-md-2 hidden-xs hidden-sm"></div>
+  </div>
+
+</div>

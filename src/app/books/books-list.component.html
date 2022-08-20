@@ -1,0 +1,85 @@
+<div style="background-color:white;"> 
+
+    <!-- <ul>
+    <li *ngFor="let book of allbooks">{{book.id}}</li>
+    </ul> -->
+    <div class="container-fluid"
+        style="padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
+        <div class="row" style="margin-bottom:10px;margin-left:10px;">
+
+            <div class="col-md-4" style="text-align: center;">
+                <span style="color:#31b0d5;"> Type </span>
+                <div class="btn-group btn-group-sm" style="margin-right:20px">
+                    <button class="btn btn-info" [class.active]="filterByOption==='swap'"
+                        (click)="filterBooksOption('swap')">Swap</button>
+                    <button class="btn btn-info" [class.active]="filterByOption==='donate'"
+                        (click)="filterBooksOption('donate')"> Donate</button>
+                    <button class="btn btn-info" [class.active]="filterByOption==='all'"
+                        (click)="filterBooksOption('all')"> ALL</button>
+                </div>
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <span style="color:#449d44;"> Condition </span>
+                <div class="btn-group btn-group-sm" style="margin-right:20px">
+                    <button class="btn btn-success" [class.active]="filterBy==='new'"
+                        (click)="filterBooksCondition('new')"> New</button>
+                    <button class="btn btn-success" [class.active]="filterBy==='good'"
+                        (click)="filterBooksCondition('good')"> Good</button>
+                    <button class="btn btn-success" [class.active]="filterBy==='fair'"
+                        (click)="filterBooksCondition('fair')"> Fair</button>
+                    <button class="btn btn-success" [class.active]="filterBy==='all'"
+                        (click)="filterBooksCondition('all')"> ALL</button>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4" style="text-align: center;">
+
+                <span style="color:grey;" *ngIf="(searchTerm)">Search For: <button disabled>{{ searchTerm }} </button>
+                    <a [routerLink]="['/books/']" (click)="resetSearch()">
+                        <span style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span>
+                        <span style="color:grey;">Clear Search </span>
+                    </a>
+                </span>
+
+
+
+
+                <span *ngIf="(!search)" style="color:#ec971f;"> Sorted </span>
+                <div *ngIf="(!search)" class="btn-group btn-group-sm">
+                    <button class="btn btn-warning" [class.active]="sortBy==='title'"
+                        (click)="sortBooks('swap')">Title</button>
+                    <button class="btn btn-warning" [class.active]="sortBy==='author'" (click)="sortBooks('donate')">
+                        Author</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:5px;padding-left:15px;padding-right:15px;">
+        
+        <div *ngFor="let book of visibleBooks;" class="col-md-6" style="padding-left:1px;padding-right:1px;">
+            <books-thumbnail #thumbnail [booklist]="book"></books-thumbnail>
+        </div>
+    </div>
+
+
+    <div *ngIf="visibleBooks.length === 0" class="container-fluid"
+    style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
+    <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
+
+        <p style="margin-top:30px">
+        <span style="color:grey;margin-top:30px;">There were no search results found. Try again</span>
+        </p>
+        <p style="margin-top:30px">
+        <img margin:auto  src="./assets/images/oops.gif" width="100%" style="max-width: 400px;">
+        </p>
+
+
+    </div>
+</div>
+    <!-- <h3>{{thumbnail.someProperty}}</h3> -->
+    <!-- <button class="btn btn-primary" (click)="thumbnail.logFoo()">Log Foo</button> -->
+    <!-- (eventClick)="handleEventClicked($event)" -->
+</div>

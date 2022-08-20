@@ -1,0 +1,13 @@
+<div class="well pointable">
+
+    <h2>
+        <ng-content select="[well-category]"></ng-content>
+            <span class="glyphicon glyphicon-eye-open green" (click)="toggleContent()"> </span>
+            <span  class="mini-view" (click)="toggleContent()"> Quick View </span>
+        <ng-content select="[well-title]"></ng-content>
+    </h2>
+
+    <ng-content select="[well-body]" *ngIf="visible"></ng-content>
+
+
+</div>

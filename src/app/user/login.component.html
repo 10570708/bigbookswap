@@ -1,0 +1,36 @@
+<div class="container-fluid" style="background-color: white;color:blueviolet">
+
+  <div class="row" style="margin-top:30px;margin-bottom: 30px;">
+    <div class="col-md-3 hidden-xs hidden-sm" style="background-color: white;"></div>
+    <div class="col-md-6" id="loginbox">
+      <h1 style="color:#5090cc">Login to &quot;The Big Book Swap&quot;</h1>
+      <hr>
+      <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off">
+        <div class="form-group">
+          <label for="userName" style="color:#5090cc">User Name:</label>
+          <em *ngIf="loginForm.controls['userName']?.invalid && 
+      (loginForm.controls['userName']?.touched || mouseoverLogin)">Required</em>
+          <input (ngModel)="userName" name="userName" id="userName" type="text" required class="form-control"
+            placeholder="User Name..." />
+        </div>
+        <div class="form-group">
+          <label for="password" style="color:#5090cc">Password:</label>
+          <em *ngIf="loginForm.controls['password']?.invalid && 
+      (loginForm.controls['password']?.touched || mouseoverLogin)">Required</em>
+          <input (ngModel)="password" name="password" id="password" type="password" required class="form-control"
+            placeholder="Password..." />
+        </div>
+
+        <div style="text-align: center;">
+          <span (mouseenter)="mouseoverLogin=true" (mouseleave)="mouseoverLogin=false">
+            <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+          </span>
+          <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+          <button type="button" class="btn btn-forgot" (click)="cancel()">Forgot</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-3 hidden-xs hidden-sm"></div>
+  </div>
+
+</div>

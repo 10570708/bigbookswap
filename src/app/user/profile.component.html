@@ -1,0 +1,113 @@
+<div>
+  <h1>Edit Your Profile </h1>
+  <hr>
+  <div [formGroup]="profileForm" class="col-md-12">
+    <form (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
+      <!-- <div [formGroup]="profileForm" class="form-group" [ngClass]="{'error' : !validateFirstName()}">
+        <label for="firstName">First Name:</label>
+        <em *ngIf="!validateFirstName() && 
+          ((profileForm.controls['firstName'].errors) && (profileForm.controls['firstName'].errors['required']))  ">Required</em>
+        <em *ngIf="!validateFirstName() && 
+        ((profileForm.controls['firstName'].errors) && (profileForm.controls['firstName'].errors['pattern']))  ">Letters Only</em>
+        <input formControlName="firstName" id="firstName" type="text" class="form-control" placeholder="First Name..." />
+      </div> -->
+  
+
+      <div class="form-group">
+
+      
+      
+            <div [formGroup]="profileForm" class="form-group">
+              <div class="parent">
+                <div class='child'>
+                  <mat-form-field class="display:inline" appearance="fill">
+                    <mat-label>Avatar</mat-label>
+
+                      <mat-select  (selectionChange)="changeImageSource($event)" [(ngModel)]="selectedavatar" [formControl]="avatar" name="avatar" >
+                      <mat-option *ngFor="let category of categories" [value]="category.viewValue">
+                        <img height="40px" src="./assets/images/icons/{{ category.viewValue | lowercase }}.jpg"/>
+                          {{ category.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  </div>
+
+            
+            <div class='child'>
+              <img class="display:inline" id="avimg" [src]="selectedavatar?.image" width="150px">
+              </div>
+
+        </div>
+      </div>
+
+      <div><select [formControl]="avatar" (change)="changeImageSourceA($event)" name="avatar" class="form-control">
+              <option *ngFor="let category of categories" [value]="category.viewValue" [ngValue]="category.viewValue">{{category.viewValue}}</option>
+            </select>
+            </div>
+
+      <!-- <div>
+        <div class="col-md-4"><img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;"></div>
+        <div class="col-md-4"><img src="./assets/images/icons/cat.jpg" style="width:150px;height:150;"></div>
+
+        <div class="col-md-4"><img src="./assets/images/icons/fish.jpg" style="width:150px;height:150;"></div>
+        <div class="col-md-4"><img src="./assets/images/icons/crab.jpg" style="width:150px;height:150;"></div>
+
+        <div class="col-md-4"><img src="./assets/images/icons/rabbit.jpg" style="width:150px;height:150;"></div>
+        <div class="col-md-4"><img src="./assets/images/icons/horse.jpg" style="width:150px;height:150;"></div>
+
+
+
+
+
+      </div> -->
+    
+     
+
+     
+    </div>
+
+
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" (click)="cancel()" class="btn btn-default">Cancel</button>
+    </form>
+  </div>
+
+  <!-- <div class="row">
+    <div class="column">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/cat.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/horse.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/fish.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/rabbit.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/crab.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/deer.jpg" style="width:150px;height:150;">
+    </div>
+    <div class="column">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+    </div>
+    <div class="column">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+    </div>
+    <div class="column">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+      <img src="./assets/images/icons/dog.jpg" style="width:150px;height:150;">
+    </div>
+  </div> -->
+</div>

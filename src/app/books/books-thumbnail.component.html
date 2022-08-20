@@ -1,0 +1,29 @@
+<div class=" bookbox well hoverwell thumbnail" style="margin:2px">
+    <collapsible-well style="background-color:#fafafa;">
+
+        <img well-category src="./assets/images/swap1.jpg" width="90px;" *ngIf="booklist.option === 'Swap'">
+        <img well-category src="./assets/images/donate1.jpg" width="90px;" *ngIf="booklist.option === 'Donate'">
+
+        <div well-title>
+            <a [routerLink]="['/book/' , booklist.id]">
+                {{booklist.title | uppercase}} - {{ booklist.author }}
+            </a>          
+        </div>
+        <div well-body>
+            <div>Author: {{booklist.author}}
+            </div>
+            <div [hidden]="!booklist.author">Author: {{booklist.author}}
+            </div>
+            <div *ngIf="booklist.condition" [ngSwitch]="booklist.condition">Condition:
+                <span [ngClass]="{green: booklist.condition === 'New'}" *ngSwitchCase="'New'">New</span>
+                <span *ngSwitchCase="'Good'">Used - Good</span>
+                <span *ngSwitchDefault>Used - Fair</span>
+            </div>
+           
+
+        </div>
+       
+
+    </collapsible-well>
+    <!-- <button class="btn btn-primary" (click)="handleClickMe()">Pick Me</button> -->
+</div>

@@ -1,0 +1,73 @@
+<div class="navbar navbar-default" style="margin-bottom:1px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">The Big Book Swap</a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a [routerLink]="['books']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Books</a>
+        </li>
+        <li>
+          <a [routerLink]="['book/new']" routerLinkActive="active">Add Book</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Swaps
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a [routerLink]="['swaps']">All </a></li>
+            <li><a [routerLink]="['swaps/req']">RequestSwap</a></li>
+            <li><a [routerLink]="['swaps/rec']">My Offers </a></li>
+          </ul>
+        </li>
+      </ul>
+      <div  id="loginbox" class="navbar-header navbar-right">
+        <ul class="nav navbar-nav">
+          <li class="tst">
+            <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']"><span style="color:blue;">Login</span></a>
+            <a  *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']"><span style="color:blue;">Welcome {{auth.currentUser.userName}} </span><img
+                src="./assets/images/icons/{{auth.currentUser.avatar | lowercase}}.jpg" height="30px;"></a>
+          </li>
+        </ul>
+      </div>
+      <form id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
+        <div class="form-group">
+          <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
+            placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">
+        </div>
+        <button class="btn btn-default btn-navbar">
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div style="background-color: white;text-align: center;">
+    <img class="hidden-sm hidden-xs" margin:auto src="./assets/images/bbs-logo.jpg" width="100%"
+      style="max-width: 80px;margin-right:120px;">
+    <img margin:auto src="./assets/images/bookswap-logo.jpg" width="100%" style="max-width: 400px;">
+    <img class="hidden-sm hidden-xs" margin:auto src="./assets/images/crest.png" width="100%"
+      style="max-width: 80px;margin-left:120px;">
+  </div>
+
+</div>
+
+<!-- <section class="mat-button-container">
+  <h2>Angular Material dialog</h2>
+  <div class="example-button-row">
+    <button mat-raised-button (click)="openDialog()">
+      Angular Material Alert
+    </button> -->
+    <!-- <button mat-raised-button color="primary" (click)="confirmDialog()">
+      Confirm
+    </button>
+    <button mat-raised-button color="accent" (click)="showPrompt()">
+      Prompt Input
+    </button> -->
+  <!-- </div>
+</section> -->
