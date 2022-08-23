@@ -1,29 +1,33 @@
 <div class="container-fluid" style="background-color: white;color:#5090cc">
 
-  <div class="row" style="margin-top:30px;margin-bottom: 30px;">
+  <div  class="row" style="margin-top:30px;margin-bottom: 30px;">
       <div class="card mb-3">
         <div>
-            <h1 class="card-title" align="center"><strong>Book Details: {{ book.title}}</strong></h1>
+            <h1 class="card-title" align="center"><strong>Book Details: {{ book?.title  }}</strong></h1>
+
+            <h1 class="card-title" align="center"><strong>Book Details: {{  (realBook$ | async)?.title  }}</strong></h1>
+
+
             <hr>
         </div>
         <div class="row g-0">
           <div class="col-md-4" style="text-align:center">
-            <img *ngIf="(book.cover.length > 0)" style="margin-bottom:40px;" src="https://covers.openlibrary.org/b/id/{{book.cover}}-M.jpg" class="image-fluid">
-            <img *ngIf="(book.cover.length == 0)" style="margin-bottom:40px;" src="./assets/images/generic.jpg" class="image-fluid">
+            <img *ngIf="(book?.cover?.length !== 0 && book?.cover !== 'cover')" style="margin-bottom:40px;" src="https://covers.openlibrary.org/b/id/{{book?.cover}}-M.jpg" class="image-fluid">
+            <img *ngIf="(book?.cover?.length === 0 || book?.cover === 'cover')" style="margin-bottom:40px;" src="./assets/images/generic.jpg" class="image-fluid">
 
           </div>
           <div class="col-md-8">
             <div class="card-body" style="margin-left:10px;">
-              <h2 class="card-title">{{ book.title}}</h2>
-              <h3><strong>Written by: </strong>{{ book.author }}</h3>
-              <p class="card-text"><strong>Published By:</strong> {{ book.condition }}</p>
-              <p class="card-text"><strong># Pages:</strong> {{ book.numPages }}</p>
-              <p class="card-text"><strong># ISBN:</strong> {{ book.isbn }}</p>
-              <p class="card-text"><strong>Publisher:</strong> {{ book.publisher }}</p>
-              <p class="card-text"><strong>Condition:</strong> {{ book.condition }}</p>
-              <p class="card-text"><strong>Status:</strong> {{ book.status }}</p>
-              <p class="card-text"><strong>Option:</strong> {{ book.option }}</p>
-              <p class="card-text"><button (click)="buildBookHref()">Find Out More:</button></p>
+              <h2 class="card-title">{{ book?.title}}</h2>
+              <h3><strong>Written by: </strong>{{ book?.author }}</h3>
+              <p class="card-text"><strong>Published By:</strong> {{ book?.condition }}</p>
+              <p class="card-text"><strong># Pages:</strong> {{ book?.numPages }}</p>
+              <p class="card-text"><strong># ISBN:</strong> {{ book?.isbn }}</p>
+              <p class="card-text"><strong>Publisher:</strong> {{ book?.publisher }}</p>
+              <p class="card-text"><strong>Condition:</strong> {{ book?.condition }}</p>
+              <p class="card-text"><strong>Status:</strong> {{ book?.status }}</p>
+              <p class="card-text"><strong>Option:</strong> {{ book?.option }}</p>
+              <p *ngIf="book?.cover && book?.cover?.length !== 0" class="card-text"><button (click)="buildBookHref()">Find Out More:</button></p>
               <p class="card-text"><button (click)="removeBook()">Delete Book</button></p>
               <p class="card-text"><button (click)="requestSwap()">RequestSwap</button></p>
 

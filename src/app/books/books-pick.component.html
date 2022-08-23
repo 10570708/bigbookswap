@@ -24,7 +24,7 @@
                     <div class="col-md-2" style="text-align:center">
                         <img *ngIf="(book.cover.length > 0)" style="width:100px;margin-bottom:40px;"
                             src="https://covers.openlibrary.org/b/id/{{book.cover}}-M.jpg" class="image-fluid">
-                        <img *ngIf="(book.cover.length == 0)" style="width:100px;margin-bottom:40px;"
+                        <img *ngIf="(book.cover.length === 0)" style="width:100px;margin-bottom:40px;"
                             src="./assets/images/generic.jpg" class="image-fluid">
 
                     </div>

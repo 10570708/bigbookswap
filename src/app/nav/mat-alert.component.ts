@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import { MatDialogModule } from "@angular/material/dialog";
 
 @Component({
-    selector: 'mat-alert',
+    selector: 'app-mat-alert',
     templateUrl: 'mat-alert.component.html',
 })
 

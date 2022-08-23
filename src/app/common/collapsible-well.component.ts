@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
 
-    selector: 'collapsible-well',
+    selector: 'app-collapsible-well',
     templateUrl: 'collapsible-well.component.html',
     styleUrls: ['collapsible-well.component.scss']
     

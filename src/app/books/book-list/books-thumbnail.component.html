@@ -1,11 +1,11 @@
 <div class=" bookbox well hoverwell thumbnail" style="margin:2px">
-    <collapsible-well style="background-color:#fafafa;">
+    <app-collapsible-well style="background-color:#fafafa;">
 
         <img well-category src="./assets/images/swap1.jpg" width="90px;" *ngIf="booklist.option === 'Swap'">
         <img well-category src="./assets/images/donate1.jpg" width="90px;" *ngIf="booklist.option === 'Donate'">
 
         <div well-title>
-            <a [routerLink]="['/book/' , booklist.id]">
+            <a (click)="loadBook(booklist.id)" [routerLink]="['/book/' , booklist.id]">
                 {{booklist.title | uppercase}} - {{ booklist.author }}
             </a>          
         </div>
@@ -24,6 +24,6 @@
         </div>
        
 
-    </collapsible-well>
+    </app-collapsible-well>
     <!-- <button class="btn btn-primary" (click)="handleClickMe()">Pick Me</button> -->
 </div>

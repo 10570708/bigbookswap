@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { ConditionType, IBook, OptionType } from "../shared/index";
+import { IBook } from "../shared/index";
 import { APIService } from "../shared/index";
 
 @Component({
@@ -85,6 +85,30 @@ export class BookLookupComponent implements OnInit {
     getBookImage()
     {
         if (!this.firstError) {
+            // this.apiService.getBooks()
+            // .subscribe({
+            //     next: data => {
+            //         var stringified = JSON.stringify(data);
+            //         var parsed = JSON.parse(stringified);
+            //         var list = [] ;
+            //         list = parsed.content;
+            //         parsed.content.forEach((book:IBook) => console.log('Yippe !!!! '  + book.title + ' - ' + book.author));
+            //         console.log('*************** fing4ers crossed ' + parsed.content[0].title);
+            //         console.log('Pages ' + parsed.totalPages);
+            //         console.log('This Page' + parsed.number);
+            //     }});
+
+
+                this.apiService.getBooksBySearch()
+                .subscribe({
+                    next: data => {
+                        var stringified = JSON.stringify(data);
+                        var parsed = JSON.parse(stringified);
+                        parsed.forEach((book:IBook) =>  console.log('Found book with title ') + book.title);
+                        console.log('*************** fing4ers AGAIN crossed ' + parsed[0].title);
+                    }});
+
+
             this.apiService
                 .getBookAuthors(this.isbn)
                 .subscribe({

@@ -59,10 +59,15 @@
 
     <div class="row" style="margin-top:5px;padding-left:15px;padding-right:15px;">
         
-        <div *ngFor="let book of visibleBooks;" class="col-md-6" style="padding-left:1px;padding-right:1px;">
-            <books-thumbnail #thumbnail [booklist]="book"></books-thumbnail>
+        <div *ngFor="let book of realBooks | paginate: { itemsPerPage: 20, currentPage: p+1, totalItems: total };" class="col-md-6" style="padding-left:1px;padding-right:1px;">
+            <app-books-thumbnail #thumbnail [booklist]="book"></app-books-thumbnail>
         </div>
     </div>
+
+
+    
+        
+      <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
 
 
     <div *ngIf="visibleBooks.length === 0" class="container-fluid"

@@ -9,15 +9,16 @@ export class EventRouteActivator implements CanActivate{
     }
 
     canActivate(route: ActivatedRouteSnapshot) {
-          
-        console.log('In events route act ');
-        const bookExists = !!this.bookService.getBook(+route.params['id']);
-        //console.log('Book exists ' + route.params['id']);
-
-        if (!bookExists)
-            this.router.navigate(['/404'])
         
-        return bookExists
+        return(true);
+        // console.log('In events route act ');
+        // const bookExists = !!this.bookService.getBook(+route.params['id']);
+        // //console.log('Book exists ' + route.params['id']);
+
+        // if (!bookExists)
+        //     this.router.navigate(['/404'])
+        
+        // return bookExists
     }
 
 }

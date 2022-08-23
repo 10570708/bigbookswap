@@ -1,5 +1,6 @@
 //import { NgModule } from '@angular/core';
 import { NgModule } from '@angular/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
@@ -39,13 +40,14 @@ declare let JQuery:any;
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes,{ onSameUrlNavigation: 'reload' }),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
   declarations: [
     AppComponent,

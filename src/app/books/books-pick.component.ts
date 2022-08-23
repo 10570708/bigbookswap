@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core'
+import { Component, Inject } from '@angular/core'
 import { BookService, SwapService } from './shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -33,7 +33,7 @@
                         style="margin-bottom:10px;"
                         src="https://covers.openlibrary.org/b/id/{{getCover(swap.offerBookId)}}-S.jpg"
                         class="image-fluid">
-                    <img *ngIf="(getCover(swap.offerBookId).length == 0)" style="margin-bottom:10px;width:37px"
+                    <img *ngIf="(getCover(swap.offerBookId).length === 0)" style="margin-bottom:10px;width:37px"
                         src="./assets/images/generic.jpg" class="image-fluid">
                 </div>
                 <div class="col-md-2"><strong><span style="color: #5090cc;vertical-align: top;"> <a

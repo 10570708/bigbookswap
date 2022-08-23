@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Resolve } from "@angular/router";
 import { BookService } from "../shared/index";
 import { ActivatedRoute } from "@angular/router";

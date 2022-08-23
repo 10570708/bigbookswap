@@ -28,11 +28,12 @@
           </ul>
         </li>
       </ul>
-      <div  id="loginbox" class="navbar-header navbar-right">
+      <div id="loginbox" class="navbar-header navbar-right">
         <ul class="nav navbar-nav">
           <li class="tst">
             <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']"><span style="color:blue;">Login</span></a>
-            <a  *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']"><span style="color:blue;">Welcome {{auth.currentUser.userName}} </span><img
+            <a *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']"><span style="color:blue;">Welcome
+                {{auth.currentUser.userName}} </span><img
                 src="./assets/images/icons/{{auth.currentUser.avatar | lowercase}}.jpg" height="30px;"></a>
           </li>
         </ul>
@@ -67,11 +68,11 @@
     <button mat-raised-button (click)="openDialog()">
       Angular Material Alert
     </button> -->
-    <!-- <button mat-raised-button color="primary" (click)="confirmDialog()">
+<!-- <button mat-raised-button color="primary" (click)="confirmDialog()">
       Confirm
     </button>
     <button mat-raised-button color="accent" (click)="showPrompt()">
       Prompt Input
     </button> -->
-  <!-- </div>
+<!-- </div>
 </section> -->

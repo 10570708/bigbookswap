@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { Observable } from "rxjs";
 import { BookLookupComponent } from "../book-lookup/book-lookup.component";
 import { ConditionType, IBook, OptionType } from "../shared/index";
 import { APIService,BookService } from "../shared/index";
@@ -86,7 +87,8 @@ export class CreateBookComponent implements OnInit {
         }
 
         this.bookDisplay.id = this.bookService.getNextId();
-        this.bookService.saveBook(this.bookDisplay);
+        //this.bookService.saveBook(this.bookDisplay);
+        this.apiService.saveBook(this.bookDisplay).subscribe((response) => console.log('Response from add ' + response));
         this.isDirty = false;
         this.router.navigate(['book/' + this.bookDisplay.id]);
 

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core'
-import { BookService } from '../shared/index';
+import { Component } from '@angular/core'
+import { APIService, BookService } from '../shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IBook } from '../shared/index';
@@ -21,9 +21,13 @@ export class BooksListComponent implements OnInit {
     searchTerm: string = '';
     search: boolean = false; 
 
+    realBooks:any;
+    p: number = 1;
+    total: number = 0;
 
 
-    constructor(private bookService: BookService,  private route:ActivatedRoute){
+
+    constructor(private bookService: BookService,  private route:ActivatedRoute, private apiService:APIService){
     }
     
 
@@ -44,6 +48,7 @@ export class BooksListComponent implements OnInit {
     filterBooks(){
 
         this.visibleBooks = this.searchableBooks.slice(0);
+        
 
         // this.visibleBooks.forEach(element => {
         //     console.log('Book:' + element.condition + ' - '  +element.option)          
@@ -101,6 +106,8 @@ export class BooksListComponent implements OnInit {
     ngOnInit(){
         //console.log('Second option ' +this.route.snapshot.params['search']); 
 
+        this.getBooks();
+
         this.allbooks = this.route.snapshot.data['allbooks'];
 
         this.searchTerm = this.route.snapshot.params['search'];
@@ -134,8 +141,41 @@ export class BooksListComponent implements OnInit {
 
         //this.visibleBooks = this.allbooks.slice(0);
 
+
+
     }
+
+
+    getBooks(){
+        console.log('Getting books ' + (this.p-1));
+        this.apiService.getBooks(this.p-1)
+          .subscribe(
+            { next: data => { 
+                
+                var stringified = JSON.stringify(data);
+                var parsed = JSON.parse(stringified);
+
+                this.realBooks = parsed.content;
+
+                console.log('Yippe !!!! '); 
+                this.total = parsed.totalPages;
+                this.realBooks.forEach((book:IBook) => console.log('Yippe !!!! '  + book.title + ' - ' + book.author));
+                this.p = parsed.number;
+                this.total = parsed.totalElements;
+            }
+        });
+
+
+          
+    } 
+
+    pageChangeEvent(event: number){
+        this.p = event;
+        this.getBooks();
+    }
+    
 }
+
 
 
 

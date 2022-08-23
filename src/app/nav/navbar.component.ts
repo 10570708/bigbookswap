@@ -2,13 +2,12 @@ import { Component } from "@angular/core";
 import { BookService, IBook } from "../books/shared/index";
 import { AuthService } from "../user/auth.service";
 import { Router} from '@angular/router'
-import { NodeWithI18n } from "@angular/compiler";
-import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatAlertComponent } from './mat-alert.component';
 
 
 @Component({
-    selector: 'navbar',
+    selector: 'app-nav-bar',
     templateUrl: 'navbar.component.html',
     styleUrls: ['navbar.component.css']
 })
