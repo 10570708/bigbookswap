@@ -5,6 +5,10 @@ em {
     padding-bottom: 10px;
 }
 
+.btn{
+    border-radius: 4px;
+    margin: 5px;
+}
 #newbookbox {
     border-radius: 25px;
     border: 2px solid #5090cc;
@@ -50,9 +54,14 @@ em {
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited {
-    background-color: #449d44 !important;
+    background-color: #337ab7 !important;
 }
 
+
+.glyphicon{
+    vertical-align: middle;
+    margin-right: 5px;
+}
 .btn-default,
 .btn-default:hover,
 .btn-default:active,

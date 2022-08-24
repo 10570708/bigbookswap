@@ -1,66 +1,74 @@
-<div mat-dialog-title style="float: right; font-weight: 700; cursor: pointer; margin-bottom: 0px;" (click)="close()"><span
-  style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span></div>
+<div mat-dialog-title style="float: right; font-weight: 700; cursor: pointer; margin-bottom: 0px;" (click)="close()">
+  <span style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span></div>
 
 <div class="container-fluid" style="background-color: white;color:#5090cc">
 
-<div class="row" style="margin-top:10px;margin-bottom: 10px;">
+  <div class="row" style="margin-top:10px;margin-bottom: 10px;">
 
-  <div style="padding:5px" id="newbookbox">
-
-    
-    <div *ngIf="bookLoading" class="row" style="padding:30px;">
-      <div class="col-md-8">
-        <h1>Looking for your book ... </h1>
-      </div>
-      <div class="spin col-md-4"></div>    
-    </div>
+    <div style="padding:5px" id="newbookbox">
 
 
-
-
-
-
-
-    
-
-   
-    <div *ngIf="!bookLoading && !firstError" class="card mb-3">
-      <div class="row g-0">
-        <div class="col-md-12"> <img id="foundbanner" src="./assets/images/gotit.jpg" width="120px;"> <h1 class="card-title" align="center">{{ bookDisplay.title}}</h1><hr></div>
-      </div>
-      <div class="row g-0">
-        <div class="col-md-4">
-          <div *ngIf="imageLoading">
-            <div class="spin col-md-12"></div>    
-          </div>
-
-          <img src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg" class="image-fluid">
-        </div>
+      <div *ngIf="bookLoading" class="row" style="padding:30px;">
         <div class="col-md-8">
-          <div class="card-body">
-            <h2 class="card-title">{{ bookDisplay.title}}</h2>
-            <h3>by: {{ bookDisplay.author }}</h3>
-              <p  class="card-text">Published By: {{ publishedBy }}</p>
-              <p  class="card-text"># Pages: {{ bookDisplay.numPages }}</p>
-           
+          <h1>Looking for your book ... </h1>
+        </div>
+        <div class="spin col-md-4"></div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+      <div *ngIf="!bookLoading && !firstError" class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-12"> <img id="foundbanner" src="./assets/images/gotit.jpg" width="120px;">
+            <h1 class="card-title" align="center">{{ bookDisplay.title}}</h1>
+            <hr>
+          </div>
+        </div>
+        <div class="row g-0">
+          <div class="col-md-4">
+            <div *ngIf="imageLoading">
+              <div class="spin col-md-12"></div>
+            </div>
+
+            <img src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg" class="image-fluid">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h2 class="card-title">{{ bookDisplay.title}}</h2>
+              <h3>by: {{ bookDisplay.author }}</h3>
+              <p class="card-text">Published By: {{ publishedBy }}</p>
+              <p class="card-text"># Pages: {{ bookDisplay.numPages }}</p>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div *ngIf="firstError" style="text-align: center;"><h1>Oops! We couldn't find your book ISBN: {{ isbn }} </h1>
-    <img src="./assets/images/notfound.png" width="150px;">
-  </div>
+    <div *ngIf="firstError" style="text-align: center;">
+      <h1>Oops! We couldn't find your book ISBN: {{ isbn }} </h1>
+      <img src="./assets/images/notfound.png" width="150px;">
+    </div>
 
-</div>
+  </div>
 </div>
 
 
 
 
 <mat-dialog-actions align="center">
-<button class="mat-raised-button" (click)="close()">Close</button>
-<button class="mat-raised-button" (click)="enterdetails()">Enter Details</button>
-<button *ngIf="!firstError && !bookLoading" class="mat-raised-button mat-primary" (click)="save()">Save</button>
+  <button mat-raised-button color="primary" (click)="close()">
+    <mat-icon style="vertical-align: middle;margin-right:5px;">close</mat-icon>
+    Close
+    </button>
+  <button mat-raised-button (click)="enterdetails()"><mat-icon style="vertical-align: middle;margin-right:5px;">keyboard</mat-icon>Enter Deatils Yourself</button>
+  <button *ngIf="!firstError && !bookLoading" class="mat-raised-button" style="margin-left:10px;background-color: rgb(92, 184, 92);color:white;" color="success" (click)="save()"><mat-icon style="vertical-align: middle;margin-right:5px;">check-icon</mat-icon>
+    Save Details</button>
 </mat-dialog-actions>

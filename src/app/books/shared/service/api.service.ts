@@ -50,7 +50,7 @@ export class APIService {
       //return this.bookService.getBooks().pipe(map(allbooks => allbooks))
 
       public getBooks(page: number){
-        return this.httpClient.get('http://localhost:8080/api/v1/book/all'+'?page='+page);
+        return this.httpClient.get('http://localhost:8080/api/v1/book/all'+'?page='+page+'&size=10');
       }
 
       public getBooksBySearch(){

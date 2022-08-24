@@ -9,7 +9,7 @@
         Add New Book
         <!-- <img *ngIf="loadForm" float:right id="thumb1"
           src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg"> -->
-          <span *ngIf="manualLoad">ISBN: {{ bookDisplay.isbn }}</span>
+        <span *ngIf="manualLoad">ISBN: {{ bookDisplay.isbn }}</span>
       </h1>
       <hr>
 
@@ -17,15 +17,16 @@
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-md-4">
-              <img style="height:150px;" src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg" class="image-fluid">
+              <img style="height:150px;" src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg"
+                class="image-fluid">
             </div>
             <div class="col-md-8">
               <div class="card-body">
                 <h2 class="card-title">{{ bookDisplay.title}}</h2>
                 <h3>by: {{ bookDisplay.author }}</h3>
-                  <p  class="card-text">Published By: {{ bookDisplay.publisher }}</p>
-                  <p  class="card-text"># Pages: {{ bookDisplay.numPages }}</p>
-               
+                <p class="card-text">Published By: {{ bookDisplay.publisher }}</p>
+                <p class="card-text"># Pages: {{ bookDisplay.numPages }}</p>
+
               </div>
             </div>
           </div>
@@ -37,7 +38,7 @@
 
 
 
-     
+
       <form [formGroup]="form" (ngSubmit)="saveBook()" autocomplete="off" novalidate>
         <div *ngIf="!loadForm" class="form-group" [ngClass]="{'error': f['isbn'].errors && f['isbn'].dirty}">
           <label for="isbn">Search by Book ISBN:</label>
@@ -116,17 +117,33 @@
           </select>
         </div>
 
-        <div *ngIf="loadForm" style="text-align: center;">
-          <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
-          <button *ngIf="loadForm" type="button" class="btn btn-default" (click)="clear()">Clear</button>
+        <div *ngIf="(loadForm && !manualLoad)" style="text-align: center;">
+          <button type="button" class="btn btn-default" (click)="cancel()"><span
+              class="glyphicon glyphicon-remove"></span>Cancel</button>
+
+          <button *ngIf="loadForm && manualLoad" type="button" class="btn btn-default" (click)="resetformgroup()"><span
+              class="glyphicon glyphicon-repeat"></span>
+            <span>Clear Form</span>
+
+          </button>
+
+
+          <button *ngIf="loadForm" type="button" class="btn btn-primary" (click)="clear()"><span
+              class="glyphicon glyphicon-repeat"></span>
+            <span>Search Again</span>
+
+          </button>
+
+
+          <button type="submit" [disabled]="form.invalid" class="btn btn-success"><span
+              class="glyphicon glyphicon-ok"></span> Save</button>
 
         </div>
 
         <!-- [disabled]="form.invalid" -->
       </form>
 
-      
+
 
     </div>
     <div class="col-md-2 hidden-xs hidden-sm"></div>

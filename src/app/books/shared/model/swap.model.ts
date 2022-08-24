@@ -12,7 +12,8 @@ export interface ISwap {
 }
 
 export enum StatusType {
-    Req = 'Request Made',
+    Req = 'Request Received',
+    Res = 'Request Sent',
     Acc = 'Request Accepted',
     Rej = 'Requst Rejected',
     Swap = 'Swap Done',

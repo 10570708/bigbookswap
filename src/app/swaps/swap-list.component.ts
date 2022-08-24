@@ -8,8 +8,8 @@ import { BooksPickComponent } from '../books/books-pick.component';
 
 
 @Component({
-    templateUrl: 'swap-list.component.html',
-    styleUrls: ['swap-list.component.scss']
+    templateUrl: './swap-list.component.html',
+    styleUrls: ['./swap-list.component.scss']
 })
 export class SwapListComponent implements OnInit {
 
@@ -43,10 +43,13 @@ export class SwapListComponent implements OnInit {
         //this.allbooks = this.route.snapshot.data['allbooks'];
 
         this.searchTerm = this.route.snapshot.params['filter'];
-        //console.log('Filter is ' + this.searchTerm);
+        console.log('Filter is ' + this.searchTerm);
         this.visibleSwaps = []
         this.searchableSwaps = []
-        this.searchableSwaps = this.swapService.searchSwaps(this.searchTerm);
+        this.searchableSwaps = (this.searchTerm)
+            ? this.swapService.searchSwaps(this.searchTerm)
+            : this.swapService.getAllSwaps();
+
         this.visibleSwaps = this.searchableSwaps.slice(0);
 
         //console.log('****** Got SEARCH books ' + this.searchableBooks);
@@ -61,6 +64,12 @@ export class SwapListComponent implements OnInit {
         return book.title;
     }
 
+    getAuthor(id: number) {
+        var book = this.bookService.getBook(id);
+        //console.log('Title is ' + book.title);
+        return book.author;
+    }
+
     getCover(id: number) {
         var book = this.bookService.getBook(id);
         //console.log('Title is ' + book.cover);
@@ -70,6 +79,11 @@ export class SwapListComponent implements OnInit {
     completeSwap(id: number) {
         this.swapService.completeSwap(id);
         this.router.navigate(['/swaps', 'done']);
+    }
+
+    getrandomNumber()
+    {
+        return Math.floor((Math.random() * 4) + 1);
     }
 
     openViewAvailableSwapBooksDialog(id: number, swapid: number) {

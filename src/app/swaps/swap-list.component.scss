@@ -9,3 +9,23 @@ a { color: #bbb; text-decoration: none;}
 .grey{background-color: rgb(236, 230, 230);}
 .bottom{padding-bottom: 10px;padding-top:5px;margin-bottom:10px;}
 
+.glyphicon{
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.btn{
+    border-radius: 4px;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+    background-color: #337ab7 !important;
+}
+
+.no-pad{
+    padding-bottom: 0px;
+}
+

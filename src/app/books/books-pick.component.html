@@ -34,26 +34,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <div class="col-md-6" style="margin:0;"><strong>Written by:</strong> </div>
+                                        <div class="col-md-6" style="margin:0;"><strong>Author:</strong> </div>
                                         <div class="col-md-6" style="margin:0;">{{ book.author }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong>Published By: </strong></div>
-                                        <div class="col-md-6">{{ book.condition }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong># Pages: </strong></div>
-                                        <div class="col-md-6">{{ book.numPages }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong># ISBN: </strong></div>
-                                        <div class="col-md-6">{{ book.isbn }}</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6"><strong>Publisher: </strong></div>
                                         <div class="col-md-6">{{ book.publisher }}</div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>Pages: </strong></div>
+                                        <div class="col-md-6">{{ book.numPages }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6"><strong>ISBN: </strong></div>
+                                        <div class="col-md-6">{{ book.isbn }}</div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
 
@@ -69,17 +64,17 @@
                                         <div class="col-md-6"><strong>Option: </strong></div>
                                         <div class="col-md-6">{{ book.option }}</div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong># ISBN: </strong></div>
-                                        <div class="col-md-6">{{ book.isbn }}</div>
-                                    </div>
-
-                                    <div class="row">
+                                    <div class="row top-pad">
                                         <div class="col-md-6"></div>
-                                        <div class="col-md-6">
-                                            
+                                        <div class="col-md-6">                
                                             <mat-dialog-actions align="center">
-                                                <button (click)="acceptSwap(book.id)">Select</button>
+                                                <button mat-raised-button
+                                                    class="mat-raised-button" 
+                                                    style="margin-left:10px;background-color: rgb(92, 184, 92);color:white;" 
+                                                    color="success" 
+                                                    (click)="acceptSwap(book.id)">
+                                                    <mat-icon style="vertical-align: middle;margin-right:5px;">check-icon</mat-icon> Select 
+                                                </button>                                                                                                   
                                             </mat-dialog-actions>                                            
                                         </div>
                                     </div>
@@ -109,7 +104,7 @@
                 <span style="color:grey;margin-top:30px;">There were no search results found. Try again</span>
             </p>
             <p style="margin-top:30px">
-                <img margin:auto src="./assets/images/oops.gif" width="100%" style="max-width: 400px;">
+                <img margin:auto src="./assets/images/notfound.png" width="100%" style="max-width: 400px;">
             </p>
 
 

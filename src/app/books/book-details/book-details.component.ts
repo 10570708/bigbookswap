@@ -8,7 +8,7 @@ import { BookService, SwapService } from "../shared/index";
 @Component({
     selector: 'book-details-component',
     templateUrl: './book-details.component.html',
-    styleUrls: ['./book-details.component.style.css']
+    styleUrls: ['./book-details.component.style.scss']
 
 })
 
@@ -81,7 +81,7 @@ export class BookDetailsComponent implements OnInit{
         {
         this.swap.offerBookId = this.book.id;
         this.swapService.saveSwap(this.swap);
-        this.router.navigate(['/books']);
+        this.router.navigate(['/swaps/sent']);
         }
 
     }

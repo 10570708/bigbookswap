@@ -86,11 +86,19 @@ export class CreateBookComponent implements OnInit {
             this.bookDisplay.cover = '';
         }
 
-        this.bookDisplay.id = this.bookService.getNextId();
+        //this.bookDisplay.id = this.bookService.getNextId();
         //this.bookService.saveBook(this.bookDisplay);
-        this.apiService.saveBook(this.bookDisplay).subscribe((response) => console.log('Response from add ' + response));
-        this.isDirty = false;
-        this.router.navigate(['book/' + this.bookDisplay.id]);
+        this.apiService.saveBook(this.bookDisplay)
+        .subscribe({
+            next: data => {
+                // var stringified = JSON.stringify(data);
+                // var parsed:IBook = JSON.parse(stringified);
+                // console.log('Loading book' + parsed.title);
+                this.bookDisplay.id = data.id;
+                this.isDirty = false;
+                this.router.navigate(['book/' + this.bookDisplay.id]);
+            }});
+        
 
         // this.toastrService.success('Successfully saved your book: ' + this.form.value['title']);
     }

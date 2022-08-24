@@ -65,13 +65,13 @@ export class SwapService {
               if (searchTerm === 'sent')
               {
                 //console.log('Checking for offerOwnr id 1 ');
-                return swap.offerOwnerId === 1 
+                return swap.status === StatusType.Res;
               }
               else if (searchTerm === 'received')
               {
                 //console.log('Checking for offerRecipient id 1 ');
 
-                return swap.recipientOfferId == 1
+                return swap.status === StatusType.Req;
               }
               else if (searchTerm === 'pending')
               {
@@ -79,7 +79,7 @@ export class SwapService {
                 return swap.status === StatusType.Acc;
               }
               else if (searchTerm === 'done'){
-                return swap.status === StatusType.Swap;
+                return swap.status === StatusType.Swap || swap.status === StatusType.Donate;
               } 
               else
               {
@@ -168,14 +168,14 @@ return SWAPS;
           offerBookId: 1,
           recipientOfferId:2, 
           createDate: new Date(),
-          status: StatusType.Req
+          status: StatusType.Res
         },
         { 
           id: 2,
           offerOwnerId: 1,
           offerBookId: 2,
           recipientOfferId:1, 
-          status: StatusType.Req,
+          status: StatusType.Res,
           createDate: new Date(),
 
         },

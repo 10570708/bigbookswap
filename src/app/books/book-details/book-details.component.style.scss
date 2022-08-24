@@ -1,0 +1,22 @@
+.container { padding-left:20px; padding-right: 20px; }
+.book-image { height: 100px; }
+
+
+
+    .glyphicon{
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
+    .btn{
+        border-radius: 4px;
+        margin: 8px;
+        margin-top:40px;
+    }
+
+
+.btn-warning:hover,
+.btn-primary:active,
+.btn-primary:visited {
+    background-color: rgb(244, 67, 54) !important;
+}

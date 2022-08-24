@@ -1,4 +1,4 @@
- .well div { color: #bbb;  background-color: #fafafa;}
+ .well div { color: #5090cc;  background-color: #fafafa;}
  .thumbnail { min-height: 100px; background-color: #fafafa;}
  .green { color: #26b026 !important;}
  .bold { font-weight: bold; }
@@ -6,8 +6,31 @@
 {    border-radius: 25px;
     border: 2px solid #73AD21;
   
-   background-color: #fafafa !important;
+}
+.heading{
+    color:#5090cc;
+    margin:0px;
 }
 
+.reg{
+    color:#5090cc;
+}
+
+a,
+a.active {
+    color:#5090cc
+
+}
+.thumb-text{
+    font-size: 20px;
+}
+
+.thumb-content{
+    font-size: 15px;
+}
+
+.no-pad{
+    padding:0px;
+}
 
         
