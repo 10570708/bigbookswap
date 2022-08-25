@@ -53,6 +53,48 @@ export class APIService {
         return this.httpClient.get('http://localhost:8080/api/v1/book/all'+'?page='+page+'&size=10');
       }
 
+
+      public getBooksByCondition(condition: String, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/condition/'+condition+'?page='+page+'&size=10');
+      }
+
+      public getBooksByOption(option: String, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/option/'+option+'?page='+page+'&size=10');
+      }
+
+      public getBooksOwnerConditionOption(id: number, condition: String, option: String, page: number)
+      {
+        return this.httpClient.get('http://localhost:8080/api/v1/book/ocosearch/'+id+'/'+condition+'/'+option+'?page='+page+'&size=10');
+      }
+
+      public getBooksSearchCondition(search: String, condition: String, page: number)
+      {
+        return this.httpClient.get('http://localhost:8080/api/v1/book/scsearch/'+search+'/'+condition+'?page='+page+'&size=10');
+      } 
+
+      public getBooksSearchOption(search: String, option: String, page: number)
+      {
+        return this.httpClient.get('http://localhost:8080/api/v1/book/sosearch/'+search+'/'+option+'?page='+page+'&size=10');
+      }
+
+      public getBooksConditionOption(condition: String, option: String, page: number)
+      {
+        return this.httpClient.get('http://localhost:8080/api/v1/book/cosearch/'+condition+'/'+option+'?page='+page+'&size=10');
+      }
+
+      public getBooksSearchConditionOption(search: String, condition: String, option: String, page: number)
+      {
+        return this.httpClient.get('http://localhost:8080/api/v1/book/scosearch/'+search+'/'+condition+'/'+option+'?page='+page+'&size=10');
+      }
+
+      public getSearchBooksMine(ownerId: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/owner/'+ownerId+'/'+match+'?page='+page+'&size=10');
+      }
+
+      public getSearchBooks(searchTerm: String, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/books/'+searchTerm+'?page='+page+'&size=10');
+      }
+
       public getBooksBySearch(){
         return this.httpClient.get('http://localhost:8080/api/v1/book/books/Lisa');
       }
