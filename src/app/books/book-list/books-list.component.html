@@ -2,7 +2,7 @@
 
     <div class="container-fluid"
         style="padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
-       
+
         <div class="row" style="margin-bottom:10px;margin-left:10px;">
 
             <div class="col-md-4" style="text-align: center;">
@@ -10,9 +10,9 @@
                 <div class="btn-group btn-group-sm" style="margin-right:20px">
                     <button class="btn btn-info" [class.active]="filterbyOwnerValue==='mine'"
                         (click)="filterBooksOwner('mine')">Mine</button>
-                        <button class="btn btn-info" [class.active]="filterbyOwnerValue==='other'"
+                    <button class="btn btn-info" [class.active]="filterbyOwnerValue==='other'"
                         (click)="filterBooksOwner('other')">Other</button>
-                        <button class="btn btn-info" [class.active]="filterbyOwnerValue==='all'"
+                    <button class="btn btn-info" [class.active]="filterbyOwnerValue==='all'"
                         (click)="filterBooksOwner('allowners')">All</button>
                 </div>
             </div>
@@ -34,13 +34,13 @@
 
             <div class="col-md-4" style="text-align: center;">
 
-            
+
 
 
 
                 <span style="color:#ec971f;"> Type </span>
                 <div class="btn-group btn-group-sm">
-                     <button class="btn btn-warning" [class.active]="filterbyOptionsValue==='swap'"
+                    <button class="btn btn-warning" [class.active]="filterbyOptionsValue==='swap'"
                         (click)="filterBooksOption('swap')">Swap</button>
                     <button class="btn btn-warning" [class.active]="filterbyOptionsValue==='donate'"
                         (click)="filterBooksOption('donate')"> Donate</button>
@@ -49,7 +49,8 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
+        <div class="row" *ngIf="(searchTerm || visibleBooks.length > 0)"
+            style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
             <div class="col-md-4" style="text-align: center;">
                 <span style="color:grey;" *ngIf="(searchTerm)">Search For: <button disabled>{{ searchTerm }} </button>
                     <a [routerLink]="['/books/']" (click)="resetSearch()">
@@ -59,7 +60,7 @@
                 </span>
 
             </div>
-            
+
             <div class="col-md-4" style="text-align: center;"></div>
             <div class="col-md-4" style="text-align: center;">
                 <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
@@ -76,19 +77,6 @@
         </div>
     </div>
 
-
-
-
-    <div class="row" style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
-        <div class="col-md-4" style="text-align: center;"></div>
-        
-        <div class="col-md-4" style="text-align: center;"></div>
-        <div class="col-md-4" style="text-align: center;">
-            <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
-        </div>
-
-    </div>
-
     <div *ngIf="visibleBooks.length === 0" class="container-fluid"
         style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
         <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
@@ -103,6 +91,21 @@
 
         </div>
     </div>
+
+
+
+
+    <div *ngIf="visibleBooks.length !== 0" class="row" style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
+        <div class="col-md-4" style="text-align: center;"></div>
+
+        <div class="col-md-4" style="text-align: center;"></div>
+        <div class="col-md-4" style="text-align: center;">
+            <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+        </div>
+
+    </div>
+
+
     <!-- <h3>{{thumbnail.someProperty}}</h3> -->
     <!-- <button class="btn btn-primary" (click)="thumbnail.logFoo()">Log Foo</button> -->
     <!-- (eventClick)="handleEventClicked($event)" -->
