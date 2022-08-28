@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AuthService } from "./auth.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterStateSnapshot } from "@angular/router";
 
 @Component ({
 
@@ -9,23 +9,35 @@ import { Router } from "@angular/router";
 
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
     userName:any;
     password:any;
     mouseoverLogin:any;
+    loginError:any;
     
 
-    constructor(private authService:AuthService, private router: Router){
+    constructor(private authService:AuthService, private route: Router, private router: ActivatedRoute){
 
     }
+
+    ngOnInit() {
+        //console.log('Hitting lists with  ' + this.route.snapshot.params['filter']);
+        //this.router.onSameUrlNavigation = 'reload';
+
+        //this.allbooks = this.route.snapshot.data['allbooks'];
+
+        this.loginError = this.router.snapshot.params['err'];
+    }
     
-    login(formValues:any){
-        this.authService.loginUser(formValues.userName, formValues.password);
-        this.router.navigate(['books']);
+    async login(formValues:any){
+        console.log('Logging in !!');
+        await this.authService.loginUser(formValues.userName, formValues.password);
+        console.log('Just authenticatd');
+
     }
 
     cancel() {
-        this.router.navigate(['books']);
+        this.route.navigate(['books']);
     }
 
 }

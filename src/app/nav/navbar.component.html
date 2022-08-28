@@ -26,18 +26,28 @@
           </ul>
         </li>
       </ul>
-      <div id="loginbox" class="navbar-header navbar-right">
-        <ul class="nav navbar-nav">
-          <li class="tst">
-            <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']"><span style="color:blue;">Login</span></a>
-            <a *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']"><span style="color:blue;">Welcome
-                {{auth.currentUser.userName}} </span><img
-                src="./assets/images/icons/{{auth.currentUser.avatar | lowercase}}.jpg" height="30px;"></a>
-          </li>
-        </ul>
+      <div class="navbar-right">
+
+        <div class="navbar-header">
+          <ul class="nav navbar-nav">
+            <li class="tst">
+              <a *ngIf="auth.isAuthenticated()" (click)="logUserOut()" [routerLink]="['user/login']"><span style="color:white;">Logout</span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div id="loginbox" class="navbar-header">
+          <ul class="nav navbar-nav">
+            <li class="tst">
+              <a *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']"><span style="color:blue;">Welcome
+                  {{auth.currentUser.userName}} </span><img
+                  src="./assets/images/icons/{{auth.currentUser.avatar | lowercase}}.jpg" height="30px;"></a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <form id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
-        <div class="form-group">
+      <form  *ngIf="auth.isAuthenticated()" id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
+        <div class="form-group" >
           <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
             placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">
         </div>

@@ -17,7 +17,7 @@ export class NavBarComponent{
     searchTerm: string = this.getSearchTerm();
     foundBooks: IBook[] = [];
 
-    constructor(public auth:AuthService, private bookService: BookService, private router: Router,private dialog: MatDialog){}
+    constructor(public auth:AuthService, private bookService: BookService, private router: Router,private dialog: MatDialog, private authService: AuthService){}
 
 getSearchTerm(){
     return this.bookService.getSearchTerm();
@@ -57,6 +57,13 @@ openDialog() {
         this.searchTerm = '';
         this.router.navigate([newHref]);
         
+
+    }
+
+    logUserOut()
+    {
+        this.authService.logUserOut();
+       // this.router.navigate(['']);
 
     }
 

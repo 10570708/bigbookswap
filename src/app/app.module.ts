@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import {
   BooksListComponent,
@@ -23,7 +23,7 @@ import { AppComponent } from './books-app.component';
 import { NavBarComponent } from './nav/navbar.component';
 import { Error404Component } from './errors/404.component';
 import { TOASTR_TOKEN, Toastr, JQ_TOKEN, CollapsibleWellComponent } from './common/index';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { AuthService } from './user/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +32,9 @@ import { APIService } from './books/shared/index';
 import { BookLookupComponent } from './books/book-lookup/book-lookup.component';
 import { SwapListComponent } from './swaps/swap-list.component';
 import { BooksPickComponent } from './books/books-pick.component';
+import { AuthGuard } from './authGuard';
+import { AuthInterceptor } from './authIntercepter';
+import { StorageService } from './storage-service';
 
 declare let toastr:Toastr 
 declare let JQuery:any;
@@ -41,6 +44,14 @@ declare let JQuery:any;
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes,{ onSameUrlNavigation: 'reload' }),
+  //   RouterModule.forRoot([
+  //     {
+  //         path: 'secured',
+  //         component: NavBarComponent,
+  //         pathMatch: 'full',
+  //         canActivate: [AuthGuard]
+  //     }
+  // ]),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -75,7 +86,16 @@ declare let JQuery:any;
         useValue: checkDirtyState
     },
     BookListResolver,
-    AuthService
+    AuthService,
+   {  provide: HTTP_INTERCEPTORS,
+        useFactory: function (router: Router) {
+            return new AuthInterceptor(router);
+        },
+        multi: true,
+        deps: [Router]
+    },
+    AuthGuard,
+    StorageService
   ],
   bootstrap: [AppComponent],
   entryComponents: [MatAlertComponent]

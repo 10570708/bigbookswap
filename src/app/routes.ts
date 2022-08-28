@@ -12,20 +12,24 @@ import {
 
 import { Error404Component } from "./errors/404.component";
 import { SwapListComponent } from "./swaps/swap-list.component";
+import { AuthGuard } from "./authGuard";
 
 export const appRoutes:Routes= [
+    
  
-    { path: 'book/new', component: CreateBookComponent, canDeactivate: ['canDeactivateCreateBook']},
+    { path: 'book/new', component: CreateBookComponent, canActivate:[AuthGuard]},
 
-    { path: 'books/:search', component: BooksListComponent, resolve: {allbooks:BookListResolver} },
-    { path: 'books', component: BooksListComponent, resolve: {allbooks:BookListResolver} },
-    { path: 'book/:id', component: BookDetailsComponent, canActivate: [EventRouteActivator]},
-    { path: 'swaps', component: SwapListComponent},
-    { path: 'swaps/:filter', component: SwapListComponent},
+    { path: 'books/:search', component: BooksListComponent, resolve: {allbooks:BookListResolver},canActivate: [AuthGuard]},
+    { path: 'books', component: BooksListComponent,canActivate: [AuthGuard]},
+    { path: 'book/:id', component: BookDetailsComponent, canActivate: [AuthGuard]},
+    { path: 'swaps', component: SwapListComponent,canActivate: [AuthGuard]},
+    { path: 'swaps/:filter', component: SwapListComponent,canActivate: [AuthGuard]},
+    
+
 
 
     { path: '404', component: Error404Component},
-    { path: '', redirectTo: '/books', pathMatch: 'full'},
+    { path: '', redirectTo: '/user/login', pathMatch: 'full'},
     { 
         path: 'user', 
         loadChildren: () => 

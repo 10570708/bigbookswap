@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit{
     firstName!:UntypedFormControl
     avatar!: UntypedFormControl
     selectedavatar?: Category
+    currentAvatar: string = ""
 
 
     constructor(private auth:AuthService,private router:Router, @Inject(TOASTR_TOKEN) private toastr: Toastr){}
@@ -25,10 +26,10 @@ export class ProfileComponent implements OnInit{
         {value: '1', viewValue: 'Cat', image: './assets/images/icons/cat.jpg'},
         {value: '2', viewValue: 'Dog', image: './assets/images/icons/dog.jpg'},
         {value: '3', viewValue: 'Fish', image: './assets/images/icons/fish.jpg'},
-        {value: '3', viewValue: 'Horse', image: './assets/images/icons/horse.jpg'},
-        {value: '3', viewValue: 'Crab', image: './assets/images/icons/crab.jpg'},
-        {value: '3', viewValue: 'Deer', image: './assets/images/icons/deer.jpg'},
-        {value: '3', viewValue: 'Scorpion', image: './assets/images/icons/scorpion.jpg'},
+        {value: '4', viewValue: 'Horse', image: './assets/images/icons/horse.jpg'},
+        {value: '5', viewValue: 'Crab', image: './assets/images/icons/crab.jpg'},
+        {value: '6', viewValue: 'Deer', image: './assets/images/icons/deer.jpg'},
+        {value: '7', viewValue: 'Scorpion', image: './assets/images/icons/scorpion.jpg'},
 
 
 
@@ -39,34 +40,34 @@ export class ProfileComponent implements OnInit{
     ngOnInit(): void {
         
 
-        this.firstName = new UntypedFormControl(this.auth.currentUser?.userName, [Validators.required,Validators.pattern('[a-zA-Z]*')]);
+        this.currentAvatar = this.auth.currentUser.avatar;
         this.avatar= new UntypedFormControl('this.auth.currentUser?.avatar', Validators.required);
+        this.currentAvatar = this.auth.currentUser.avatar;
 
         this.profileForm = new UntypedFormGroup({
-            firstName: this.firstName,
             avatar: this.avatar
         })
 
         if (this.auth.currentUser?.avatar)
-        this.selectedavatar = this.categories.find(profile => profile.viewValue == this.auth.currentUser?.avatar);
-        console.log('Slectd avatar' + this.auth.currentUser?.avatar);
+        this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() == this.auth.currentUser?.avatar);
 
 
 
   }
 
   changeImageSource(event: any){
-    console.log('In here anyway' + event.value);
 
-    this.selectedavatar = this.categories.find(profile => profile.viewValue === event.value);
+    this.currentAvatar = event.value;
+    this.selectedavatar = event.value;
+    this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() ===this.currentAvatar.toLowerCase() );
+
+
 }
 
 changeImageSourceA(event:any){
-    console.log('In here anyway' + event.target.value);
 
-    this.selectedavatar = this.categories.find(profile => profile.viewValue ===this.avatar.value );
+    this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() ===this.currentAvatar.toLowerCase() );
 
-    console.log('Selected Avatar ' + this.selectedavatar);
 }  
 
 cancel()
@@ -74,13 +75,14 @@ cancel()
     this.router.navigate(['books']);
 }
 
-saveProfile(formValues:any){
-    if (this.profileForm.valid) {
-        this.auth.updateCurrentUser(formValues.firstName,formValues.avatar);
+saveProfile(){
+
+
+    if (this.currentAvatar)
+    this.auth.updateCurrentUser(this.currentAvatar.toLowerCase());
         this.toastr.success('Your Profile Details were successfully Updated')
         this.router.navigate(['books']);
     }
-}
 
 validateFirstName(){
     if (this.firstName.errors){}

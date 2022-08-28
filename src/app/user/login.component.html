@@ -5,6 +5,8 @@
     <div class="col-md-6" id="loginbox">
       <h1 style="color:#5090cc">Login to &quot;The Big Book Swap&quot;</h1>
       <hr>
+      <div class="err" *ngIf="loginError">Failed to Login - Try again ...</div>
+
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off">
         <div class="form-group">
           <label for="userName" style="color:#5090cc">User Name:</label>
@@ -26,7 +28,6 @@
             <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
           </span>
           <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
-          <button type="button" class="btn btn-forgot" (click)="cancel()">Forgot</button>
         </div>
       </form>
     </div>

@@ -24,7 +24,13 @@ li > a.active { color: #F97924; }
    background-color: #fafafa;}
 
 li > .tst  { color: #2a4d9f}
-#loginbox
+
+#logoutbox li > a  {
+    font-size: 15px;
+    color:white;
+
+}
+#loginbox, 
 {   
     
     color:#2a4d9f; 
