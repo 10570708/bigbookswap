@@ -1,14 +1,16 @@
 import { Component, OnInit, Inject} from "@angular/core";
-import { Form, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
-import { MatSelectChange } from "@angular/material/select";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "./auth.service";
 import { TOASTR_TOKEN, Toastr } from "../common/toastr.service";
+import { StorageService } from "../storage-service";
+import { NavBarComponent } from "../nav/navbar.component";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+
 
 @Component({
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss']
-
 })
 
 export class ProfileComponent implements OnInit{
@@ -17,9 +19,12 @@ export class ProfileComponent implements OnInit{
     avatar!: UntypedFormControl
     selectedavatar?: Category
     currentAvatar: string = ""
+    profileUser: String = ""
 
 
-    constructor(private auth:AuthService,private router:Router, @Inject(TOASTR_TOKEN) private toastr: Toastr){}
+    constructor(private auth:AuthService,private dialogRef: MatDialogRef<NavBarComponent>,
+        @Inject(MAT_DIALOG_DATA) data: any,
+private router:Router, private storageService: StorageService, @Inject(TOASTR_TOKEN) private toastr: Toastr){}
 
   
     categories: Category[] = [
@@ -30,66 +35,61 @@ export class ProfileComponent implements OnInit{
         {value: '5', viewValue: 'Crab', image: './assets/images/icons/crab.jpg'},
         {value: '6', viewValue: 'Deer', image: './assets/images/icons/deer.jpg'},
         {value: '7', viewValue: 'Scorpion', image: './assets/images/icons/scorpion.jpg'},
-
-
-
-
-
     ]
 
     ngOnInit(): void {
-        
-
         this.currentAvatar = this.auth.currentUser.avatar;
+        this.profileUser =  this.auth.currentUser.username;
+        
         this.avatar= new UntypedFormControl('this.auth.currentUser?.avatar', Validators.required);
         this.currentAvatar = this.auth.currentUser.avatar;
 
-        this.profileForm = new UntypedFormGroup({
-            avatar: this.avatar
-        })
+        this.profileForm = new UntypedFormGroup({ avatar: this.avatar })
 
         if (this.auth.currentUser?.avatar)
-        this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() == this.auth.currentUser?.avatar);
+            this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() == this.auth.currentUser?.avatar);
+    }
 
+    changeImageSource(event: any)
+    {
 
+        this.currentAvatar = event.value;
+        this.selectedavatar = event.value;
+        this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() ===this.currentAvatar.toLowerCase() );
+    }
 
-  }
+    getAuthenticatedUserBooks(): String
+    {
+        if (this.auth.currentUser.numBooks) return this.auth.currentUser.numBooks;
+        return  "0";
+    }
 
-  changeImageSource(event: any){
+    getAuthenticatedUserSwaps(): String
+    {
+        if (this.auth.currentUser.numSwaps) return this.auth.currentUser.numSwaps;
+        return "0";
+    }
+    getAuthenticatedUserDonations(): String
+    {
+        if (this.auth.currentUser.numDonations) return this.auth.currentUser.numDonations;
+        return "0";
+    }
 
-    this.currentAvatar = event.value;
-    this.selectedavatar = event.value;
-    this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() ===this.currentAvatar.toLowerCase() );
+    changeImageSourceA(event:any){
+        this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() ===this.currentAvatar.toLowerCase() );
+    }  
 
+    cancel() { this.router.navigate(['books']);  }
+    close() { this.dialogRef.close(); } 
 
-}
+    saveProfile(){
+        if (this.currentAvatar)
+        this.auth.updateCurrentUser(this.currentAvatar.toLowerCase());
 
-changeImageSourceA(event:any){
-
-    this.selectedavatar = this.categories.find(profile => profile.viewValue.toLowerCase() ===this.currentAvatar.toLowerCase() );
-
-}  
-
-cancel()
-{
-    this.router.navigate(['books']);
-}
-
-saveProfile(){
-
-
-    if (this.currentAvatar)
-    this.auth.updateCurrentUser(this.currentAvatar.toLowerCase());
+        this.dialogRef.close();
         this.toastr.success('Your Profile Details were successfully Updated')
         this.router.navigate(['books']);
     }
-
-validateFirstName(){
-    if (this.firstName.errors){}
-    
-    return (this.firstName.valid || this.firstName.untouched)
-}
-
 }
 
 interface Category {

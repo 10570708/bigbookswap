@@ -3,6 +3,8 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGro
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
+import { StorageService } from "src/app/storage-service";
+import { AuthService } from "src/app/user/auth.service";
 import { BookLookupComponent } from "../book-lookup/book-lookup.component";
 import { ConditionType, IBook, OptionType } from "../shared/index";
 import { APIService,BookService } from "../shared/index";
@@ -40,7 +42,7 @@ export class CreateBookComponent implements OnInit {
     submitted = false;
     isDirty: boolean = true;
 
-    constructor(private formBuilder: UntypedFormBuilder, private router: Router, private bookService: BookService, private apiService: APIService, private dialog: MatDialog) { }
+    constructor(private formBuilder: UntypedFormBuilder, private storageService: StorageService, private authService: AuthService, private router: Router, private bookService: BookService, private apiService: APIService, private dialog: MatDialog) { }
     ngOnInit(): void {
 
         this.form = this.formBuilder.group(
@@ -98,6 +100,8 @@ export class CreateBookComponent implements OnInit {
                 this.isDirty = false;
                 this.router.navigate(['book/' + this.bookDisplay.id]);
             }});
+
+            this.authService.updateUserBookCount(this.authService.currentUser.id);
         
 
         // this.toastrService.success('Successfully saved your book: ' + this.form.value['title']);

@@ -30,7 +30,12 @@ li > .tst  { color: #2a4d9f}
     color:white;
 
 }
-#loginbox, 
+
+a:not([href]){
+    cursor: pointer;
+}
+
+    #loginbox, 
 {   
     
     color:#2a4d9f; 

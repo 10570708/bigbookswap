@@ -1,6 +1,9 @@
 export interface IUser {
     id: number,
-    userName: string,
+    username: string,
     access: string,
-    avatar: string
+    avatar: string,
+    numBooks?: string,
+    numSwaps?: string,
+    numDonations?:string
 }

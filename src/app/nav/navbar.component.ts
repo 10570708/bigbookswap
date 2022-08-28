@@ -4,6 +4,8 @@ import { AuthService } from "../user/auth.service";
 import { Router} from '@angular/router'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatAlertComponent } from './mat-alert.component';
+import { ProfileComponent } from "../user/profile.component";
+import { StorageService } from "../storage-service";
 
 
 @Component({
@@ -16,8 +18,9 @@ export class NavBarComponent{
 
     searchTerm: string = this.getSearchTerm();
     foundBooks: IBook[] = [];
+    userProfileName = "";
 
-    constructor(public auth:AuthService, private bookService: BookService, private router: Router,private dialog: MatDialog, private authService: AuthService){}
+    constructor(public auth:AuthService, private bookService: BookService, private router: Router,private dialog: MatDialog, private authService: AuthService, private storageService: StorageService){}
 
 getSearchTerm(){
     return this.bookService.getSearchTerm();
@@ -44,41 +47,74 @@ openDialog() {
 }
     searchBooks(searchTerm:string){
 
-
-        // this.bookService.searchBooks(searchTerm).subscribe(
-        //     books => {
-        //         this.foundBooks = books;
-        //         console.log(this.foundBooks);
-        //     }
-        // );
-
         var newHref = '/books/'+searchTerm; 
         this.bookService.setSearchTerm(searchTerm);
         this.searchTerm = '';
         this.router.navigate([newHref]);
-        
 
     }
+
+    openProfileDialog() {
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = false;
+        dialogConfig.autoFocus = true;
+
+        dialogConfig.data = {
+            id: 1,
+            title: 'Profile',
+            owner: this.authService.currentUser.id
+
+        };
+
+        dialogConfig.maxWidth = '800px';
+        dialogConfig.panelClass = 'my-class';
+
+        const dialogRef = this.dialog.open(ProfileComponent, dialogConfig);
+
+        // dialogRef.afterClosed().subscribe({
+        //     next: data => {
+        //         var stringJson = JSON.stringify(data);
+
+        //         //console.log('Return is ' + stringJson); 
+
+        //         if (stringJson === 'true') {}
+        //         else if (stringJson === 'false'){
+        //             this.loadForm = true;
+        //             this.loadForm = true;
+        //             this.manualLoad = true;
+        //             this.bookDisplay = <IBook>{};
+        //             this.bookDisplay.isbn = this.form.value['isbn'];
+        //             this.resetformgroup();
+        //         }
+        //         else{
+        //             // ConvertjSON to an object
+        //             this.loadForm = true;
+        //             var stringObject = JSON.parse(stringJson);
+        //             this.bookDisplay = stringObject;
+        //             this.foundIsbn = this.bookDisplay.isbn;
+        //         }                    
+        //     },
+        //     error: error => console.log(error),
+        // });
+    }
+
 
     logUserOut()
     {
         this.authService.logUserOut();
-       // this.router.navigate(['']);
+        this.router.navigate(['/user/login']);
 
     }
 
     searchSwaps(searchTerm:string)
     {
         var newHref = '/swaps/'+searchTerm; 
-        // this.bookService.setSearchTerm(searchTerm);
-        // this.searchTerm = '';
         this.router.navigate([newHref]);
     }
+
     setUp(path:string)
     {
-        //var newHref = '/books/';
-        // this.bookService.setSearchTerm(searchTerm);
-        // this.searchTerm = '';
         this.router.navigate([path]);
     }
 

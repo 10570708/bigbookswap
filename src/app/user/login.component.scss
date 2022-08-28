@@ -1,31 +1,29 @@
-em
-{
-    float: right;
-    color: #E05C65;
-    padding-left: 10px;
+em {
+  float: right;
+  color: #E05C65;
+  padding-left: 10px;
 }
 
-.err{
+.err {
   color: #E05C65;
   padding-bottom: 5px;
 }
-#loginbox
-{    border-radius: 25px;
-    border: 2px solid #73AD21;
-    padding: 20px; 
-   background-color: #fafafa;
-   box-shadow: 5px 10px 8px 10px #aeb2eb;
+
+#loginbox {
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  background-color: #fafafa;
+  box-shadow: 5px 10px 8px 10px #aeb2eb;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-    background-color: #449d44 !important;
-  }
-
-  .btn-default, .btn-default:hover, .btn-default:active, .btn-default:visited {
-    background-color: #d3d9d3 !important;
-  }
-
-  .btn{
-    border-radius: 4px;
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #449d44 !important;
 }
-  
+
+.btn {
+  border-radius: 4px;
+}

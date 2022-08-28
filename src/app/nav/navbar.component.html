@@ -39,14 +39,14 @@
         <div id="loginbox" class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="tst">
-              <a *ngIf="auth.isAuthenticated()" [routerLink]="['user/profile']"><span style="color:blue;">Welcome
-                  {{auth.currentUser.userName}} </span><img
+              <a *ngIf="this.auth.isAuthenticated()"   (click)="openProfileDialog()" [routerLink]=""><span style="color:blue;">Welcome
+                  {{this.auth.getusername()}} </span><img
                   src="./assets/images/icons/{{auth.currentUser.avatar | lowercase}}.jpg" height="30px;"></a>
             </li>
           </ul>
         </div>
       </div>
-      <form  *ngIf="auth.isAuthenticated()" id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
+      <form  *ngIf="this.auth.isAuthenticated()"  id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
         <div class="form-group" >
           <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
             placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">

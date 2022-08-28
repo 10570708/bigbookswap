@@ -17,7 +17,11 @@ export class AuthService {
     isLoggedIn = false;
 
 
-    constructor(private httpClient: HttpClient, private storageService: StorageService, private router: Router) { }
+    constructor(
+        private httpClient: HttpClient, 
+        private storageService: StorageService,
+         private router: Router) { }
+
 
     public user() {
 
@@ -34,123 +38,87 @@ export class AuthService {
 
     public isSignedIn(): Observable<boolean> {
 
-
-        console.log('Checking is valid');
-
         return this.user().pipe(
             map((user) => {
                 const hasId = user.id !== null;
-                console.log('The user id is ' + user.id);
-                console.log('Not sure of this ' + !hasId ? false : true)
-                return !hasId ? false : true;
-            }
+                console.log('TAUTH SERVICE - is Loggd In - the user id is ' + user.id);
+                //console.log('Not sure of this ' + !hasId ? false : true)
+                this.currentUser = user;
+                console.log(this.currentUser.id);
+                console.log(this.currentUser.username + '-' + this.currentUser.numDonations + '-' + this.currentUser.numSwaps);
+                return !hasId ? false : true;             
+            },
             ),
             catchError((error) => {
                 console.log('Caught ERROR ');
+
                 return of(false);
             }
             ));
     }
 
+    public updateUSer(){
 
+    }
 
-    loginUser(userName: string, password: string) {
+    loginUser(username: string, password: string) {
 
-        let loginInfo = { username: userName, password: password };
-
+        let loginInfo = { username: username, password: password };
 
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
         });
-        let options = {
-            headers: httpHeaders, withCredentials: true
-        };
 
-        console.log('Checking fo r' + userName + ' and ' + password);
+        let options = { headers: httpHeaders, withCredentials: true };
+
+        console.log('Checking fo r' + username + ' and ' + password);
 
         this.httpClient.post<IUser>('http://localhost:8080/api/v1/user/login', loginInfo, options)
             .subscribe({
                 next: data => {
-                    // var stringified = JSON.stringify(data);
-                    // var parsed:IBook = JSON.parse(stringified);
-                    // console.log('Loading book' + parsed.title);
                     this.currentUser = data;
                     this.reset = false;
                     this.storageService.saveUser(data);
                     this.isLoginFailed = false;
                     this.isLoggedIn = true;
-                    console.log('Got user ' + this.currentUser.id + ' and ' + data.id)
                 },
                 error: error => {
                     console.log('Error logging in ');
                     this.router.navigate(['user/login/err']);
-
-
                 },
                 complete: () => {
                     this.router.navigate(['books']);
                 }
             });
-
-
-        // .pipe(tap(data=> {
-        //     console.log('Got a return);')
-        //     this.currentUser = data;
-        // }))
-        // .pipe(catchError(err => {
-        //     console.log('Error from login');
-        //     return of(false);
-        // }))
-
-        // this.currentUser = {
-        //     id:1,
-        //     userName: 'LDal',
-        //     access: 'user',
-        //     avatar: 'cat'
-        // }
-
-
     }
 
 
-    logUserOut() {
+    public logUserOut() {
+
         this.reset = true;
 
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
         });
-        let options = {
-            headers: httpHeaders
-        };
+        let options = { headers: httpHeaders };
 
 
         this.httpClient.post<IUser>('http://localhost:8080/api/v1/user/logout', options)
             .subscribe({
                 next: data => {
-                    // var stringified = JSON.stringify(data);
-                    // var parsed:IBook = JSON.parse(stringified);
-                    // console.log('Loading book' + parsed.title);
-                    console.log('Got user ' + data);
                     this.storageService.clean();
                     this.isLoggedIn = false;
                 }
             });
-
-        //this.router.navigate(['user/login']);
-
     }
 
     isAuthenticated() {
-        //console.log('Checking auth ');
-
-        return this.isLoggedIn;
+        return this.isLoggedIn && this.storageService.isLoggedIn();
     }
 
     updateCurrentUser(avatar: string) {
-
-        console.log('Updating' + avatar);
 
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -159,7 +127,6 @@ export class AuthService {
         let options = {
             headers: httpHeaders
         };
-
 
         this.httpClient.put('http://localhost:8080/api/v1/user/avatar/'+ this.currentUser.id +'/'+avatar, options)
             .subscribe({
@@ -174,4 +141,70 @@ export class AuthService {
 
         this.currentUser.avatar = avatar;
     }
-}
+
+    getusername(): string {
+         if (this.isLoggedIn) return this.currentUser.username;
+         return "";
+    }
+
+
+    updateUserBookCount(id:number) {
+
+
+        let httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+        });
+        let options = { headers: httpHeaders };
+
+        var updatedUser : any;
+        this.httpClient.put('http://localhost:8080/api/v1/user/bookcount/'+id, options)
+            .subscribe({
+                next: data => {
+                    updatedUser = data;
+                    this.storageService.saveUser(data);
+                    console.log('Got user ' + this.currentUser.id + ' and ' + data)
+                    console.log('Got user ' + data);
+                },
+                complete: () => {
+                    this.currentUser = updatedUser;
+                }                               
+            });
+        }
+
+
+        // public getUserId(): any {
+        //    return this.currentUser.id
+        //   }
+        //   public getusername(): any {
+        //     const user = window.sessionStorage.getItem(USER_KEY);
+        //     if (user) {
+        //       return JSON.parse(user).username;
+        //     }
+        //     return {};
+        //   }
+        
+        
+        //   public getUserBooks(): any {
+        //     const user = window.sessionStorage.getItem(USER_KEY);
+        //     if (user) {
+        //       return JSON.parse(user).numBooks;
+        //     }
+        //     return {};
+        //   }
+        
+        //   public getUserDonations(): any {
+        //     const user = window.sessionStorage.getItem(USER_KEY);
+        //     if (user) {
+        //       return JSON.parse(user).numDonations;
+        //     }
+        //     return {};
+        //   }
+        //   public getUserSwaps(): any {
+        //     const user = window.sessionStorage.getItem(USER_KEY);
+        //     if (user) {
+        //       return JSON.parse(user).numSwaps;
+        //     }
+        //     return {};
+        //   }
+   }
