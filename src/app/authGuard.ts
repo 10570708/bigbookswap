@@ -20,6 +20,7 @@ export class AuthGuard implements CanActivate {
             return this.isSignedIn();
         }
         else {
+            this.router.navigate(['user/login']);
             return of(false);
         }
     }
@@ -28,6 +29,7 @@ export class AuthGuard implements CanActivate {
         return this.authService.isSignedIn().pipe(
             map((isSignedIn) => {
                 if (!isSignedIn) {
+                    
                     this.router.navigate(['user/login']);
                     return false;
                 }

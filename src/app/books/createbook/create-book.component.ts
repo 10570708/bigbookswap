@@ -81,11 +81,14 @@ export class CreateBookComponent implements OnInit {
         this.bookDisplay.condition = this.form.value['condition'];
         this.bookDisplay.option = this.form.value['option'];
         this.bookDisplay.status = 'available';
+        this.bookDisplay.ownerId = this.authService.currentUser.id;
 
         if (this.manualLoad) {
             this.bookDisplay.title = this.form.value['title'];
             this.bookDisplay.author = this.form.value['author'];
             this.bookDisplay.cover = '';
+            this.bookDisplay.numPages = 0;
+            this.bookDisplay.publisher = "";
         }
 
         //this.bookDisplay.id = this.bookService.getNextId();
@@ -98,10 +101,16 @@ export class CreateBookComponent implements OnInit {
                 // console.log('Loading book' + parsed.title);
                 this.bookDisplay.id = data.id;
                 this.isDirty = false;
+                //this.router.navigate(['book/' + this.bookDisplay.id]);
+            },
+            complete: () => {
+                this.authService.updateUserBookCount(this.authService.currentUser.id);
                 this.router.navigate(['book/' + this.bookDisplay.id]);
-            }});
+                
+            }
+        },
+            );
 
-            this.authService.updateUserBookCount(this.authService.currentUser.id);
         
 
         // this.toastrService.success('Successfully saved your book: ' + this.form.value['title']);

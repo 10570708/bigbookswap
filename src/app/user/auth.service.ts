@@ -16,6 +16,8 @@ export class AuthService {
     isLoginFailed = false;
     isLoggedIn = false;
 
+    
+
 
     constructor(
         private httpClient: HttpClient, 
@@ -150,7 +152,6 @@ export class AuthService {
 
     updateUserBookCount(id:number) {
 
-
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -172,6 +173,28 @@ export class AuthService {
             });
         }
 
+        reduceUserBookCount(id:number) {
+
+            let httpHeaders = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            });
+            let options = { headers: httpHeaders };
+    
+            var updatedUser : any;
+            this.httpClient.put('http://localhost:8080/api/v1/user/bookcount/reduce/'+id, options)
+                .subscribe({
+                    next: data => {
+                        updatedUser = data;
+                        this.storageService.saveUser(data);
+                        //console.log('Got user ' + this.currentUser.id + ' and ' + data)
+                        //console.log('Got user ' + data);
+                    },
+                    complete: () => {
+                        this.currentUser = updatedUser;
+                    }                               
+                });
+            }
 
         // public getUserId(): any {
         //    return this.currentUser.id

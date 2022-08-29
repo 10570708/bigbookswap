@@ -26,7 +26,8 @@
             </div>
             <div style="width:100%">
               <div class="col-md-3"><strong>Publisher:</strong></div>
-              <div class="col-md-9">{{ book?.publisher }}</div>
+              <div *ngIf="(book?.publisher)" class="col-md-9">{{ book?.publisher }}</div>
+              <div *ngIf="!(book?.publisher)" class="col-md-9">N/A</div>
             </div>
             <div style="width:100%">
               <div class="col-md-3"><strong>ISBN:</strong></div>

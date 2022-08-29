@@ -43,64 +43,9 @@ export class BooksPickComponent implements OnInit {
     {
         sortField === 'title' ? this.visibleBooks.sort(sortByTitleAsc) : this.visibleBooks.sort(sortByAuthorAsc)
     }
-    filterBooksOption(filter: string){
-        this.filterByOption = filter;
-        this.filterBooks();
-    }
+    
 
-    filterBooksCondition(filter: string){
-        this.filterBy = filter;
-        this.filterBooks();
-    }
-
-    filterBooks(){
-
-        this.visibleBooks = this.searchableBooks.slice(0);
-
-        // this.visibleBooks.forEach(element => {
-        //     console.log('Book:' + element.condition + ' - '  +element.option)          
-        // }); 
-
-        if (this.filterByOption === 'all' && this.filterBy === 'all')
-        {
-            this.visibleBooks = this.searchableBooks.slice(0);
-        }
-        else if (this.filterByOption === 'all' && this.filterBy !== 'all')
-        {
-            this.visibleBooks = this.searchableBooks.filter(
-                book => {
-                       return book.condition.toLocaleLowerCase() === this.filterBy;
-                }
-            )
-        }
-        else if (this.filterByOption !== 'all' && this.filterBy === 'all')
-        {
-            this.visibleBooks = this.searchableBooks.filter(
-                book => {
-                       return book.option.toLocaleLowerCase() === this.filterByOption;
-                }
-            )           
-        }
-        else {
-            this.visibleBooks = this.searchableBooks.filter(
-                book => {
-                       return (book.option.toLocaleLowerCase() === this.filterByOption 
-                       &&
-                       book.condition.toLocaleLowerCase() === this.filterBy );
-                }
-            )                  
-        }
-
-    }
-
-
-    resetSearch(){
-        this.bookService.resetSearchTerm();
-     }
-
-     getSearchTerm(){
-        return this.searchTerm;
-     }
+   
            
 
     handleEventClicked(output:any){
@@ -108,16 +53,14 @@ export class BooksPickComponent implements OnInit {
 
     }
 
-    
    
-
     ngOnInit(){
         //console.log('Second option ' +this.route.snapshot.params['search']); 
 
         this.allbooks = this.route.snapshot.data['allbooks'];
 
         this.searchTerm = this.route.snapshot.params['id'];
-        console.log('Swap is ' + this.swapid);
+        //console.log('Swap is ' + this.swapid);
 
         // if (this.searchTerm)
         // {

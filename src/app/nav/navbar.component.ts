@@ -22,39 +22,22 @@ export class NavBarComponent{
 
     constructor(public auth:AuthService, private bookService: BookService, private router: Router,private dialog: MatDialog, private authService: AuthService, private storageService: StorageService){}
 
-getSearchTerm(){
-    return this.bookService.getSearchTerm();
-}
+    getSearchTerm(){
+        return this.bookService.getSearchTerm();
+    }
 
-
-openDialog() {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-
-    dialogConfig.data = {
-        id: 1,
-        title: 'Angular For Beginners'
-    };
-
-    dialogConfig.width = '600px';
-    dialogConfig.panelClass= 'my-class';
-
-    this.dialog.open(MatAlertComponent, dialogConfig);
-    
-}
     searchBooks(searchTerm:string){
 
         var newHref = '/books/'+searchTerm; 
         this.bookService.setSearchTerm(searchTerm);
         this.searchTerm = '';
         this.router.navigate([newHref]);
-
     }
 
     openProfileDialog() {
+
+        console.log('The nav says ' + this.auth.isAuthenticated());
+
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.disableClose = false;
@@ -64,47 +47,18 @@ openDialog() {
             id: 1,
             title: 'Profile',
             owner: this.authService.currentUser.id
-
         };
 
         dialogConfig.maxWidth = '800px';
         dialogConfig.panelClass = 'my-class';
 
         const dialogRef = this.dialog.open(ProfileComponent, dialogConfig);
-
-        // dialogRef.afterClosed().subscribe({
-        //     next: data => {
-        //         var stringJson = JSON.stringify(data);
-
-        //         //console.log('Return is ' + stringJson); 
-
-        //         if (stringJson === 'true') {}
-        //         else if (stringJson === 'false'){
-        //             this.loadForm = true;
-        //             this.loadForm = true;
-        //             this.manualLoad = true;
-        //             this.bookDisplay = <IBook>{};
-        //             this.bookDisplay.isbn = this.form.value['isbn'];
-        //             this.resetformgroup();
-        //         }
-        //         else{
-        //             // ConvertjSON to an object
-        //             this.loadForm = true;
-        //             var stringObject = JSON.parse(stringJson);
-        //             this.bookDisplay = stringObject;
-        //             this.foundIsbn = this.bookDisplay.isbn;
-        //         }                    
-        //     },
-        //     error: error => console.log(error),
-        // });
     }
-
 
     logUserOut()
     {
         this.authService.logUserOut();
         this.router.navigate(['/user/login']);
-
     }
 
     searchSwaps(searchTerm:string)

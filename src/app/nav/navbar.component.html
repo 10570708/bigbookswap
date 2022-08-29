@@ -5,9 +5,9 @@
     </div>
 
     <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
+      <ul *ngIf="auth.isAuthenticated()"  class="nav navbar-nav">
         <li>
-          <a (click)="setUp('books')" [routerLink]="['books']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Books</a>
+          <a  (click)="setUp('books')" [routerLink]="['books']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Books</a>
         </li>
         <li>
           <a (click)="setUp('book/new')" [routerLink]="['book/new']" routerLinkActive="active">Add Book</a>
@@ -33,6 +33,9 @@
             <li class="tst">
               <a *ngIf="auth.isAuthenticated()" (click)="logUserOut()" [routerLink]="['user/login']"><span style="color:white;">Logout</span></a>
             </li>
+            <li class="tst">
+              <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']"><span style="color:white;">Login</span></a>
+            </li>
           </ul>
         </div>
 
@@ -46,9 +49,10 @@
           </ul>
         </div>
       </div>
+      
       <form  *ngIf="this.auth.isAuthenticated()"  id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
         <div class="form-group" >
-          <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
+          <input [disabled]="getSearchTerm() ? true : false" [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
             placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">
         </div>
         <button class="btn btn-default btn-navbar">

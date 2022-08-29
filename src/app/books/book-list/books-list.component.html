@@ -77,6 +77,24 @@
         </div>
     </div>
 
+    <div *ngIf="fetchingBooks" class="container-fluid"
+    style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
+    <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
+
+        <p style="margin-top:30px">
+            <span style="color:grey;margin-top:30px;">We're fetching your books ... </span>
+        </p>
+        <p style="margin-top:30px">
+            <img margin:auto src="./assets/images/booksearch.jpg" width="100%" style="max-width: 150px;">
+        </p>
+
+
+    </div>
+</div>
+
+
+    
+
     <div *ngIf="visibleBooks.length === 0" class="container-fluid"
         style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
         <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">

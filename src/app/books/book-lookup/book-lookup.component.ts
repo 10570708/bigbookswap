@@ -57,10 +57,10 @@ export class BookLookupComponent implements OnInit {
                     this.title = parsed.title;
                     this.coverimage = parsed.covers;
 
-                    this.bookDisplay.title = parsed.title;
-                    this.bookDisplay.cover = parsed.covers;
-                    this.bookDisplay.numPages = parsed.number_of_pages;
-                    this.bookDisplay.publisher = parsed.publishers;
+                    this.bookDisplay.title = parsed.title? parsed.title : '-';
+                    this.bookDisplay.cover = parsed.covers? parsed.covers : '';
+                    this.bookDisplay.numPages = parsed.number_of_pages? parsed.number_of_pages : 0 ;
+                    this.bookDisplay.publisher = parsed.publishers? parsed.publishers : "-";
                     this.bookDisplay.isbn = this.isbn;
 
                     if (this.bookDisplay.cover) this.imageLoading = false;
@@ -99,15 +99,7 @@ export class BookLookupComponent implements OnInit {
             //     }});
 
 
-                this.apiService.getBooksBySearch()
-                .subscribe({
-                    next: data => {
-                        var stringified = JSON.stringify(data);
-                        var parsed = JSON.parse(stringified);
-                        parsed.forEach((book:IBook) =>  console.log('Found book with title ') + book.title);
-                        console.log('*************** fing4ers AGAIN crossed ' + parsed[0].title);
-                    }});
-
+               
 
             this.apiService
                 .getBookAuthors(this.isbn)

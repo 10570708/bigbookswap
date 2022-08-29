@@ -3,6 +3,7 @@ import { APIService, BookService } from '../shared/index';
 import { OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IBook } from '../shared/index';
+import { AuthService } from 'src/app/user/auth.service';
 
 
 @Component({
@@ -10,6 +11,8 @@ import { IBook } from '../shared/index';
     styleUrls: ['books-list.component.scss']
 })
 export class BooksListComponent implements OnInit {
+    searchTerm =  this.route.snapshot.params['search'];
+
 
     allbooks!: IBook[];
     searchableBooks: IBook[] = [];
@@ -17,8 +20,12 @@ export class BooksListComponent implements OnInit {
     morebooks: any;
     filterBy: string = 'all';
     filterByOption: string = 'all';
-    searchTerm: string = '';
+    //searchTerm: string = '';
     search: boolean = false;
+    searchError = false;
+    searchErrorMessage = "Oops ! Something went wrong ! Try again ...";
+
+    fetchingBooks = false;
 
     filterbyOwner: boolean = false;
     filterbyOwnerId: number = 0;
@@ -38,11 +45,15 @@ export class BooksListComponent implements OnInit {
 
 
 
-    constructor(private bookService: BookService, private route: ActivatedRoute, private apiService: APIService) {
+    constructor(
+        private bookService: BookService,
+        private route: ActivatedRoute,
+        private apiService: APIService,
+        private authService: AuthService) {
     }
 
 
-   
+
     filterBooksOption(filter: string) {
         if (filter.toLowerCase() !== 'all') {
             this.filterbyOptions = true;
@@ -79,13 +90,13 @@ export class BooksListComponent implements OnInit {
 
         if (filter.toLowerCase() === 'mine') {
             this.filterbyOwner = true;
-            this.filterbyOwnerId = 1;
+            this.filterbyOwnerId = this.authService.currentUser.id;
             this.filterbyOwnerMatch = true;
             this.filterbyOwnerValue = 'mine';
         }
         else if (filter === 'other') {
             this.filterbyOwner = true;
-            this.filterbyOwnerId = 1;
+            this.filterbyOwnerId = this.authService.currentUser.id;
             this.filterbyOwnerMatch = false;
             this.filterbyOwnerValue = 'other';
         }
@@ -95,6 +106,7 @@ export class BooksListComponent implements OnInit {
             this.filterbyOwnerMatch = false;
             this.filterbyOwnerValue = 'all';
         }
+        console.log('Leaving owners filter with ' + this.filterbyOwnerMatch);
         this.findAllBooksWithFilters();
 
         this.filterBy = filter;
@@ -158,6 +170,10 @@ export class BooksListComponent implements OnInit {
     ngOnInit() {
         //console.log('Second option ' +this.route.snapshot.params['search']); 
 
+        console.log('Getting search term ' + this.route.snapshot.params['sarch']);
+
+
+        this.fetchingBooks = true;
 
         this.searchTerm = this.route.snapshot.params['search'];
 
@@ -194,6 +210,20 @@ export class BooksListComponent implements OnInit {
     findAllBooksWithFilters() {
 
         // reset the page settings 
+        this.fetchingBooks = true;
+        this.p = 1;
+        this.total = 0;
+
+
+
+
+        console.log('*Search Categoris');
+        console.log('Search' + this.search);
+        console.log('Owner' + this.filterbyOwner);
+        console.log('Conditionh' + this.filterbyCondition);
+        console.log('Option' + this.filterbyOptions);
+
+
 
         // No options selected => Full Search
 
@@ -202,7 +232,7 @@ export class BooksListComponent implements OnInit {
 
         // All options selcted => full search all filters
         else if (this.search && this.filterbyOwner && this.filterbyCondition && this.filterbyOptions)
-            this.getBySearchOwnerCondtionOption();
+            this.getBySearchOwnerCondtionOption(this.route.snapshot.params['search']);
 
 
         // Only searching by Options
@@ -231,7 +261,7 @@ export class BooksListComponent implements OnInit {
 
         // Only search by search box and Owner
         else if (this.search && this.filterbyOwner && !this.filterbyCondition && !this.filterbyOptions)
-            this.getBySearchOwner();
+            this.getBySearchOwner(this.route.snapshot.params['search']);
 
 
         // Only search by Owner and Condition 
@@ -250,11 +280,11 @@ export class BooksListComponent implements OnInit {
 
         // Only search by sarch field and Owner and Condition 
         else if (this.search && this.filterbyOwner && this.filterbyCondition && !this.filterbyOptions)
-            this.getBySearchOwnerCondition();
+            this.getBySearchOwnerCondition(this.route.snapshot.params['search']);
 
         // Only search by sarch fiels and Ownr and Option 
         else if (this.search && this.filterbyOwner && this.filterbyOptions && !this.filterbyCondition)
-            this.getBySearchOwnerOption();
+            this.getBySearchOwnerOption(this.route.snapshot.params['search']);
 
         // Only search by search field and Owner and Option 
         else if (this.search && this.filterbyCondition && this.filterbyOptions && !this.filterbyOwner)
@@ -272,31 +302,142 @@ export class BooksListComponent implements OnInit {
     }
 
 
-    getByOwner() {
-        this.p = 1;
-        this.total = 0;
+    getBySearchOwnerCondtionOption(search: string) {
+        console.log('Gettins ALL 4');
+        this.apiService.getBooksSearchConditionOptionOwner(search, this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+            .subscribe(
+                {
+                    next: data => {
+                        this.processResponse(data);
+                    },
+                    error: () => {
+                        this.processErrorResponse();
+                    },
+                    complete: () => {
+                        this.setSearchResults();
+                    }
+                });
+    }
 
-        this.apiService.getSearchBooksMine(this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+    getBySearchOwnerOption(search: string) {
+        this.apiService.getBooksSearchOptionOwner(search, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+            .subscribe(
+                {
+                    next: data => {
+                       this.processResponse(data)
+                    },
+                    error: () => {
+                        this.processErrorResponse();
+                    },
+                    complete: () => {
+                        this.setSearchResults();
+                    }
+                });
+
+
+
+
+
+    }
+
+
+    getBySearchOwnerCondition(search: string) {
+
+        console.log('Gettins ALL 4');
+        this.apiService.getBooksSearchConditionOwner(search, this.filterbyConditionValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+            .subscribe(
+                {
+                    next: data => {
+                       this.processResponse(data)
+                    },
+                    error: () => {
+                        this.processErrorResponse();
+                    },
+                    complete: () => {
+                        this.setSearchResults();
+                    }
+                });
+
+
+
+    }
+
+
+
+    getBySearchOwner(searchTerm: string) {
+
+        this.apiService.getBooksSearchOwner(searchTerm, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe(
                 {
                     next: data => {
 
-                        var stringified = JSON.stringify(data);
-                        var parsed = JSON.parse(stringified);
-
-                        this.realBooks = parsed.content;
-
-                        this.total = parsed.totalPages;
-                        //this.realBooks.forEach((book:IBook) => console.log('Yippe !!!! '  + book.title + ' - ' + book.author));
-                        this.p = parsed.number;
-                        this.total = parsed.totalElements;
+                      this.processResponse(data)
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
+                    }
+                });
+
+
+
+
+    }
+
+
+    getByOwnerOption() {
+        this.apiService.getBooksOptionOwner(this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+            .subscribe(
+                {
+                    next: data => {
+                     this.processResponse(data);
+                    },
+                    error: () => {
+                        this.processErrorResponse();
+                    },
+                    complete: () => {
+                        this.setSearchResults();
+                    }
+                });
+
+
+    }
+
+    getByOwnerCondition() {
+        this.apiService.getBooksConditionOwner(this.filterbyConditionValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+            .subscribe(
+                {
+                    next: data => {
+                        this.processResponse(data);
+
+                    },
+                    error: () => {
+                        this.processErrorResponse();
+                    },
+                    complete: () => {
+                        this.setSearchResults();
+                    }
+                });
+
+
+    }
+
+    getByOwner() {
+        this.apiService.getSearchBooksOwner(this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+            .subscribe(
+                {
+                    next: data => {
+
+                        this.processResponse(data);
+
+                    },
+                    error: () => {
+                        this.processErrorResponse();
+                    },
+                    complete: () => {
+                        this.setSearchResults();
                     }
                 });
 
@@ -304,30 +445,20 @@ export class BooksListComponent implements OnInit {
 
     }
     getBySearch(searchTerm: String) {
-        this.p = 1;
-        this.total = 0;
 
         this.apiService.getSearchBooks(searchTerm, this.p - 1)
             .subscribe(
                 {
                     next: data => {
 
-                        var stringified = JSON.stringify(data);
-                        var parsed = JSON.parse(stringified);
+                        this.processResponse(data);
 
-                        this.realBooks = parsed.content;
-
-                        this.total = parsed.totalPages;
-                        //this.realBooks.forEach((book:IBook) => console.log('Yippe !!!! '  + book.title + ' - ' + book.author));
-                        this.p = parsed.number;
-                        this.total = parsed.totalElements;
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
 
@@ -340,14 +471,13 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
     }
@@ -357,32 +487,30 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
     }
 
 
     getByOwnerConditionOption() {
-        this.apiService.getBooksOwnerConditionOption(this.filterbyOwnerId, this.filterbyConditionValue, this.filterbyOptionsValue, this.p - 1)
+        this.apiService.getBooksByConditionOptionOwner(this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
 
@@ -393,14 +521,13 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
     }
@@ -412,14 +539,13 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
     }
@@ -429,14 +555,13 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
 
@@ -450,14 +575,13 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
     }
@@ -468,47 +592,41 @@ export class BooksListComponent implements OnInit {
             .subscribe(
                 {
                     next: data => {
-                        this.dotheresults(data);
+                        this.processResponse(data);
                     },
-                    error: error => {
-                        console.log('Error in search');
+                    error: () => {
+                        this.processErrorResponse();
                     },
                     complete: () => {
-                        this.searchableBooks = this.realBooks;
-                        this.visibleBooks = this.searchableBooks.slice(0);
+                        this.setSearchResults();
                     }
                 });
     }
 
+    setSearchResults(){
+        this.searchableBooks = this.realBooks;
+        this.visibleBooks = this.searchableBooks.slice(0);
+        this.fetchingBooks = false;
+    }
 
-    dotheresults(data: any) {
+    processErrorResponse() {
+        this.searchError = true;
+        this.fetchingBooks = false;
+    }
+    processResponse(data: any) {
 
         var stringified = JSON.stringify(data);
         var parsed = JSON.parse(stringified);
-
         this.realBooks = parsed.content;
-
-        console.log('Yippe !!!! ');
         this.total = parsed.totalPages;
-        this.realBooks.forEach((book: IBook) => console.log('Yippe !!!! ' + book.title + ' - ' + book.author));
         this.p = parsed.number;
         this.total = parsed.totalElements;
-        console.log('Total is ' + this.total);
     }
 
     pageChangeEvent(event: number) {
         this.p = event;
         this.findAllBooksWithFilters();
     }
-
-
-    getBySearchOwnerCondtionOption() { }
-    getBySearchOwner() { }
-    getByOwnerCondition() { }
-    getByOwnerOption() { }
-    getBySearchOwnerCondition() { }
-    getBySearchOwnerOption() { }
-
 }
 
 

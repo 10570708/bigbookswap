@@ -2,6 +2,7 @@ import { CloseScrollStrategy } from "@angular/cdk/overlay";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
+import { AuthService } from "src/app/user/auth.service";
 import { APIService, IBook, ISwap } from "../shared/index";
 import { BookService, SwapService } from "../shared/index";
 
@@ -17,15 +18,19 @@ export class BookDetailsComponent implements OnInit {
     swap: ISwap = <ISwap>{};
     realBook$!: Observable<IBook>;
 
-    constructor(private bookService: BookService, private route: ActivatedRoute, private router: Router, private swapService: SwapService, private apiService: APIService) {
-        this.router.routeReuseStrategy.shouldReuseRoute = function () {
-            return false;
-        };
-
+    constructor(
+        private bookService: BookService, 
+        private route: ActivatedRoute, 
+        private router: Router, 
+        private swapService: SwapService, 
+        private authService: AuthService,
+        private apiService: APIService) {
+            this.router.routeReuseStrategy.shouldReuseRoute = function () {
+                return false;
+            };
     }
 
     ngOnInit() {
-
 
         this.getRealBook();
 
@@ -58,7 +63,7 @@ export class BookDetailsComponent implements OnInit {
 
     ngOnDestroy() {
         this.router.navigated = false;
-        console.log('ngOnDestroy: cleaning up...');
+        //console.log('ngOnDestroy: cleaning up...');
     }
 
     buildBookHref() {
@@ -69,8 +74,10 @@ export class BookDetailsComponent implements OnInit {
 
         if (this.book?.id) {
             this.apiService.deleteBook(this.book.id).subscribe((response) => {
-                console.log(response);
+                console.log('');
             });
+
+            this.authService.reduceUserBookCount(this.authService.currentUser.id);
             this.router.navigate(['/books']);
         }
 

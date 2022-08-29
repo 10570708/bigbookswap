@@ -34,6 +34,9 @@ export class APIService {
              };        
         console.log('Adding book[' + book.cover+']');
 
+        book.id = 0;
+        console.log('Adding book for owner ' + book.ownerId );
+
         console.log('Adding book[' + book.cover.length);
         console.log('Adding book[' + book.id+']');
 
@@ -64,9 +67,9 @@ export class APIService {
         return this.httpClient.get('http://localhost:8080/api/v1/book/option/'+option+'?page='+page+'&size=10');
       }
 
-      public getBooksOwnerConditionOption(id: number, condition: String, option: String, page: number)
+      public getBooksByConditionOptionOwner(condition: String, option: String, id: number, match: boolean, page: number)
       {
-        return this.httpClient.get('http://localhost:8080/api/v1/book/ocosearch/'+id+'/'+condition+'/'+option+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/conditionoptionowner/'+condition+'/'+option+'/'+id+'/'+match+'?page='+page+'&size=10');
       }
 
       public getBooksSearchCondition(search: String, condition: String, page: number)
@@ -79,6 +82,32 @@ export class APIService {
         return this.httpClient.get('http://localhost:8080/api/v1/book/sosearch/'+search+'/'+option+'?page='+page+'&size=10');
       }
 
+      public getBooksSearchOwner(search: string, owner: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/sonsearch/'+search+'/'+owner+'/'+match+'?page='+page+'&size=10');
+
+      }
+
+      public getBooksSearchConditionOptionOwner(search: string, condition: string, option: string, owner: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/scoosearch/'+search+'/'+condition+'/'+option+'/'+owner+'/'+match+'?page='+page+'&size=10');
+      }
+
+      public getBooksSearchConditionOwner(search: string, condition: string, owner: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/searchconditionowner/'+search+'/'+condition+'/'+owner+'/'+match+'?page='+page+'&size=10');
+      }
+
+      public getBooksConditionOwner(condition: string, owner: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/conditionowner/'+condition+'/'+owner+'/'+match+'?page='+page+'&size=10');
+      }
+
+
+      public getBooksOptionOwner(option: string, owner: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/optionowner/'+option+'/'+owner+'/'+match+'?page='+page+'&size=10');
+      }
+
+      public getBooksSearchOptionOwner(search: string, option: string, owner: number, match: boolean, page: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/searchoptionowner/'+search+'/'+option+'/'+owner+'/'+match+'?page='+page+'&size=10');
+      }
+
       public getBooksConditionOption(condition: String, option: String, page: number)
       {
         return this.httpClient.get('http://localhost:8080/api/v1/book/cosearch/'+condition+'/'+option+'?page='+page+'&size=10');
@@ -89,7 +118,7 @@ export class APIService {
         return this.httpClient.get('http://localhost:8080/api/v1/book/scosearch/'+search+'/'+condition+'/'+option+'?page='+page+'&size=10');
       }
 
-      public getSearchBooksMine(ownerId: number, match: boolean, page: number){
+      public getSearchBooksOwner(ownerId: number, match: boolean, page: number){
         return this.httpClient.get('http://localhost:8080/api/v1/book/owner/'+ownerId+'/'+match+'?page='+page+'&size=10');
       }
 
@@ -97,9 +126,7 @@ export class APIService {
         return this.httpClient.get('http://localhost:8080/api/v1/book/books/'+searchTerm+'?page='+page+'&size=10');
       }
 
-      public getBooksBySearch(){
-        return this.httpClient.get('http://localhost:8080/api/v1/book/books/Lisa');
-      }
+      
 
 
       

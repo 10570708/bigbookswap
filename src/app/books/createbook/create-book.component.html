@@ -51,7 +51,7 @@
           <div>
             <input style="width:80%;display:inline" formControlName="isbn" (ngModel)="book.isbn" type="text"
               class="form-control" placeholder="ISBN of your book..." />
-            <button style="width:20%;display:inline" type="button" [disabled]="f['isbn'].errors" class="btn btn-default"
+            <button style="width:20%;display:inline" type="button" [disabled]="f['isbn'].errors" class="btn btn-success"
               (click)="openNewBookDialog()">Find My Book</button>
           </div>
 
@@ -117,7 +117,7 @@
           </select>
         </div>
 
-        <div *ngIf="(loadForm && !manualLoad)" style="text-align: center;">
+        <div *ngIf="loadForm" style="text-align: center;">
           <button type="button" class="btn btn-default" (click)="cancel()"><span
               class="glyphicon glyphicon-remove"></span>Cancel</button>
 
@@ -140,7 +140,6 @@
 
         </div>
 
-        <!-- [disabled]="form.invalid" -->
       </form>
 
 

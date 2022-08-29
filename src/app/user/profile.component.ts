@@ -35,6 +35,19 @@ private router:Router, private storageService: StorageService, @Inject(TOASTR_TO
         {value: '5', viewValue: 'Crab', image: './assets/images/icons/crab.jpg'},
         {value: '6', viewValue: 'Deer', image: './assets/images/icons/deer.jpg'},
         {value: '7', viewValue: 'Scorpion', image: './assets/images/icons/scorpion.jpg'},
+        {value: '8', viewValue: 'Koala', image: './assets/images/icons/koala.jpg'},
+        {value: '9', viewValue: 'Giraffe', image: './assets/images/icons/giraffe.jpg'},
+        {value: '10', viewValue: 'Jellyfish', image: './assets/images/icons/jellyfish.jpg'},
+        {value: '11', viewValue: 'Lion', image: './assets/images/icons/lion.jpg'},
+        {value: '12', viewValue: 'Starfish', image: './assets/images/icons/starfish.jpg'},
+        {value: '13', viewValue: 'Bunny', image: './assets/images/icons/bunny.jpg'},
+        {value: '14', viewValue: 'Bull', image: './assets/images/icons/bull.jpg'},
+
+
+
+
+
+
     ]
 
     ngOnInit(): void {
