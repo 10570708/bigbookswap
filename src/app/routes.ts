@@ -19,7 +19,7 @@ export const appRoutes:Routes= [
  
     { path: 'book/new', component: CreateBookComponent, canActivate:[AuthGuard]},
 
-    { path: 'books/:search', component: BooksListComponent, resolve: {allbooks:BookListResolver},canActivate: [AuthGuard]},
+    { path: 'books/:search', component: BooksListComponent, canActivate: [AuthGuard]},
     { path: 'books', component: BooksListComponent,canActivate: [AuthGuard]},
     { path: 'book/:id', component: BookDetailsComponent, canActivate: [AuthGuard]},
     { path: 'swaps', component: SwapListComponent,canActivate: [AuthGuard]},

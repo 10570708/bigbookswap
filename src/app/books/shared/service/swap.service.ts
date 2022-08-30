@@ -1,12 +1,32 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable, EventEmitter, ɵsetCurrentInjector } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { BooksListComponent } from "../../book-list/books-list.component";
 import { IBook, ConditionType, OptionType } from "../model/book.model";
-import { ISwap, StatusType } from "../model/swap.model";
+import { ISwap, Swap, SwapMember, StatusType } from "../model/swap.model";
 
 @Injectable()
 export class SwapService {
   searchTerm: string = '';
+
+  constructor(private httpClient: HttpClient) { }
+
+
+
+  public saveSwapRequest(swap: Swap) : Observable<any>{
+
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Cache-Control': 'no-cache'
+         });    
+         let options = {
+      headers: httpHeaders
+         };        
+    console.log('Adding book[' + swap.offerMember?.ownerId);
+
+    return this.httpClient.post('http://localhost:8080/api/v1/swap', swap);        
+  }
+ 
 
     getSwaps(id:number):Observable<ISwap[]>{    
       let subject = new Subject<ISwap[]>();
@@ -46,9 +66,29 @@ export class SwapService {
         
       return SWAPS.find(swap => swap.id === id) as ISwap;
     }
-    
 
-     searchSwaps(searchTerm:string){
+
+    public getMySwapRequests(id: number){
+      console.log('Looking for my swaps' + id);
+      return this.httpClient.get('http://localhost:8080/api/v1/swap/requests/'+id);
+    }
+
+    public getMySwapOffers(id: number){
+      console.log('Looking for my swaps' + id);
+      return this.httpClient.get('http://localhost:8080/api/v1/swap/offers/'+id);
+    }
+    
+    public getAllMySwaps(id: number){
+      console.log('Looking for my swaps' + id);
+      return this.httpClient.get('http://localhost:8080/api/v1/swap/all/'+id);
+    }
+
+
+     searchSwaps(searchTerm:string, id: number){
+
+      if (searchTerm === 'sent')
+        this.getMySwapRequests(id);
+
     //   //console.log('Calling search Books with ' + searchTerm);
     //   var search = searchTerm.toLocaleLowerCase();
        var results: ISwap[] = []; 
@@ -85,7 +125,7 @@ export class SwapService {
               {
                 //console.log('Checking for offerOwnr or Owner id 1 ');
 
-                return swap.offerOwnerId ==1 || swap.recipientOfferId == 1
+                return swap.offerMember?.ownerId ==1 || swap.recipientMember?.ownerId == 1
               }              
             });
 
@@ -117,17 +157,17 @@ getAllSwaps(){
 return SWAPS;
 
 }
-    saveSwap(swap:ISwap){
+    saveSwap(swap:Swap){
 
-      console.log('Saving my Book !!!!' + swap.id);
-      const nextId = Math.max.apply(null, SWAPS.map(s => s.id));
-      swap.id = nextId + 1;
-      swap.offerOwnerId =  2;
-      swap.createDate = new Date();
-      swap.status = StatusType.Req;
+      console.log('Saving my Swap !!!!' + swap.id);
+      //const nextId = Math.max.apply(null, SWAPS.map(s => s.id));
+      //swap.id = nextId + 1;
+      //swap.offerMember?.ownerId? =  2;
+      //swap.createdDate = new Date();
+      //swap.status = StatusType.Req;
 
-      SWAPS.push(swap);
-      console.log(SWAPS);
+      //SWAPS.push(swap);
+      //onsole.log(SWAPS);
 
     }
 
@@ -148,8 +188,8 @@ return SWAPS;
       console.log('******************' + swapid);
       let index = SWAPS.findIndex(x => x.id === swapid );
       console.log('Matched at index ' + index);
-      SWAPS[index].recipientBookId = bookid;
-      SWAPS[index].status = StatusType.Acc;
+      // SWAPS[index].recipientMember.bookId = bookid;
+      // SWAPS[index].status = StatusType.Acc;
 
       console.log(SWAPS[index]);
 
@@ -162,50 +202,5 @@ return SWAPS;
     }
 }let SWAPS:ISwap[]=  
 [
-        { 
-          id: 1,
-          offerOwnerId: 1,
-          offerBookId: 1,
-          recipientOfferId:2, 
-          createDate: new Date(),
-          status: StatusType.Res
-        },
-        { 
-          id: 2,
-          offerOwnerId: 1,
-          offerBookId: 2,
-          recipientOfferId:1, 
-          status: StatusType.Res,
-          createDate: new Date(),
-
-        },
-        { 
-          id: 3,
-          offerOwnerId: 1,
-          offerBookId: 3,
-          recipientOfferId:2, 
-          status: StatusType.Req,
-          createDate: new Date(),
-
-        },
-        { 
-          id: 4,
-          offerOwnerId: 4,
-          offerBookId: 1,
-          recipientOfferId:1, 
-          status: StatusType.Req,
-          createDate: new Date(),
-
-        },
-        { 
-          id: 5,
-          offerOwnerId: 2,
-          offerBookId: 1,
-          recipientOfferId:7, 
-          status: StatusType.Acc,
-          createDate: new Date(),
-
-
-        }
-
+      
     ]

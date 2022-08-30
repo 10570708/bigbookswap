@@ -23,6 +23,57 @@
 
     <div class="row" style="margin-top:5px;padding-left:15px;padding-right:15px;">
 
+        <div style="color: #5090cc" *ngFor="let swap of swapResults" class="col-md-12"
+        style="padding-left:15px;padding-right:15px;">
+
+
+
+
+        <div class="row" style="color: #5090cc;display:flex;align-items:baseline;height:100%">
+            <div class="col-md-2  no-pad" style="text-align:center;"><img *ngIf="(  (swap.offerMember?.bookCover?.length !== 0) )"
+                    style="margin-bottom:10px;"
+                    src="https://covers.openlibrary.org/b/id/{{swap.offerMember?.bookCover}}-S.jpg"
+                    class="image-fluid">
+                <img *ngIf="!(swap.offerMember?.bookCover) || swap.offerMember?.bookCover === 'cover'" style="margin-bottom:10px;height:60px;"
+                    src="./assets/images/generic.jpg" class="image-fluid">
+            </div>
+            <div class="col-md-2 no-pad">
+                    <a [routerLink]="['/swap/' , swap.id]"> {{ swap.offerMember?.bookTitle }}
+                        </a>
+            </div>
+            <div class="col-md-2 no-pad">
+                {{ swap.offerMember?.bookAuthor }}
+             </div>
+            <div class="col-md-2 no-pad">
+                {{ swap.createdDate | date: 'dd-MMM-yyyy' }} 
+            </div>
+            <div class="col-md-2 no-pad">
+                {{ swap.status }}
+            </div>
+            <div class="col-md-2 no-pad">
+                <button class="btn btn-primary" *ngIf="swap.status === 'Request Received'"
+                    (click)="openViewAvailableSwapBooksDialog(swap.id,swap.offerMember?.ownerId)">
+                    <span class="glyphicon glyphicon-book"></span>
+                    View Swaps
+                </button>
+                <button disabled class="btn btn-info" *ngIf="swap.status === 'Request Sent'"
+                (click)="openViewAvailableSwapBooksDialog(swap.id,swap.offerMember?.ownerId)">
+                <span class="glyphicon glyphicon-time"></span>
+                Waiting ... 
+                </button>
+                <button class="btn btn-success" *ngIf="swap.status === 'Request Accepted'" (click)="completeSwap(swap.id)">
+                    <span class="glyphicon glyphicon-check"></span>
+                    Complete
+                </button>
+                <img *ngIf="swap.status === 'Swap Done' || swap.status === 'Donation Made'" height="30px;" src="./assets/images/super-{{getrandomNumber()}}.jpg">
+            </div>
+        </div>
+    </div>
+
+
+
+
+
         <div style="color: #5090cc" *ngFor="let swap of visibleSwaps" class="col-md-12"
             style="padding-left:15px;padding-right:15px;">
 
@@ -30,34 +81,34 @@
 
 
             <div class="row" style="color: #5090cc;display:flex;align-items:baseline;height:100%">
-                <div class="col-md-2  no-pad" style="text-align:center;"><img *ngIf="(  getCover(swap.offerBookId).length > 0)"
+                <div class="col-md-2  no-pad" style="text-align:center;"><img *ngIf="(  (swap.offerMember?.bookCover) )"
                         style="margin-bottom:10px;"
-                        src="https://covers.openlibrary.org/b/id/{{getCover(swap.offerBookId)}}-S.jpg"
+                        src="https://covers.openlibrary.org/b/id/{{swap.offerMember?.bookCover}}-S.jpg"
                         class="image-fluid">
-                    <img *ngIf="(getCover(swap.offerBookId).length === 0)" style="margin-bottom:10px;height:60px;"
+                    <img *ngIf="(swap.offerMember?.bookCover?.length === 0)" style="margin-bottom:10px;height:60px;"
                         src="./assets/images/generic.jpg" class="image-fluid">
                 </div>
                 <div class="col-md-2 no-pad">
-                        <a [routerLink]="['/swap/' , swap.id]"> {{ getTitle(swap.offerBookId) }}
+                        <a [routerLink]="['/swap/' , swap.id]"> {{ swap.offerMember?.bookTitle }}
                             </a>
                 </div>
                 <div class="col-md-2 no-pad">
-                    {{ getAuthor(swap.offerBookId) }}
+                    {{ swap.offerMember?.bookAuthor }}
                  </div>
                 <div class="col-md-2 no-pad">
-                    {{ swap.createDate | date: 'dd-MM-yyyy' }} 
+                    {{ swap.createdDate | date: 'dd-MM-yyyy' }} 
                 </div>
                 <div class="col-md-2 no-pad">
                     {{ swap.status }}
                 </div>
                 <div class="col-md-2 no-pad">
                     <button class="btn btn-primary" *ngIf="swap.status === 'Request Received'"
-                        (click)="openViewAvailableSwapBooksDialog(swap.offerOwnerId,swap.id)">
+                        (click)="openViewAvailableSwapBooksDialog(swap.id,swap.offerMember?.ownerId)">
                         <span class="glyphicon glyphicon-book"></span>
                         View Swaps
                     </button>
                     <button disabled class="btn btn-info" *ngIf="swap.status === 'Request Sent'"
-                    (click)="openViewAvailableSwapBooksDialog(swap.offerOwnerId,swap.id)">
+                    (click)="openViewAvailableSwapBooksDialog(swap.id,swap.offerMember?.ownerId)">
                     <span class="glyphicon glyphicon-time"></span>
                     Waiting ... 
                     </button>

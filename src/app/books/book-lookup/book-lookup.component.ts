@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { IBook } from "../shared/index";
+import { BookStatus, IBook } from "../shared/index";
 import { APIService } from "../shared/index";
 
 @Component({
@@ -11,20 +11,11 @@ import { APIService } from "../shared/index";
 
 export class BookLookupComponent implements OnInit {
     covers: any;
-    coverimage = "";
     bookFound = false;
     bookLoading = true;
     bookDisplay: IBook = <IBook>{};
-    author: string = "";
     isbn: any;
-    publishedBy: any;
-    numpages: any;
-    number_of_pages: any;
-    publishers: any;
-    publish_date: any;
-    authors: any;
     firstError = false;
-    title: any;
     lookupError: string = "";
     imageLoading=true;
 
@@ -35,7 +26,6 @@ export class BookLookupComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) data: any) {
         this.isbn = data.isbn;
     }
-
 
     ngOnInit(): void {
 
@@ -48,15 +38,7 @@ export class BookLookupComponent implements OnInit {
                     var stringified = JSON.stringify(data);
                     var parsed = JSON.parse(stringified);
 
-                    this.number_of_pages = parsed.number_of_pages;
-                    this.publishers = parsed.publishers;
-                    this.publish_date = parsed.publish_date;
-                    this.authors = JSON.stringify(parsed.authors);
-                    this.publishedBy = parsed.publishers;
-                    this.numpages = parsed.number_of_pages;
-                    this.title = parsed.title;
-                    this.coverimage = parsed.covers;
-
+                   
                     this.bookDisplay.title = parsed.title? parsed.title : '-';
                     this.bookDisplay.cover = parsed.covers? parsed.covers : '';
                     this.bookDisplay.numPages = parsed.number_of_pages? parsed.number_of_pages : 0 ;
@@ -73,34 +55,16 @@ export class BookLookupComponent implements OnInit {
                     this.bookLoading = false;
                     this.imageLoading = false;
                 },
-                complete: () => this.getBookImage(),
-            }
-            );
-
-       
-
-        if (this.numpages) this.bookFound = true;
+                complete: () => {
+                    this.bookFound = true;
+                    this.getBookAuthor();
+                }
+            });
     }
 
-    getBookImage()
+    getBookAuthor()
     {
         if (!this.firstError) {
-            // this.apiService.getBooks()
-            // .subscribe({
-            //     next: data => {
-            //         var stringified = JSON.stringify(data);
-            //         var parsed = JSON.parse(stringified);
-            //         var list = [] ;
-            //         list = parsed.content;
-            //         parsed.content.forEach((book:IBook) => console.log('Yippe !!!! '  + book.title + ' - ' + book.author));
-            //         console.log('*************** fing4ers crossed ' + parsed.content[0].title);
-            //         console.log('Pages ' + parsed.totalPages);
-            //         console.log('This Page' + parsed.number);
-            //     }});
-
-
-               
-
             this.apiService
                 .getBookAuthors(this.isbn)
                 .subscribe({
@@ -125,8 +89,6 @@ export class BookLookupComponent implements OnInit {
     }
 
     buildBookHref() {
-
-        //console.log('This is ' + this.form.value['isbn']);
         window.open('https://openlibrary.org/isbn/' + this.isbn, "_blank");
     }
 
@@ -142,12 +104,7 @@ export class BookLookupComponent implements OnInit {
     }
 
     save() {
-
-            this.bookDisplay.id =  33,
-            this.bookDisplay.ownerId =  2,
-            this.bookDisplay.addedDate = new Date('9/26/2019'),
-            this.bookDisplay.status =  'available',
-  
+        this.bookDisplay.status = BookStatus.Available,  
         this.dialogRef.close(this.bookDisplay);
     }
 

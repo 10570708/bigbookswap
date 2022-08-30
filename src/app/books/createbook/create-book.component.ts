@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 import { StorageService } from "src/app/storage-service";
 import { AuthService } from "src/app/user/auth.service";
 import { BookLookupComponent } from "../book-lookup/book-lookup.component";
-import { ConditionType, IBook, OptionType } from "../shared/index";
+import { BookStatus, ConditionType, IBook, OptionType } from "../shared/index";
 import { APIService,BookService } from "../shared/index";
 
 @Component({
@@ -80,7 +80,7 @@ export class CreateBookComponent implements OnInit {
     saveBook() {
         this.bookDisplay.condition = this.form.value['condition'];
         this.bookDisplay.option = this.form.value['option'];
-        this.bookDisplay.status = 'available';
+        this.bookDisplay.status = BookStatus.Available;
         this.bookDisplay.ownerId = this.authService.currentUser.id;
 
         if (this.manualLoad) {

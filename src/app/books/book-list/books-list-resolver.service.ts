@@ -11,6 +11,7 @@ export class BookListResolver implements Resolve<any> {
    
     resolve() {
 
+        console.log('Not sure why but returning all books');
         return this.bookService.getBooks().pipe(map(allbooks => allbooks))
         
     }

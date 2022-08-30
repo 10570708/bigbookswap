@@ -46,6 +46,9 @@ export class APIService {
       }
      
 
+      public getAvailableBooksOwner(ownerId: number){
+        return this.httpClient.get('http://localhost:8080/api/v1/book/available/owner/'+ownerId);
+      }
 
 
       public getBookAuthors(isbn?: string){
@@ -74,21 +77,21 @@ export class APIService {
 
       public getBooksSearchCondition(search: String, condition: String, page: number)
       {
-        return this.httpClient.get('http://localhost:8080/api/v1/book/scsearch/'+search+'/'+condition+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/searchcondition/'+search+'/'+condition+'?page='+page+'&size=10');
       } 
 
       public getBooksSearchOption(search: String, option: String, page: number)
       {
-        return this.httpClient.get('http://localhost:8080/api/v1/book/sosearch/'+search+'/'+option+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/searchoption/'+search+'/'+option+'?page='+page+'&size=10');
       }
 
       public getBooksSearchOwner(search: string, owner: number, match: boolean, page: number){
-        return this.httpClient.get('http://localhost:8080/api/v1/book/sonsearch/'+search+'/'+owner+'/'+match+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/searchowner/'+search+'/'+owner+'/'+match+'?page='+page+'&size=10');
 
       }
 
       public getBooksSearchConditionOptionOwner(search: string, condition: string, option: string, owner: number, match: boolean, page: number){
-        return this.httpClient.get('http://localhost:8080/api/v1/book/scoosearch/'+search+'/'+condition+'/'+option+'/'+owner+'/'+match+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/allfilters/'+search+'/'+condition+'/'+option+'/'+owner+'/'+match+'?page='+page+'&size=10');
       }
 
       public getBooksSearchConditionOwner(search: string, condition: string, owner: number, match: boolean, page: number){
@@ -110,12 +113,12 @@ export class APIService {
 
       public getBooksConditionOption(condition: String, option: String, page: number)
       {
-        return this.httpClient.get('http://localhost:8080/api/v1/book/cosearch/'+condition+'/'+option+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/conditionoption/'+condition+'/'+option+'?page='+page+'&size=10');
       }
 
       public getBooksSearchConditionOption(search: String, condition: String, option: String, page: number)
       {
-        return this.httpClient.get('http://localhost:8080/api/v1/book/scosearch/'+search+'/'+condition+'/'+option+'?page='+page+'&size=10');
+        return this.httpClient.get('http://localhost:8080/api/v1/book/searchconditionoption/'+search+'/'+condition+'/'+option+'?page='+page+'&size=10');
       }
 
       public getSearchBooksOwner(ownerId: number, match: boolean, page: number){

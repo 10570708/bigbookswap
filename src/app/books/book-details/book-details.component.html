@@ -39,21 +39,22 @@
             </div>
             <div style="width:100%">
               <div class="col-md-3"><strong>Condition:</strong></div>
-              <div class="col-md-9">{{ book?.condition }}</div>
+              <div class="col-md-9">{{ book?.condition | titlecase }}</div>
             </div>
             <div>
               <div class="col-md-3"><strong>Status:</strong></div>
-              <div class="col-md-9">{{ book?.status }}</div>
+              <div class="col-md-9"> {{ book?.status | titlecase }}</div>
             </div>
             <div>
               <div class="col-md-3"><strong>Option:</strong></div>
-              <div class="col-md-9">{{ book?.option }}</div>
+              <div class="col-md-9">{{ book?.option | titlecase}}</div>
             </div>
 
             <div class="spaced">
              <button class="btn btn-info" *ngIf="book?.cover && book?.cover?.length !== 0"  (click)="buildBookHref()"><span class="glyphicon glyphicon-search"></span> Find Out More</button>
-            <button class="btn btn-warning" (click)="removeBook()"><span class="glyphicon glyphicon-trash"></span>Delete Book</button>
-            <button class="btn btn-success" (click)="requestSwap()"><span class="glyphicon glyphicon-transfer"></span>RequestSwap</button>
+            <button *ngIf="book?.ownerId === ownerId" class="btn btn-warning" (click)="removeBook()"><span class="glyphicon glyphicon-trash"></span>Delete Book</button>
+            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Swap.toLowerCase())" class="btn btn-success" (click)="requestSwap()"><span class="glyphicon glyphicon-transfer"></span>RequestSwap</button>
+            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Donate.toLowerCase())" class="btn btn-success" (click)="requestDonation()"><span class="glyphicon glyphicon-share-alt"></span>RequestDonation</button>
               
     
             </div>

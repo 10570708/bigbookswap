@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core'
-import { BookService, SwapService } from './shared/index';
+import { APIService, BookService, SwapService } from './shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBook } from './shared/index';
@@ -30,6 +30,7 @@ export class BooksPickComponent implements OnInit {
 
     constructor(private bookService: BookService,  private route:ActivatedRoute,
         private router: Router,
+        private apiService: APIService,
         private dialogRef: MatDialogRef<SwapListComponent>,
         @Inject(MAT_DIALOG_DATA) data: any,
         private swapService:SwapService) 
@@ -73,7 +74,26 @@ export class BooksPickComponent implements OnInit {
             //     }
             // );
             this.search = true;
-            this.searchableBooks = this.bookService.searchAvailableSwapBooks(this.owner);
+            this.apiService.getAvailableBooksOwner(this.owner)
+            .subscribe({
+                next: data => {
+                    var stringified = JSON.stringify(data);
+                    var parsed = JSON.parse(stringified);
+                    this.searchableBooks = parsed;
+                    this.searchableBooks.forEach(book => console.log('This book is ' + book.title));
+
+                    console.log('books' + parsed);
+                },
+                error: () => console.log('Error'),
+                complete: () => {
+                    this.visibleBooks = this.searchableBooks.slice(0);
+                }
+            }
+        );
+
+
+
+            //this.searchableBooks = this.bookService.searchAvailableSwapBooks(this.owner);
         
         // else{
         //     //console.log('NOT Filtering Got search params'+ this.route.snapshot.params['search']);
@@ -85,9 +105,10 @@ export class BooksPickComponent implements OnInit {
         console.log('****** Got SEARCH ?? ' + this.search);
 
 
-        this.visibleBooks = this.searchableBooks.slice(0);
 
-        //console.log('Got vis books ' + this.visibleBooks);
+        this.visibleBooks.forEach(book => console.log('This book is ' + book.title));
+
+        console.log('Got vis books ' + this.visibleBooks);
 
         //this.visibleBooks = this.allbooks.slice(0);
 

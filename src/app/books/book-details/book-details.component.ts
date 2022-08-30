@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthService } from "src/app/user/auth.service";
-import { APIService, IBook, ISwap } from "../shared/index";
+import { APIService, IBook, ISwap, BookStatus, OptionType, Swap, SwapMember, StatusType } from "../shared/index";
 import { BookService, SwapService } from "../shared/index";
 
 @Component({
@@ -17,6 +17,9 @@ export class BookDetailsComponent implements OnInit {
     book?: IBook
     swap: ISwap = <ISwap>{};
     realBook$!: Observable<IBook>;
+    bookStatus = BookStatus;
+    bookOption = OptionType;
+    ownerId = this.authService.currentUser.id;
 
     constructor(
         private bookService: BookService, 
@@ -85,11 +88,50 @@ export class BookDetailsComponent implements OnInit {
 
     requestSwap() {
         if (this.book?.id) {
-            this.swap.offerBookId = this.book.id;
-            this.swapService.saveSwap(this.swap);
-            this.router.navigate(['/swaps/sent']);
-        }
+            var offerMember = new SwapMember();
+            var recipientMember = new SwapMember();
+            recipientMember.ownerId = this.book?.ownerId;
+            offerMember.setSwapMember(
+                this.authService.currentUser.id,
+                this.book.id,
+                this.book.title,
+                this.book.cover,
+                this.book.author);
 
+            var mySwap = new Swap();
+            mySwap.createSwapRequest(
+                offerMember,
+                recipientMember,
+                StatusType.Res);
+
+              
+            this.swapService.saveSwapRequest(mySwap)
+            .subscribe({
+                next: data => {
+                    // var stringified = JSON.stringify(data);
+                    // var parsed:IBook = JSON.parse(stringified);
+                    // console.log('Loading book' + parsed.title);
+                    console.log('Got new swap id ' + data.id);
+                    //this.router.navigate(['book/' + this.bookDisplay.id]);
+                },
+                complete: () => {
+
+                    this.router.navigate(['/swaps/sent']);
+                    
+                }
+            },
+                );
+
+            
+        }
+    }
+
+    requestDonation() {
+        if (this.book?.id) {
+            // this.swap.offerMember?.bookId = this.book.id;
+            // this.swapService.saveSwap(this.swap);
+            // this.router.navigate(['/swaps/sent']);
+        }
     }
 
 }

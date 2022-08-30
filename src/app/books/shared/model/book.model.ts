@@ -23,3 +23,9 @@ export enum OptionType {
     Swap = 'Swap',
     Donate = 'Donate'
 }   
+
+export enum BookStatus {
+    Available = 'Available',
+    Donated = 'Donated',
+    Swapped = 'Swapped'
+}   

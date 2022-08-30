@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
 import {
   BooksListComponent,
   BooksThumbnailComponent,
@@ -35,6 +36,8 @@ import { BooksPickComponent } from './books/books-pick.component';
 import { AuthGuard } from './authGuard';
 import { AuthInterceptor } from './authIntercepter';
 import { StorageService } from './storage-service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+
 
 declare let toastr:Toastr 
 declare let JQuery:any;
@@ -57,8 +60,10 @@ declare let JQuery:any;
     ReactiveFormsModule,
     MaterialModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     AppComponent,

@@ -2,7 +2,7 @@ import { Conditional } from "@angular/compiler";
 import { Injectable, EventEmitter, ɵsetCurrentInjector } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { BooksListComponent } from "../../book-list/books-list.component";
-import { IBook, ConditionType, OptionType } from "../model/book.model";
+import { IBook, ConditionType, OptionType, BookStatus } from "../model/book.model";
 
 @Injectable()
 export class BookService {
@@ -52,9 +52,7 @@ export class BookService {
 
         console.log('Looking for owner ' + searchTerm);
           results = BOOKS.filter( book =>
-              book.ownerId == 4 && book.status === 'available'
-             
-             
+              book.ownerId == 4 && book.status === BookStatus.Available            
               );
       return results;
           }

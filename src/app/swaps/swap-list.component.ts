@@ -1,10 +1,12 @@
 import { Component } from '@angular/core'
-import { BookService, SwapService } from '../books/shared/index';
+import { BookService, Swap, SwapService } from '../books/shared/index';
 import { OnInit } from '@angular/core';
 import { IBook, ISwap  } from '../books/shared/index';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BooksPickComponent } from '../books/books-pick.component';
+import { AuthService } from '../user/auth.service';
+import { map } from 'rxjs';
 
 
 @Component({
@@ -22,6 +24,7 @@ export class SwapListComponent implements OnInit {
    // sortBy: string = 'title';
     searchTerm: string = '';
    // search: boolean = false;
+   swapResults: Swap[] = [];
 
 
 
@@ -30,7 +33,8 @@ export class SwapListComponent implements OnInit {
             private router: Router, 
             private route: ActivatedRoute, 
             private swapService: SwapService, 
-            private dialog: MatDialog
+            private dialog: MatDialog,
+            private authService: AuthService
         )
         {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -44,10 +48,69 @@ export class SwapListComponent implements OnInit {
 
         this.searchTerm = this.route.snapshot.params['filter'];
         console.log('Filter is ' + this.searchTerm);
+
+        if (this.searchTerm === 'sent')
+        {
+            this.swapService.getMySwapRequests(this.authService.currentUser.id)
+            .subscribe({
+                next: data => {
+
+                    var stringified = JSON.stringify(data);
+                    var parsed = JSON.parse(stringified);
+                    this.swapResults = parsed;
+                    console.log('Dates are ' + this.swapResults[0].createdDate);
+                    console.log('Dates are ' + this.swapResults[1].createdDate);
+
+                }
+                    ,
+                error: () => console.log('Error'),
+                complete: () => console.log('no error')
+            });
+        }
+        else if (this.searchTerm === 'received')
+        {
+            this.swapService.getMySwapOffers(this.authService.currentUser.id)
+            .subscribe({
+                next: data => {
+
+                    var stringified = JSON.stringify(data);
+                    var parsed = JSON.parse(stringified);
+                    this.swapResults = parsed;
+                    console.log('Dates are ' + this.swapResults[0].createdDate);
+                    console.log('Dates are ' + this.swapResults[1].createdDate);
+
+                }
+                    ,
+                error: () => console.log('Error'),
+                complete: () => console.log('no error')
+            });
+        }
+        else if (this.searchTerm === 'all')
+        {
+            this.swapService.getAllMySwaps(this.authService.currentUser.id)
+            .subscribe({
+                next: data => {
+
+                    var stringified = JSON.stringify(data);
+                    var parsed = JSON.parse(stringified);
+                    this.swapResults = parsed;
+                    console.log('Dates are ' + this.swapResults[0].createdDate);
+                    console.log('Dates are ' + this.swapResults[1].createdDate);
+
+                }
+                    ,
+                error: () => console.log('Error'),
+                complete: () => console.log('no error')
+            });
+        }
+
+
+
+        
         this.visibleSwaps = []
         this.searchableSwaps = []
         this.searchableSwaps = (this.searchTerm)
-            ? this.swapService.searchSwaps(this.searchTerm)
+            ? this.swapService.searchSwaps(this.searchTerm, this.authService.currentUser.id)
             : this.swapService.getAllSwaps();
 
         this.visibleSwaps = this.searchableSwaps.slice(0);
@@ -86,7 +149,7 @@ export class SwapListComponent implements OnInit {
         return Math.floor((Math.random() * 4) + 1);
     }
 
-    openViewAvailableSwapBooksDialog(id: number, swapid: number) {
+    openViewAvailableSwapBooksDialog(swapid: number,id?: number) {
         //console.log('Looking for ' + id);
         const dialogConfig = new MatDialogConfig();
 
