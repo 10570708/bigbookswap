@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
-import { BookService, Swap, SwapService } from '../books/shared/index';
+import { BookService, StatusType, Swap, SwapService } from '../books/shared/index';
 import { OnInit } from '@angular/core';
-import { IBook, ISwap  } from '../books/shared/index';
+import { IBook, ISwap } from '../books/shared/index';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BooksPickComponent } from '../books/books-pick.component';
@@ -19,26 +19,26 @@ export class SwapListComponent implements OnInit {
     searchableSwaps: ISwap[] = [];
     visibleSwaps: ISwap[] = [];
     morebooks: any;
-   // filterBy: string = 'all';
-   // filterByOption: string = 'all';
-   // sortBy: string = 'title';
+    // filterBy: string = 'all';
+    // filterByOption: string = 'all';
+    // sortBy: string = 'title';
     searchTerm: string = '';
-   // search: boolean = false;
-   swapResults: Swap[] = [];
+    // search: boolean = false;
+    swapResults: Swap[] = [];
+    usr = this.authService.currentUser.id;
 
 
 
     constructor(
-            private bookService: BookService, 
-            private router: Router, 
-            private route: ActivatedRoute, 
-            private swapService: SwapService, 
-            private dialog: MatDialog,
-            private authService: AuthService
-        )
-        {
-            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        }
+        private bookService: BookService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private swapService: SwapService,
+        private dialog: MatDialog,
+        private authService: AuthService
+    ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
     ngOnInit() {
         //console.log('Hitting lists with  ' + this.route.snapshot.params['filter']);
@@ -49,77 +49,102 @@ export class SwapListComponent implements OnInit {
         this.searchTerm = this.route.snapshot.params['filter'];
         console.log('Filter is ' + this.searchTerm);
 
-        if (this.searchTerm === 'sent')
-        {
-            this.swapService.getMySwapRequests(this.authService.currentUser.id)
+        this.swapService.searchSwaps(this.searchTerm, this.authService.currentUser.id)
             .subscribe({
                 next: data => {
-
                     var stringified = JSON.stringify(data);
                     var parsed = JSON.parse(stringified);
                     this.swapResults = parsed;
-                    console.log('Dates are ' + this.swapResults[0].createdDate);
-                    console.log('Dates are ' + this.swapResults[1].createdDate);
-
                 }
-                    ,
-                error: () => console.log('Error'),
-                complete: () => console.log('no error')
+                ,
+                error: () => { console.log('Error'); },
+                complete: () => { console.log('No error'); }
             });
-        }
-        else if (this.searchTerm === 'received')
-        {
-            this.swapService.getMySwapOffers(this.authService.currentUser.id)
-            .subscribe({
-                next: data => {
 
-                    var stringified = JSON.stringify(data);
-                    var parsed = JSON.parse(stringified);
-                    this.swapResults = parsed;
-                    console.log('Dates are ' + this.swapResults[0].createdDate);
-                    console.log('Dates are ' + this.swapResults[1].createdDate);
-
-                }
-                    ,
-                error: () => console.log('Error'),
-                complete: () => console.log('no error')
-            });
-        }
-        else if (this.searchTerm === 'all')
-        {
-            this.swapService.getAllMySwaps(this.authService.currentUser.id)
-            .subscribe({
-                next: data => {
-
-                    var stringified = JSON.stringify(data);
-                    var parsed = JSON.parse(stringified);
-                    this.swapResults = parsed;
-                    console.log('Dates are ' + this.swapResults[0].createdDate);
-                    console.log('Dates are ' + this.swapResults[1].createdDate);
-
-                }
-                    ,
-                error: () => console.log('Error'),
-                complete: () => console.log('no error')
-            });
-        }
-
-
-
-        
-        this.visibleSwaps = []
-        this.searchableSwaps = []
-        this.searchableSwaps = (this.searchTerm)
-            ? this.swapService.searchSwaps(this.searchTerm, this.authService.currentUser.id)
-            : this.swapService.getAllSwaps();
-
-        this.visibleSwaps = this.searchableSwaps.slice(0);
-
-        //console.log('****** Got SEARCH books ' + this.searchableBooks);
-        //console.log('****** Got SEARCH ?? ' + this.search);
-        //console.log('Got vis books ' + this.visibleSwaps);
-        //this.visibleSwaps = this.allbooks.slice(0);
     }
+    // var swapResults = this.getMySwapRequests(id);
+    // else if (this.searchTerm === 'received')
+    // swapResults = this.getMySwapOffers(id);
+    // else if (this.searchTerm === 'pending')
+    // swapResults = this.getMyPendingOffers(id);
+    // else  
+    // swapResults = this.getAllMySwaps(id);
+
+
+    // if (this.searchTerm === 'sent')
+    // {
+    //     this.swapService.getMySwapRequests(this.authService.currentUser.id)
+    //     .subscribe({
+    //         next: data => {
+
+    //             var stringified = JSON.stringify(data);
+    //             var parsed = JSON.parse(stringified);
+    //             this.swapResults = parsed;
+    //             console.log('Dates are ' + this.swapResults[0].createdDate);
+    //             console.log('Dates are ' + this.swapResults[1].createdDate);
+
+    //         }
+    //             ,
+    //         error: () => console.log('Error'),
+    //         complete: () => console.log('no error')
+    //     });
+    // }
+    // else if (this.searchTerm === 'received')
+    // {
+    //     this.swapService.getMySwapOffers(this.authService.currentUser.id)
+    //     .subscribe({
+    //         next: data => {
+
+    //             var stringified = JSON.stringify(data);
+    //             var parsed = JSON.parse(stringified);
+    //             this.swapResults = parsed;
+    //             console.log('Dates are ' + this.swapResults[0].createdDate);
+    //             console.log('Dates are ' + this.swapResults[1].createdDate);
+
+    //         }
+    //             ,
+    //         error: () => console.log('Error'),
+    //         complete: () => console.log('no error')
+    //     });
+    // }
+    // else if (this.searchTerm === 'all')
+    // {
+    //     this.swapService.getAllMySwaps(this.authService.currentUser.id)
+    //     .subscribe({
+    //         next: data => {
+
+    //             var stringified = JSON.stringify(data);
+    //             var parsed = JSON.parse(stringified);
+    //             this.swapResults = parsed;
+    //             console.log('Dates are ' + this.swapResults[0].createdDate);
+    //             console.log('Dates are ' + this.swapResults[1].createdDate);
+
+    //         }
+    //             ,
+    //         error: () => console.log('Error'),
+    //         complete: () => console.log('no error')
+    //     });
+    // }
+
+
+    //this.fetchSwaps();
+
+
+
+    //console.log('****** Got SEARCH books ' + this.searchableBooks);
+    //console.log('****** Got SEARCH ?? ' + this.search);
+    //console.log('Got vis books ' + this.visibleSwaps);
+    //this.visibleSwaps = this.allbooks.slice(0);
+
+
+    handleError() {
+
+    }
+    processData(data: any) {
+
+    }
+
+    handleComplete() { }
 
     getTitle(id: number) {
         var book = this.bookService.getBook(id);
@@ -139,17 +164,60 @@ export class SwapListComponent implements OnInit {
         return book.cover;
     }
 
-    completeSwap(id: number) {
-        this.swapService.completeSwap(id);
+    acceptDonate(swap: Swap) {
+
+        swap.status = StatusType.Acc;
+        swap.type = 'donate';
+        this.swapService.acceptSwapRequest(swap)
+            .subscribe({
+                next: data => {
+                    // var stringified = JSON.stringify(data);
+                    // var parsed:IBook = JSON.parse(stringified);
+                    // console.log('Loading book' + parsed.title);
+                    console.log('Got new swap id ' + data.id);
+                    //this.router.navigate(['book/' + this.bookDisplay.id]);
+                },
+                complete: () => {
+
+                    this.router.navigate(['/swaps/all']);
+
+                }
+            },
+            );
+    }
+
+    completeSwap(swap: Swap) {
+        swap.status = StatusType.Swap;
+        this.swapService.completeSwap(swap)
+            .subscribe({
+                next: data => {
+                    var stringified = JSON.stringify(data);
+                    var parsed = JSON.parse(stringified);
+                    this.swapResults = parsed;
+                }
+                ,
+                error: () => { console.log('Error'); },
+                complete: () => {
+
+                    if (swap.type === 'swap') {
+                        if (swap.offerMember?.ownerId)
+                            this.authService.updateUserCount(swap.offerMember.ownerId, 'swap');
+
+                        if (swap.recipientMember?.ownerId)
+                            this.authService.updateUserCount(swap.recipientMember.ownerId, 'swap');
+                    }
+                    else if (swap.type === 'donate' && swap.recipientMember?.ownerId) {
+                        console.log('Update donate count for ' + swap.recipientMember?.ownerId);
+                        this.authService.updateUserCount(swap.recipientMember?.ownerId, 'donate');
+                    }
+                }
+            });
         this.router.navigate(['/swaps', 'done']);
     }
 
-    getrandomNumber()
-    {
-        return Math.floor((Math.random() * 4) + 1);
-    }
 
-    openViewAvailableSwapBooksDialog(swapid: number,id?: number) {
+
+    openViewAvailableSwapBooksDialog(swapid: number, id?: number) {
         //console.log('Looking for ' + id);
         const dialogConfig = new MatDialogConfig();
 
@@ -164,7 +232,7 @@ export class SwapListComponent implements OnInit {
 
         };
 
-        dialogConfig.maxWidth = '800px';
+        dialogConfig.width = '900px';
         dialogConfig.panelClass = 'my-class';
 
         const dialogRef = this.dialog.open(BooksPickComponent, dialogConfig);

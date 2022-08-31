@@ -6,7 +6,7 @@
 
 .btn-navbar {background-color: #2a4d9f;}
 
-#searchForm {margin-right: 100px}
+#searchForm {margin-right: 50px}
 
 @media (max-width: 1200px) {#searchForm {display:none}
 }

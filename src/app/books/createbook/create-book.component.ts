@@ -104,9 +104,8 @@ export class CreateBookComponent implements OnInit {
                 //this.router.navigate(['book/' + this.bookDisplay.id]);
             },
             complete: () => {
-                this.authService.updateUserBookCount(this.authService.currentUser.id);
-                this.router.navigate(['book/' + this.bookDisplay.id]);
-                
+                this.authService.updateUserCount(this.authService.currentUser.id,'book');
+                this.router.navigate(['book/' + this.bookDisplay.id]);                
             }
         },
             );

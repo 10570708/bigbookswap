@@ -14,6 +14,9 @@ a { color: #bbb; text-decoration: none;}
     margin-right: 5px;
 }
 
+@media (max-width: 1200px) {#headerRow {display:none}
+}
+
 .btn{
     border-radius: 4px;
 }

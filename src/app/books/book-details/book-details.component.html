@@ -53,8 +53,8 @@
             <div class="spaced">
              <button class="btn btn-info" *ngIf="book?.cover && book?.cover?.length !== 0"  (click)="buildBookHref()"><span class="glyphicon glyphicon-search"></span> Find Out More</button>
             <button *ngIf="book?.ownerId === ownerId" class="btn btn-warning" (click)="removeBook()"><span class="glyphicon glyphicon-trash"></span>Delete Book</button>
-            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Swap.toLowerCase())" class="btn btn-success" (click)="requestSwap()"><span class="glyphicon glyphicon-transfer"></span>RequestSwap</button>
-            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Donate.toLowerCase())" class="btn btn-success" (click)="requestDonation()"><span class="glyphicon glyphicon-share-alt"></span>RequestDonation</button>
+            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Swap.toLowerCase())" class="btn btn-success" (click)="requestSwap('swap')"><span class="glyphicon glyphicon-transfer"></span>RequestSwap</button>
+            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Donate.toLowerCase())" class="btn btn-success" (click)="requestSwap('donate')"><span class="glyphicon glyphicon-share-alt"></span>RequestDonation</button>
               
     
             </div>

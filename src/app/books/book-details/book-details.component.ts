@@ -86,11 +86,12 @@ export class BookDetailsComponent implements OnInit {
 
     }
 
-    requestSwap() {
+    requestSwap(type: string) {
         if (this.book?.id) {
             var offerMember = new SwapMember();
             var recipientMember = new SwapMember();
             recipientMember.ownerId = this.book?.ownerId;
+            console.log('Book owner is ' + this.book?.ownerId);
             offerMember.setSwapMember(
                 this.authService.currentUser.id,
                 this.book.id,
@@ -100,11 +101,18 @@ export class BookDetailsComponent implements OnInit {
 
             var mySwap = new Swap();
             mySwap.createSwapRequest(
+                type,
                 offerMember,
                 recipientMember,
-                StatusType.Res);
+                StatusType.Req);
 
-              
+              console.log('((((((((((((((((((((((())))))))))))))))))');
+
+              console.log('Sending rquest : ' + mySwap);
+
+
+              console.log('((((((((((((((((((((((())))))))))))))))))');
+
             this.swapService.saveSwapRequest(mySwap)
             .subscribe({
                 next: data => {

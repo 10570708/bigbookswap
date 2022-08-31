@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core'
-import { APIService, BookService, SwapService } from './shared/index';
+import { APIService, BookService, StatusType, Swap, SwapMember, SwapService } from './shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBook } from './shared/index';
 import { SwapListComponent } from '../swaps/swap-list.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from '../user/auth.service';
 
 
 @Component({
@@ -31,13 +32,16 @@ export class BooksPickComponent implements OnInit {
     constructor(private bookService: BookService,  private route:ActivatedRoute,
         private router: Router,
         private apiService: APIService,
+        private authService: AuthService,
         private dialogRef: MatDialogRef<SwapListComponent>,
         @Inject(MAT_DIALOG_DATA) data: any,
         private swapService:SwapService) 
         {
         this.owner = data.owner;
-        this.swapid = data.swap;
-    }
+        this.swapid = data.swap;    
+        }
+
+
     
 
     sortBooks(sortField: string)
@@ -116,9 +120,39 @@ export class BooksPickComponent implements OnInit {
 
     }
 
-   acceptSwap(bookid:number){
+   acceptSwap(book:IBook){
 
-    this.swapService.acceptSwap(this.swapid, bookid, this.owner);
+    //this.swapService.acceptSwap(this.swapid, bookid, this.owner);
+
+    var swap = new Swap();
+    var member: SwapMember = new SwapMember();
+    member.setSwapMember(this.authService.currentUser.id,book.id,book.title,book.cover,book.author);
+
+    console.log('The swap id is ' + this.swapid);
+    swap.createSwapAccept(this.swapid,member,StatusType.Acc);
+    console.log('The swap is ' + swap.id + ' - ' + swap.offerMember?.ownerId);
+    this.swapService.acceptSwapRequest(swap)
+    .subscribe({
+        next: data => {
+            // var stringified = JSON.stringify(data);
+            // var parsed:IBook = JSON.parse(stringified);
+            // console.log('Loading book' + parsed.title);
+            console.log('Got new swap id ' + data.id);
+            //this.router.navigate(['book/' + this.bookDisplay.id]);
+        },
+        complete: () => {
+
+            this.router.navigate(['/swaps/all']);
+            
+        }
+    },
+        );
+
+
+    //this.apiService.acceptSwap
+
+
+
     this.dialogRef.close();
     this.router.navigate(['/swaps','pending']);
 

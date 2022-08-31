@@ -11,6 +11,7 @@ export interface ISwap {
 
 export class Swap implements ISwap {
     public id: number = 0;
+    public type: string = 'swap';
     public offerMember?: SwapMember;
     public recipientMember?: SwapMember;
     public swapDate?: Date;
@@ -20,14 +21,26 @@ export class Swap implements ISwap {
     constructor() {}
 
     createSwapRequest(
+        type: string,
         offerMember: SwapMember,
         recipientMember: SwapMember,
         status: string)
         {      
+            this.type = type,
             this.offerMember = offerMember;
             this.recipientMember = recipientMember;
             this.status = status;
         }
+
+        createSwapAccept(
+            swapId: number,
+            recipientMember: SwapMember,
+            status: string)
+            {      
+                this.id = swapId,
+                this.recipientMember = recipientMember;
+                this.status = status;
+            }
 }
 
 export class SwapMember {
@@ -51,11 +64,10 @@ export class SwapMember {
 }
 
 export enum StatusType {
-    Req = 'Request Received',
-    Res = 'Request Sent',
-    Acc = 'Request Accepted',
-    Rej = 'Request Rejected',
-    Swap = 'Swap Done',
+    Req = 'Requested',
+    Acc = 'Accepted',
+    Rej = 'Rejected',
+    Swap = 'Complete',
     Donate = 'Donation Made'
 }   
 

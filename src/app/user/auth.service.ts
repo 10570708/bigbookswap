@@ -150,7 +150,12 @@ export class AuthService {
     }
 
 
-    updateUserBookCount(id:number) {
+    updateUserCount(id:number, type:string) {
+
+        let apiUrl = 'http://localhost:8080/api/v1/user/';
+        if (type === 'book') apiUrl += 'bookcount/';
+        else if (type === 'swap') apiUrl += 'swapcount/';
+        else if (type === 'donate') apiUrl += 'donatecount/';
 
         let httpHeaders = new HttpHeaders({
             'Content-Type': 'application/json',
@@ -159,7 +164,7 @@ export class AuthService {
         let options = { headers: httpHeaders };
 
         var updatedUser : any;
-        this.httpClient.put('http://localhost:8080/api/v1/user/bookcount/'+id, options)
+        this.httpClient.put(apiUrl+id, options)
             .subscribe({
                 next: data => {
                     updatedUser = data;
