@@ -56,6 +56,8 @@ export class BookLookupComponent implements OnInit {
                     this.imageLoading = false;
                 },
                 complete: () => {
+                    this.imageLoading = false;
+                    this.bookDisplay.cover = (this.bookDisplay.cover.length > 0) ? this.bookDisplay.cover : 'cover';
                     this.bookFound = true;
                     this.getBookAuthor();
                 }

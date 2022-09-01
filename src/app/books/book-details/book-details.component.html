@@ -51,40 +51,24 @@
             </div>
 
             <div class="spaced">
-             <button class="btn btn-info" *ngIf="book?.cover && book?.cover?.length !== 0"  (click)="buildBookHref()"><span class="glyphicon glyphicon-search"></span> Find Out More</button>
-            <button *ngIf="book?.ownerId === ownerId" class="btn btn-warning" (click)="removeBook()"><span class="glyphicon glyphicon-trash"></span>Delete Book</button>
-            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Swap.toLowerCase())" class="btn btn-success" (click)="requestSwap('swap')"><span class="glyphicon glyphicon-transfer"></span>RequestSwap</button>
-            <button *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Donate.toLowerCase())" class="btn btn-success" (click)="requestSwap('donate')"><span class="glyphicon glyphicon-share-alt"></span>RequestDonation</button>
-              
-    
+              <button class="btn btn-info" *ngIf="book?.cover && book?.cover?.length !== 0"
+                (click)="buildBookHref()"><span class="glyphicon glyphicon-search"></span> Find Out More</button>
+              <button *ngIf="book?.ownerId === ownerId" class="btn btn-warning" (click)="removeBook()"><span
+                  class="glyphicon glyphicon-trash"></span>Delete Book</button>
+              <button
+                *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Swap.toLowerCase())"
+                class="btn btn-success" (click)="requestSwap('swap')"><span
+                  class="glyphicon glyphicon-transfer"></span>RequestSwap</button>
+              <button
+                *ngIf="(book?.ownerId !== ownerId) && (book?.status?.toLowerCase()  === bookStatus.Available.toLowerCase()) && (book?.option?.toLowerCase() === bookOption.Donate.toLowerCase())"
+                class="btn btn-success" (click)="requestSwap('donate')"><span
+                  class="glyphicon glyphicon-share-alt"></span>RequestDonation</button>
+
+
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- <div class="row">
-    <div class="col-md-6">
-      <div><strong>Title:</strong> {{book.title}}</div>
-    </div>
-    <div class="col-md-6">
-      <div><strong>ISBN:</strong> {{book.isbn}}</div>
-    </div>
-    <div class="col-md-6">
-      <div><img src="https://covers.openlibrary.org/b/id/{{book.cover}}-M.jpg"></div>
-    </div>
-    <div class="col-md-6">
-      <div><strong>Author:</strong> {{book.author}}</div>
-    </div>
-    <div class="col-md-6">
-      <address>
-        <strong>Condition :</strong>
-        {{book.condition}}<br />
-      </address>
-    </div>
-    <div class="col-md-6">
-      <div><strong>Date:</strong> {{book.addedDate | date:'dd-MM-yyyy'}}</div>
-    </div>
-  </div> -->
 </div>

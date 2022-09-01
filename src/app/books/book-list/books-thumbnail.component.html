@@ -1,8 +1,6 @@
 <div class=" bookbox well hoverwell thumbnail" style="margin:2px;">
     <app-collapsible-well style="background-color:#a21313;">
 
-
-
         <div well-title>
             <div class="row" style="clear: right;">
                 <div class="col-md-4">
@@ -18,7 +16,7 @@
                 <div class="col-md-8" style="vertical-align: top">
 
                     <div class="row no-pad">
-                       
+
                         <div class="col-md-12 no-pad">
                             <h2 class="heading">
                                 <a (click)="loadBook(booklist.id)" [routerLink]="['/book/' , booklist.id]">
@@ -29,7 +27,7 @@
                     </div>
                     <div class="row no-pad">
 
-                      
+
                         <div class="col-md-12 no-pad">
                             <img src="./assets/images/swap1.jpg" width="90px;"
                                 *ngIf="(booklist.option | lowercase) === 'swap'">
@@ -54,7 +52,5 @@
             </div>
         </div>
 
-
     </app-collapsible-well>
-    <!-- <button class="btn btn-primary" (click)="handleClickMe()">Pick Me</button> -->
 </div>

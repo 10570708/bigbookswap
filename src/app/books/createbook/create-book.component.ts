@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
 import { StorageService } from "src/app/storage-service";
 import { AuthService } from "src/app/user/auth.service";
 import { BookLookupComponent } from "../book-lookup/book-lookup.component";
@@ -42,15 +41,17 @@ export class CreateBookComponent implements OnInit {
     submitted = false;
     isDirty: boolean = true;
 
-    constructor(private formBuilder: UntypedFormBuilder, private storageService: StorageService, private authService: AuthService, private router: Router, private bookService: BookService, private apiService: APIService, private dialog: MatDialog) { }
+    constructor(private formBuilder: UntypedFormBuilder, 
+        private authService: AuthService, 
+        private router: Router, 
+        private apiService: APIService, 
+        private dialog: MatDialog) { }
+
     ngOnInit(): void {
 
         this.form = this.formBuilder.group(
-
             {
-                //title: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9\\-\\!\\?\\)\\(\\s]+'), Validators.minLength(2), Validators.maxLength(50)]],
                 isbn: ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.maxLength(13), Validators.minLength(10)]],
-                //author:['',[Validators.required, Validators.pattern('[a-zA-Z\\s\\,]+'), Validators.minLength(5), Validators.maxLength(50)]],
                 condition: ['', Validators.required],
                 option: ['', Validators.required]
             }
@@ -63,7 +64,6 @@ export class CreateBookComponent implements OnInit {
     }
 
     get f(): { [key: string]: AbstractControl } {
-        //console.log(this.form.controls)
         return this.form.controls;
     }
 
@@ -91,29 +91,20 @@ export class CreateBookComponent implements OnInit {
             this.bookDisplay.publisher = "";
         }
 
-        //this.bookDisplay.id = this.bookService.getNextId();
-        //this.bookService.saveBook(this.bookDisplay);
         this.apiService.saveBook(this.bookDisplay)
         .subscribe({
             next: data => {
-                // var stringified = JSON.stringify(data);
-                // var parsed:IBook = JSON.parse(stringified);
-                // console.log('Loading book' + parsed.title);
                 this.bookDisplay.id = data.id;
                 this.isDirty = false;
-                //this.router.navigate(['book/' + this.bookDisplay.id]);
             },
             complete: () => {
                 this.authService.updateUserCount(this.authService.currentUser.id,'book');
                 this.router.navigate(['book/' + this.bookDisplay.id]);                
             }
-        },
-            );
-
-        
-
-        // this.toastrService.success('Successfully saved your book: ' + this.form.value['title']);
+        });
     }
+
+
     cancel() {
         this.router.navigate(['/books']);
     }
@@ -147,8 +138,6 @@ export class CreateBookComponent implements OnInit {
             next: data => {
                 var stringJson = JSON.stringify(data);
 
-                //console.log('Return is ' + stringJson); 
-
                 if (stringJson === 'true') {}
                 else if (stringJson === 'false'){
                     this.loadForm = true;
@@ -170,8 +159,6 @@ export class CreateBookComponent implements OnInit {
         });
     }
 
-
-
     resetformgroup() {
         this.form = this.formBuilder.group(
             {
@@ -182,7 +169,5 @@ export class CreateBookComponent implements OnInit {
             }
         );
     }
-
 }
-
 

@@ -13,6 +13,19 @@ export interface IBook {
     option: OptionType
 }
 
+
+export class BookUpdate  {
+    public id: number= 0;
+    public status: string = "";
+
+
+constructor(id:number, status: string) {
+    this.id = id,
+    this.status = status;
+}
+
+}
+
 export enum ConditionType {
     Good = 'Good',
     Fair = 'Fair',

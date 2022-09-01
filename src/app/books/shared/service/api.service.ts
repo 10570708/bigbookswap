@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap, Observable } from 'rxjs';
-import { IBook } from '../model/book.model';
+import { IBook, BookUpdate } from '../model/book.model';
 
 @Injectable()
 export class APIService {
@@ -22,6 +22,24 @@ export class APIService {
         console.log('http://localhost:8080/api/v1/book/'+id);
         return this.httpClient.delete('http://localhost:8080/api/v1/book/'+id);        
       }
+
+      updateBook(bookId: number, status: string) : Observable<any>{
+
+        console.log('In call for update book');
+
+        let httpHeaders = new HttpHeaders({
+          'Content-Type' : 'application/json',
+          'Cache-Control': 'no-cache'
+             });    
+             let options = {
+          headers: httpHeaders
+             };              
+
+        var bookUpdate = new BookUpdate(bookId, status);
+
+        return this.httpClient.put('http://localhost:8080/api/v1/book/'+bookId, bookUpdate,options);   
+      }
+  
 
       public saveBook(book: IBook) : Observable<any>{
 

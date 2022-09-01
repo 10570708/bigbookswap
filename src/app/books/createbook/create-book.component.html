@@ -17,8 +17,17 @@
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-md-4">
-              <img style="height:150px;" src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg"
-                class="image-fluid">
+
+              <img *ngIf="(bookDisplay.cover.length !== 0 && bookDisplay.cover !== 'cover')"
+                src="https://covers.openlibrary.org/b/id/{{bookDisplay.cover}}-M.jpg" 
+                class="image-fluid addImage"
+                >
+              <img *ngIf="(bookDisplay.cover.length === 0 || bookDisplay.cover === 'cover')"
+                src="./assets/images/generic.jpg" 
+                class="image-fluid addImage" 
+                >
+
+
             </div>
             <div class="col-md-8">
               <div class="card-body">

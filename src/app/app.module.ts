@@ -47,14 +47,14 @@ declare let JQuery:any;
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes,{ onSameUrlNavigation: 'reload' }),
-  //   RouterModule.forRoot([
-  //     {
-  //         path: 'secured',
-  //         component: NavBarComponent,
-  //         pathMatch: 'full',
-  //         canActivate: [AuthGuard]
-  //     }
-  // ]),
+    RouterModule.forRoot([
+      {
+          path: 'secured',
+          component: NavBarComponent,
+          pathMatch: 'full',
+          canActivate: [AuthGuard]
+      }
+  ]),
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

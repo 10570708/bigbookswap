@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="(searchTerm || visibleBooks.length > 0)"
+        <div class="row" *ngIf="(searchTerm || (visibleBooks.length > 0 && total > 10))"
             style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
             <div class="col-md-4" style="text-align: center;">
                 <span style="color:grey;" *ngIf="(searchTerm)">Search For: <button disabled>{{ searchTerm }} </button>
@@ -113,7 +113,7 @@
 
 
 
-    <div *ngIf="visibleBooks.length !== 0" class="row" style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
+    <div *ngIf="visibleBooks.length !== 0 && total > 10" class="row" style="margin-bottom:10px;margin-left:10px;margin-right:10px;background-color: #f2f2f2;">
         <div class="col-md-4" style="text-align: center;"></div>
 
         <div class="col-md-4" style="text-align: center;"></div>

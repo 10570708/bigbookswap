@@ -91,8 +91,6 @@ removeBook(id: number){
   BOOKS = BOOKS.filter(current => current.id !== id);
 
 }
-
-
     saveBook(book:IBook){
 
       console.log('Saving my Book !!!!' + book.cover);

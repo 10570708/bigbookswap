@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { BookService, StatusType, Swap, SwapService } from '../books/shared/index';
+import { APIService, BookService, BookStatus, StatusType, Swap, SwapService } from '../books/shared/index';
 import { OnInit } from '@angular/core';
 import { IBook, ISwap } from '../books/shared/index';
 import { ActivatedRoute, Router } from "@angular/router";
@@ -35,7 +35,8 @@ export class SwapListComponent implements OnInit {
         private route: ActivatedRoute,
         private swapService: SwapService,
         private dialog: MatDialog,
-        private authService: AuthService
+        private authService: AuthService,
+        private apiService: APIService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
@@ -199,22 +200,50 @@ export class SwapListComponent implements OnInit {
                 error: () => { console.log('Error'); },
                 complete: () => {
 
+                    let bookId = 0;
+                    let bookStatus = '';
                     if (swap.type === 'swap') {
+                        bookStatus = BookStatus.Swapped;
                         if (swap.offerMember?.ownerId)
                             this.authService.updateUserCount(swap.offerMember.ownerId, 'swap');
+                            bookId = (swap.offerMember?.bookId) ? swap.offerMember?.bookId : 0;
+                            this.updateBook(bookId,bookStatus);
 
                         if (swap.recipientMember?.ownerId)
                             this.authService.updateUserCount(swap.recipientMember.ownerId, 'swap');
+                            bookId = (swap.recipientMember?.bookId) ? swap.recipientMember?.bookId : 0;
+                            this.updateBook(bookId,bookStatus);
+
                     }
                     else if (swap.type === 'donate' && swap.recipientMember?.ownerId) {
-                        console.log('Update donate count for ' + swap.recipientMember?.ownerId);
+                        bookStatus = BookStatus.Donated;
+                        bookId = (swap.offerMember?.bookId) ? swap.offerMember?.bookId : 0;
                         this.authService.updateUserCount(swap.recipientMember?.ownerId, 'donate');
+                        this.updateBook(bookId,bookStatus);
+
                     }
                 }
             });
         this.router.navigate(['/swaps', 'done']);
     }
 
+    updateBook(id: number, status: string){
+        this.apiService.updateBook(id,status)
+        .subscribe({
+            next: data => {
+                 var stringified = JSON.stringify(data);
+                 var parsed:IBook = JSON.parse(stringified);
+                //this.router.navigate(['book/' + this.bookDisplay.id]);
+            },
+            complete: () => {
+
+
+            }
+        },
+        );
+
+        
+    }
 
 
     openViewAvailableSwapBooksDialog(swapid: number, id?: number) {
