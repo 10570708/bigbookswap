@@ -34,7 +34,7 @@
                 <h2 class="card-title">{{ bookDisplay.title}}</h2>
                 <h3>by: {{ bookDisplay.author }}</h3>
                 <p class="card-text">Published By: {{ bookDisplay.publisher }}</p>
-                <p class="card-text"># Pages: {{ bookDisplay.numPages }}</p>
+                <p class="card-text"># Pages: {{ (bookDisplay.numPages == 0) ? '-' :  bookDisplay.numPages }}</p>
 
               </div>
             </div>

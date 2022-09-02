@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6"><strong>Pages: </strong></div>
-                                        <div class="col-md-6">{{ book.numPages }}</div>
+                                        <div class="col-md-6">{{ (book.numPages == 0) ? '-' :  book.numPages }} </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6"><strong>ISBN: </strong></div>

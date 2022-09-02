@@ -35,7 +35,7 @@
             </div>
             <div style="width:100%">
               <div class="col-md-3"><strong>Pages:</strong></div>
-              <div class="col-md-9">{{ book?.numPages }}</div>
+              <div class="col-md-9">{{ (book?.numPages == 0) ? '-' :  book?.numPages }} </div>
             </div>
             <div style="width:100%">
               <div class="col-md-3"><strong>Condition:</strong></div>

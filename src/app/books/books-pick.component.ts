@@ -161,6 +161,7 @@ export class BooksPickComponent implements OnInit {
 
    close() { this.dialogRef.close(true); }
 
+   checkStyle(index: number){ return (index % 2 === 0) ? 'light-grey' : 'white';}
 
 
 }

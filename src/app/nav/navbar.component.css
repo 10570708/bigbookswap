@@ -8,6 +8,10 @@
 
 #searchForm {margin-right: 50px}
 
+.tstnav:active{
+    color:red;
+}
+
 @media (max-width: 1200px) {#searchForm {display:none}
 }
 

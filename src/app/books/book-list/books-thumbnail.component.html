@@ -1,56 +1,49 @@
-<div class=" bookbox well hoverwell thumbnail" style="margin:2px;">
-    <app-collapsible-well style="background-color:#a21313;">
+<div class=" bookbox well thumbnail" style="margin:2px;">
 
-        <div well-title>
-            <div class="row" style="clear: right;">
-                <div class="col-md-4">
+    <div class="row" style="clear: right;">
+        <div class="col-md-4">
 
-                    <img *ngIf="(booklist?.cover?.length !== 0 && booklist?.cover !== 'cover')"
-                        style="margin-bottom:5px;" src="https://covers.openlibrary.org/b/id/{{booklist.cover}}-S.jpg"
-                        height="80px;" class="image-fluid">
-                    <img *ngIf="(booklist?.cover?.length === 0 || booklist?.cover === 'cover')"
-                        style="margin-bottom:5px;" src="./assets/images/generic.jpg" height="80px;" class="image-fluid">
-                </div>
-
-
-                <div class="col-md-8" style="vertical-align: top">
-
-                    <div class="row no-pad">
-
-                        <div class="col-md-12 no-pad">
-                            <h2 class="heading">
-                                <a (click)="loadBook(booklist.id)" [routerLink]="['/book/' , booklist.id]">
-                                    {{booklist.title }}
-                                </a>
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="row no-pad">
-
-
-                        <div class="col-md-12 no-pad">
-                            <img src="./assets/images/swap1.jpg" width="90px;"
-                                *ngIf="(booklist.option | lowercase) === 'swap'">
-                            <img src="./assets/images/donate1.jpg" width="90px;"
-                                *ngIf="(booklist.option | lowercase) === 'donate'">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <img class="image" *ngIf="(booklist?.cover?.length !== 0 && booklist?.cover !== 'cover')"
+                style="margin-bottom:5px;" src="https://covers.openlibrary.org/b/id/{{booklist.cover}}-M.jpg">
+            <img class="image" *ngIf="(booklist?.cover?.length === 0 || booklist?.cover === 'cover')"
+                style="margin-bottom:5px;" src="./assets/images/generic.jpg">
         </div>
 
-        <div well-body>
+
+        <div class="col-md-8" style="vertical-align: top">
+
+            <div class="row no-pad">
+
+                <div class="col-md-12 no-pad">
+                    <h2 class="heading">
+                        <a (click)="loadBook(booklist.id)" [routerLink]="['/book/' , booklist.id]">
+                            {{ (booklist.title.length>30)? (booklist.title | slice:0:30)+'...':(booklist.title) }}
+                        </a>
+                    </h2>
+                </div>
+            </div>
+            <div class="row no-pad">
+
+
+                <div class="col-md-12 no-pad">
+                    <img src="./assets/images/swap1.jpg" width="90px;" *ngIf="(booklist.option | lowercase) === 'swap'">
+                    <img src="./assets/images/donate1.jpg" width="90px;"
+                        *ngIf="(booklist.option | lowercase) === 'donate'">
+                </div>
+            </div>
 
             <div class="row no-pad" style="clear: right;">
-                <div class="col-md-4 no-pad"></div>
 
-                <div class="col-md-8 no-pad" style="vertical-align: top;color:#5090cc">
+                <div class="col-md-12 no-pad top-space" style="vertical-align: top;color:#5090cc">
                     <div><strong>Author:</strong> {{booklist.author}}</div>
-                    <div><strong>Publisher:</strong> {{booklist.condition}}</div>
+                    <div><strong>Publisher:</strong> {{booklist.publisher}}</div>
                     <div><strong>Condition:</strong> {{booklist.condition}}</div>
                 </div>
             </div>
         </div>
+    </div>
 
-    </app-collapsible-well>
+
+
 </div>
+

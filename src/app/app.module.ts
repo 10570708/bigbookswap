@@ -23,7 +23,7 @@ import {
 import { AppComponent } from './books-app.component';
 import { NavBarComponent } from './nav/navbar.component';
 import { Error404Component } from './errors/404.component';
-import { TOASTR_TOKEN, Toastr, JQ_TOKEN, CollapsibleWellComponent } from './common/index';
+import { TOASTR_TOKEN, Toastr, JQ_TOKEN } from './common/index';
 import { Router, RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { AuthService } from './user/auth.service';
@@ -73,7 +73,6 @@ declare let JQuery:any;
     NavBarComponent,
     BookDetailsComponent,
     Error404Component,
-    CollapsibleWellComponent,
     MatAlertComponent,
     BookLookupComponent,
     BookDetailsComponent,
