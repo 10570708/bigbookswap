@@ -18,14 +18,14 @@ export class APIService {
 
 
       public deleteBook(id: number) : Observable<any>{
-        console.log('Removing book' + id);
-        console.log('http://localhost:8080/api/v1/book/'+id);
+      // console.log('Removing book' + id);
+      // console.log('http://localhost:8080/api/v1/book/'+id);
         return this.httpClient.delete('http://localhost:8080/api/v1/book/'+id);        
       }
 
       updateBook(bookId: number, status: string) : Observable<any>{
 
-        console.log('In call for update book');
+      // console.log('In call for update book');
 
         let httpHeaders = new HttpHeaders({
           'Content-Type' : 'application/json',
@@ -50,13 +50,13 @@ export class APIService {
              let options = {
           headers: httpHeaders
              };        
-        console.log('Adding book[' + book.cover+']');
+      // console.log('Adding book[' + book.cover+']');
 
         book.id = 0;
-        console.log('Adding book for owner ' + book.ownerId );
+      // console.log('Adding book for owner ' + book.ownerId );
 
-        console.log('Adding book[' + book.cover.length);
-        console.log('Adding book[' + book.id+']');
+      // console.log('Adding book[' + book.cover.length);
+      // console.log('Adding book[' + book.id+']');
 
         book.cover = '' + book.cover + '';
         book.publisher = ''+book.publisher+'';

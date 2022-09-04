@@ -43,7 +43,7 @@ export class NavBarComponent{
 
     openProfileDialog() {
 
-        console.log('The nav says ' + this.auth.isAuthenticated());
+      // console.log('The nav says ' + this.auth.isAuthenticated());
 
         const dialogConfig = new MatDialogConfig();
 

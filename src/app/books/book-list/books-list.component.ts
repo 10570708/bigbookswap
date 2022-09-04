@@ -204,7 +204,7 @@ export class BooksListComponent implements OnInit {
 
 
     getBySearchOwnerCondtionOption(search: string) {
-        console.log('Gettins ALL 4');
+      // console.log('Gettins ALL 4');
         this.apiService.getBooksSearchConditionOptionOwner(search, this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),

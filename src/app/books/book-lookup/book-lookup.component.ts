@@ -81,7 +81,7 @@ export class BookLookupComponent implements OnInit {
                         this.bookLoading = false;
                     },
                     error: error => {
-                        console.log('Error !!!!' + error);
+                      // console.log('Error !!!!' + error);
                     },
                     complete: () => console.log('Complted look up 2'),
                 }

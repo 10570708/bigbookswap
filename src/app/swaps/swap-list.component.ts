@@ -59,11 +59,11 @@ export class SwapListComponent implements OnInit {
                 }
                 ,
                 error: () => { 
-                    console.log('Error'); 
+                  // console.log('Error'); 
                     this.searchComplete = true;
                 },
                 complete: () => { 
-                    console.log('No error');
+                  // console.log('No error');
                     this.searchComplete = true;
 
                  }
@@ -88,8 +88,8 @@ export class SwapListComponent implements OnInit {
     //             var stringified = JSON.stringify(data);
     //             var parsed = JSON.parse(stringified);
     //             this.swapResults = parsed;
-    //             console.log('Dates are ' + this.swapResults[0].createdDate);
-    //             console.log('Dates are ' + this.swapResults[1].createdDate);
+    //           // console.log('Dates are ' + this.swapResults[0].createdDate);
+    //           // console.log('Dates are ' + this.swapResults[1].createdDate);
 
     //         }
     //             ,
@@ -106,8 +106,8 @@ export class SwapListComponent implements OnInit {
     //             var stringified = JSON.stringify(data);
     //             var parsed = JSON.parse(stringified);
     //             this.swapResults = parsed;
-    //             console.log('Dates are ' + this.swapResults[0].createdDate);
-    //             console.log('Dates are ' + this.swapResults[1].createdDate);
+    //           // console.log('Dates are ' + this.swapResults[0].createdDate);
+    //           // console.log('Dates are ' + this.swapResults[1].createdDate);
 
     //         }
     //             ,
@@ -124,8 +124,8 @@ export class SwapListComponent implements OnInit {
     //             var stringified = JSON.stringify(data);
     //             var parsed = JSON.parse(stringified);
     //             this.swapResults = parsed;
-    //             console.log('Dates are ' + this.swapResults[0].createdDate);
-    //             console.log('Dates are ' + this.swapResults[1].createdDate);
+    //           // console.log('Dates are ' + this.swapResults[0].createdDate);
+    //           // console.log('Dates are ' + this.swapResults[1].createdDate);
 
     //         }
     //             ,
@@ -165,7 +165,7 @@ export class SwapListComponent implements OnInit {
                     // var stringified = JSON.stringify(data);
                     // var parsed:IBook = JSON.parse(stringified);
                     // console.log('Loading book' + parsed.title);
-                    console.log('Got new swap id ' + data.id);
+                  // console.log('Got new swap id ' + data.id);
                     //this.router.navigate(['book/' + this.bookDisplay.id]);
                 },
                 complete: () => {

@@ -57,7 +57,7 @@ export class BookDetailsComponent implements OnInit {
 
         if (this.book?.id) {
             this.apiService.deleteBook(this.book.id).subscribe((response) => {
-                console.log('');
+              // console.log('');
             });
 
             this.authService.reduceUserBookCount(this.authService.currentUser.id);

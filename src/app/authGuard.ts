@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
         if (this.storageService.isLoggedIn()) {
-            console.log('Returning true for logged in ');
+          // console.log('Returning true for logged in ');
             return this.isSignedIn();
         }
         else {

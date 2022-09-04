@@ -17,10 +17,10 @@ export class MatAlertComponent implements OnInit{
         private dialogRef: MatDialogRef<MatAlertComponent>,
         @Inject(MAT_DIALOG_DATA) data:any) {
 
-        console.log('The data is ' + JSON.stringify({ data: data}, null, 4));
+      // console.log('The data is ' + JSON.stringify({ data: data}, null, 4));
 
         this.title = data.title;
-        console.log('Description is ' + data.title);
+      // console.log('Description is ' + data.title);
     }
 
     ngOnInit() {

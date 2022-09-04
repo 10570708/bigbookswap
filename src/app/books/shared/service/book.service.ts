@@ -41,8 +41,8 @@ export class BookService {
     }
 
     getSearchSet(){
-      console.log('Sarch term is  + ' + this.searchTerm);
-      console.log('Length is ' + this.searchTerm.length);
+    // console.log('Sarch term is  + ' + this.searchTerm);
+    // console.log('Length is ' + this.searchTerm.length);
       return this.searchTerm.length > 0;
       
 
@@ -58,7 +58,7 @@ export class BookService {
       //console.log('Calling search Books with ' + searchTerm);
       var results: IBook[] = []; 
 
-        console.log('Looking for owner ' + searchTerm);
+      // console.log('Looking for owner ' + searchTerm);
           results = BOOKS.filter( book =>
               book.ownerId == 4 && book.status === BookStatus.Available            
               );
@@ -101,7 +101,7 @@ removeBook(id: number){
 }
     saveBook(book:IBook){
 
-      console.log('Saving my Book !!!!' + book.cover);
+    // console.log('Saving my Book !!!!' + book.cover);
       //const nextId = Math.max.apply(null, BOOKS.map(s => s.id));
       //book.id = nextId + 1;
       book.ownerId =  2;

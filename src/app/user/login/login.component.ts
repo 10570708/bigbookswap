@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit{
     }
     
     async login(formValues:any){
-        console.log('Logging in !!');
+      // console.log('Logging in !!');
         await this.authService.loginUser(formValues.username, formValues.password);
-        console.log('Just authenticatd');
+      // console.log('Just authenticatd');
 
     }
 

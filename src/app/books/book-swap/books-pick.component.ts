@@ -74,7 +74,7 @@ export class BooksPickComponent implements OnInit {
             // this.bookService.searchBooks(this.route.snapshot.params['search']).subscribe(
             //     books => {
             //         this.searchableBooks = books;
-            //         console.log('Got this many books ' + this.searchableBooks);
+            //       // console.log('Got this many books ' + this.searchableBooks);
             //     }
             // );
             this.search = true;
@@ -86,7 +86,7 @@ export class BooksPickComponent implements OnInit {
                     this.searchableBooks = parsed;
                     this.searchableBooks.forEach(book => console.log('This book is ' + book.title));
 
-                    console.log('books' + parsed);
+                  // console.log('books' + parsed);
                 },
                 error: () => console.log('Error'),
                 complete: () => {
@@ -106,13 +106,13 @@ export class BooksPickComponent implements OnInit {
         // }
 
         //console.log('****** Got SEARCH books ' + this.searchableBooks);
-        console.log('****** Got SEARCH ?? ' + this.search);
+      // console.log('****** Got SEARCH ?? ' + this.search);
 
 
 
         this.visibleBooks.forEach(book => console.log('This book is ' + book.title));
 
-        console.log('Got vis books ' + this.visibleBooks);
+      // console.log('Got vis books ' + this.visibleBooks);
 
         //this.visibleBooks = this.allbooks.slice(0);
 
@@ -128,16 +128,16 @@ export class BooksPickComponent implements OnInit {
     var member: SwapMember = new SwapMember();
     member.setSwapMember(this.authService.currentUser.id,book.id,book.title,book.cover,book.author);
 
-    console.log('The swap id is ' + this.swapid);
+  // console.log('The swap id is ' + this.swapid);
     swap.createSwapAccept(this.swapid,member,StatusType.Acc);
-    console.log('The swap is ' + swap.id + ' - ' + swap.offerMember?.ownerId);
+  // console.log('The swap is ' + swap.id + ' - ' + swap.offerMember?.ownerId);
     this.swapService.acceptSwapRequest(swap)
     .subscribe({
         next: data => {
             // var stringified = JSON.stringify(data);
             // var parsed:IBook = JSON.parse(stringified);
             // console.log('Loading book' + parsed.title);
-            console.log('Got new swap id ' + data.id);
+          // console.log('Got new swap id ' + data.id);
             //this.router.navigate(['book/' + this.bookDisplay.id]);
         },
         complete: () => {

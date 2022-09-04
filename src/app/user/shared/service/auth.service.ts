@@ -43,16 +43,16 @@ export class AuthService {
         return this.user().pipe(
             map((user) => {
                 const hasId = user.id !== null;
-                console.log('TAUTH SERVICE - is Loggd In - the user id is ' + user.id);
+              // console.log('TAUTH SERVICE - is Loggd In - the user id is ' + user.id);
                 //console.log('Not sure of this ' + !hasId ? false : true)
                 this.currentUser = user;
-                console.log(this.currentUser.id);
-                console.log(this.currentUser.username + '-' + this.currentUser.numDonations + '-' + this.currentUser.numSwaps);
+              // console.log(this.currentUser.id);
+              // console.log(this.currentUser.username + '-' + this.currentUser.numDonations + '-' + this.currentUser.numSwaps);
                 return !hasId ? false : true;             
             },
             ),
             catchError((error) => {
-                console.log('Caught ERROR ');
+              // console.log('Caught ERROR ');
 
                 return of(false);
             }
@@ -74,7 +74,7 @@ export class AuthService {
 
         let options = { headers: httpHeaders, withCredentials: true };
 
-        console.log('Checking fo r' + username + ' and ' + password);
+      // console.log('Checking fo r' + username + ' and ' + password);
 
         this.httpClient.post<IUser>('http://localhost:8080/api/v1/user/login', loginInfo, options)
             .subscribe({
@@ -86,7 +86,7 @@ export class AuthService {
                     this.isLoggedIn = true;
                 },
                 error: error => {
-                    console.log('Error logging in ');
+                  // console.log('Error logging in ');
                     this.router.navigate(['user/login/err']);
                 },
                 complete: () => {
@@ -136,7 +136,7 @@ export class AuthService {
                     // var stringified = JSON.stringify(data);
                     // var parsed:IBook = JSON.parse(stringified);
                     // console.log('Loading book' + parsed.title);
-                    console.log('Got user ' + data);
+                  // console.log('Got user ' + data);
                 }
             });
 
@@ -169,8 +169,8 @@ export class AuthService {
                 next: data => {
                     updatedUser = data;
                     this.storageService.saveUser(data);
-                    console.log('Got user ' + this.currentUser.id + ' and ' + data)
-                    console.log('Got user ' + data);
+                  // console.log('Got user ' + this.currentUser.id + ' and ' + data)
+                  // console.log('Got user ' + data);
                 },
                 complete: () => {
                     this.currentUser = updatedUser;
