@@ -3,10 +3,10 @@ import { Injectable } from "@angular/core";
 import { RouteConfigLoadEnd, Router } from "@angular/router";
 import { Observable, of, map } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
-import { StorageService } from "../storage-service";
+import { StorageService } from "../../../storage-service";
 
 
-import { IUser } from "./usr.modl";
+import { IUser } from "../model/user.model";
 
 @Injectable()
 export class AuthService {

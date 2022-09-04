@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
 import { BookService, IBook } from "../books/shared/index";
-import { AuthService } from "../user/auth.service";
+import { AuthService } from "../user/shared/service/auth.service";
 import { Router} from '@angular/router'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatAlertComponent } from './mat-alert.component';
-import { ProfileComponent } from "../user/profile.component";
+import { MatAlertComponent } from '../common/mat-alert.component';
+import { ProfileComponent } from "../user/profile/profile.component";
 import { StorageService } from "../storage-service";
 
 
@@ -24,6 +24,13 @@ export class NavBarComponent{
 
     getSearchTerm(){
         return this.bookService.getSearchTerm();
+    }
+
+    resetSearch() { this.bookService.resetSearchTerm();  }
+
+
+    getSearchSet(){
+        return this.bookService.getSearchSet();
     }
 
     searchBooks(searchTerm:string){
@@ -63,12 +70,14 @@ export class NavBarComponent{
 
     searchSwaps(searchTerm:string)
     {
+        this.bookService.resetSearchTerm;
         var newHref = '/swaps/'+searchTerm; 
         this.router.navigate([newHref]);
     }
 
     setUp(path:string)
     {
+        this.bookService.resetSearchTerm();
         this.router.navigate([path]);
     }
 

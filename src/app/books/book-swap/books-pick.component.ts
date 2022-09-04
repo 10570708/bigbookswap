@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core'
-import { APIService, BookService, StatusType, Swap, SwapMember, SwapService } from './shared/index';
+import { APIService, BookService, StatusType, Swap, SwapMember, SwapService } from '../shared/index';
 import { OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IBook } from './shared/index';
-import { SwapListComponent } from '../swaps/swap-list.component';
+import { IBook } from '../shared/index';
+import { SwapListComponent } from '../../swaps/swap-list.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from '../user/auth.service';
+import { AuthService } from '../../user/shared/service/auth.service';
 
 
 @Component({

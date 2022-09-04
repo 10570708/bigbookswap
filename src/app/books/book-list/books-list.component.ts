@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router';
 import { IBook } from '../shared/index';
 import { APIService, BookService } from '../shared/index';
-import { AuthService } from 'src/app/user/auth.service';
+import { AuthService } from 'src/app/user/shared/service/auth.service';
 
 
 @Component({

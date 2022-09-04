@@ -40,6 +40,14 @@ export class BookService {
       return this.searchTerm;
     }
 
+    getSearchSet(){
+      console.log('Sarch term is  + ' + this.searchTerm);
+      console.log('Length is ' + this.searchTerm.length);
+      return this.searchTerm.length > 0;
+      
+
+    }
+
     getBook(id:number): IBook  {
         
       return BOOKS.find(book => book.id === id) as IBook;

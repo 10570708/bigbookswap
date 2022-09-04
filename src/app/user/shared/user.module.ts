@@ -6,8 +6,8 @@ import { MatSelectModule } from "@angular/material/select"
 
 
 import { userRoutes } from './user.routes';
-import { ProfileComponent } from "./profile.component";
-import { LoginComponent } from "./login.component";
+import { ProfileComponent } from "../profile/profile.component";
+import { LoginComponent } from "../login/login.component";
 
 @NgModule({
     imports: [

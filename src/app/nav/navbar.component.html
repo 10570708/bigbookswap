@@ -64,9 +64,10 @@
           <input [disabled]="getSearchTerm() ? true : false" [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
             placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">
         </div>
-        <button class="btn btn-default btn-navbar">
+        <button *ngIf="getSearchTerm() ? false : true" class="btn btn-default btn-navbar">
           Search
         </button>
+        <button *ngIf="getSearchTerm() ? true : false " class="btn btn-default btn-navbar" [routerLink]="['/books/']" (click)="resetSearch()">Clear</button>
       </form>
     </div>
   </div>

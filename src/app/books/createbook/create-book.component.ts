@@ -3,7 +3,7 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGro
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { StorageService } from "src/app/storage-service";
-import { AuthService } from "src/app/user/auth.service";
+import { AuthService } from "src/app/user/shared/service/auth.service";
 import { BookLookupComponent } from "../book-lookup/book-lookup.component";
 import { BookStatus, ConditionType, IBook, OptionType } from "../shared/index";
 import { APIService,BookService } from "../shared/index";

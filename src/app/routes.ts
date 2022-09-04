@@ -28,12 +28,14 @@ export const appRoutes:Routes= [
 
 
 
-    { path: '404', component: Error404Component},
     { path: '', redirectTo: '/user/login', pathMatch: 'full'},
     { 
         path: 'user', 
         loadChildren: () => 
-            import('./user/user.module')
+            import('./user/shared/user.module')
             .then(m => m.UserModule)
-    }
+    },
+
+    { path: '**', component: Error404Component},
+
 ]

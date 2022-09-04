@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject} from "@angular/core";
 import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthService } from "./auth.service";
-import { TOASTR_TOKEN, Toastr } from "../common/toastr.service";
-import { StorageService } from "../storage-service";
-import { NavBarComponent } from "../nav/navbar.component";
+import { AuthService } from "../shared/service/auth.service";
+import { TOASTR_TOKEN, Toastr } from "../../common/toastr.service";
+import { StorageService } from "../../storage-service";
+import { NavBarComponent } from "../../nav/navbar.component";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 

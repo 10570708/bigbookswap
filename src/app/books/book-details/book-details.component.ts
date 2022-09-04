@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { AuthService } from "src/app/user/auth.service";
+import { AuthService } from "src/app/user/shared/service/auth.service";
 import { APIService, IBook, ISwap, BookStatus, OptionType, Swap, SwapMember, StatusType } from "../shared/index";
 import { BookService, SwapService } from "../shared/index";
 

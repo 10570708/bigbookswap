@@ -4,8 +4,8 @@ import { OnInit } from '@angular/core';
 import { IBook, ISwap } from '../books/shared/index';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { BooksPickComponent } from '../books/books-pick.component';
-import { AuthService } from '../user/auth.service';
+import { BooksPickComponent } from '../books/book-swap/books-pick.component';
+import { AuthService } from '../user/shared/service/auth.service';
 import { map } from 'rxjs';
 
 
@@ -23,7 +23,7 @@ export class SwapListComponent implements OnInit {
     // filterByOption: string = 'all';
     // sortBy: string = 'title';
     searchTerm: string = '';
-    // search: boolean = false;
+    searchComplete: boolean = false;
     swapResults: Swap[] = [];
     usr = this.authService.currentUser.id;
 
@@ -48,7 +48,7 @@ export class SwapListComponent implements OnInit {
         //this.allbooks = this.route.snapshot.data['allbooks'];
 
         this.searchTerm = this.route.snapshot.params['filter'];
-        console.log('Filter is ' + this.searchTerm);
+        //console.log('Filter is ' + this.searchTerm);
 
         this.swapService.searchSwaps(this.searchTerm, this.authService.currentUser.id)
             .subscribe({
@@ -58,8 +58,15 @@ export class SwapListComponent implements OnInit {
                     this.swapResults = parsed;
                 }
                 ,
-                error: () => { console.log('Error'); },
-                complete: () => { console.log('No error'); }
+                error: () => { 
+                    console.log('Error'); 
+                    this.searchComplete = true;
+                },
+                complete: () => { 
+                    console.log('No error');
+                    this.searchComplete = true;
+
+                 }
             });
 
     }
@@ -147,23 +154,6 @@ export class SwapListComponent implements OnInit {
 
     handleComplete() { }
 
-    getTitle(id: number) {
-        var book = this.bookService.getBook(id);
-        //console.log('Title is ' + book.title);
-        return book.title;
-    }
-
-    getAuthor(id: number) {
-        var book = this.bookService.getBook(id);
-        //console.log('Title is ' + book.title);
-        return book.author;
-    }
-
-    getCover(id: number) {
-        var book = this.bookService.getBook(id);
-        //console.log('Title is ' + book.cover);
-        return book.cover;
-    }
 
     acceptDonate(swap: Swap) {
 
