@@ -1,6 +1,11 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* Books ThumbnailComponent : controls the display for each individual listing ( thumbnail ) in the 'All Books' Page 
+*
+*/
 import { Component, Input } from "@angular/core";
 import { Router } from "@angular/router";
-import { IBook } from "../shared/index";
+import { IBook } from "../../shared/index";
 
 @Component({
     selector: 'app-books-thumbnail',

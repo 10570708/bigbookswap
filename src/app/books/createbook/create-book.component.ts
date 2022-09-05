@@ -1,12 +1,16 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* CreateBookComponent - controls the display of the Create Book page and the handling of Book creation
+*
+*/
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { StorageService } from "src/app/storage-service";
 import { AuthService } from "src/app/user/shared/service/auth.service";
 import { BookLookupComponent } from "../book-lookup/book-lookup.component";
-import { BookStatus, ConditionType, IBook, OptionType } from "../shared/index";
-import { APIService,BookService } from "../shared/index";
+import { BookStatus, ConditionType, IBook, OptionType } from "../../shared/index";
+import { BookService } from "../../shared/index";
 
 @Component({
 
@@ -29,6 +33,7 @@ export class CreateBookComponent implements OnInit {
     foundIsbn: any;
     loadForm = false;
     manualLoad = false;
+    createBookError = false;
 
 
     form: UntypedFormGroup = new UntypedFormGroup({
@@ -44,8 +49,11 @@ export class CreateBookComponent implements OnInit {
     constructor(private formBuilder: UntypedFormBuilder, 
         private authService: AuthService, 
         private router: Router, 
-        private apiService: APIService, 
+        private bookService: BookService,
         private dialog: MatDialog) { }
+
+
+    // Build the create book form and validation required
 
     ngOnInit(): void {
 
@@ -59,23 +67,28 @@ export class CreateBookComponent implements OnInit {
 
     }
 
-    buildBookHref() {
-        window.open('https://openlibrary.org/isbn/' + this.form.value['isbn'], "_blank");
-    }
+    // Used in form validation 
 
     get f(): { [key: string]: AbstractControl } {
         return this.form.controls;
     }
+
+    // Form check on Submit 
 
     onSubmit(): void {
         this.submitted = true;
         if (this.form.invalid) return;
     }
 
+    // Form reset 
+
     onReset(): void {
         this.submitted = false;
         this.form.reset();
     }
+
+    // Called on 'click' of 'Save' button 
+    // Calls bookService to save the new book and thn route to the 'View Book Details' of the new book
 
     saveBook() {
         this.bookDisplay.condition = this.form.value['condition'];
@@ -91,7 +104,7 @@ export class CreateBookComponent implements OnInit {
             this.bookDisplay.publisher = "";
         }
 
-        this.apiService.saveBook(this.bookDisplay)
+        this.bookService.saveBook(this.bookDisplay)
         .subscribe({
             next: data => {
                 this.bookDisplay.id = data.id;
@@ -104,18 +117,10 @@ export class CreateBookComponent implements OnInit {
         });
     }
 
+   
 
-    cancel() {
-        this.router.navigate(['/books']);
-    }
-
-    clear() {
-        let currentUrl = this.router.url;
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate([currentUrl]);
-        });
-    }
-
+    // Open the mat-dialog with the search results 
+    // and handle the user options in the afterClosed method of mat-dialog
     openNewBookDialog() {
 
         const dialogConfig = new MatDialogConfig();
@@ -155,9 +160,11 @@ export class CreateBookComponent implements OnInit {
                     this.foundIsbn = this.bookDisplay.isbn;
                 }                    
             },
-            error: error => console.log(error),
+            error: () => this.createBookError = true,
         });
     }
+
+    // Reset the form fields - called on 'click' of reset button
 
     resetformgroup() {
         this.form = this.formBuilder.group(
@@ -168,6 +175,26 @@ export class CreateBookComponent implements OnInit {
                 option: ['', Validators.required]
             }
         );
+    }
+
+     // Called by 'click' of 'Cancel' button 
+     cancel() {
+        this.router.navigate(['/books']);
+    }
+
+    // Called by 'click' of 'Clear' button - clear and re-route to the page 
+
+    clear() {
+        let currentUrl = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([currentUrl]);
+        });
+    }
+
+    // Open window to OpenLibrary to find more book info
+
+    buildBookHref() {
+        window.open('https://openlibrary.org/isbn/' + this.form.value['isbn'], "_blank");
     }
 }
 

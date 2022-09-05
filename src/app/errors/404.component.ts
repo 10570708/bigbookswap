@@ -1,3 +1,8 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* Error404Component - handle and display appropriate messages for bad requests 
+*
+*/
 import { Component } from '@angular/core'
 
 @Component({
@@ -12,8 +17,6 @@ import { Component } from '@angular/core'
         <p style="margin-top:30px">
             <img margin:auto src="./assets/images/notfound.png" width="100%" style="max-width: 200px;">
         </p>
-
-
     </div>
 </div>
   `,
@@ -24,7 +27,7 @@ import { Component } from '@angular/core'
       text-align: center; 
     }`]
 })
-export class Error404Component{
+export class Error404Component {
   constructor() {
 
   }

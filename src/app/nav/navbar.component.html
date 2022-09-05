@@ -1,22 +1,25 @@
+<!-- Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2 -->
+
 <div class="navbar navbar-default" style="margin-bottom:1px;">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand">The Big Book Swap</a>
-      <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#collapsibleNavbar" aria-expanded="false" aria-controls="navbar">
+      <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#collapsibleNavbar"
+        aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-    </button>
+      </button>
     </div>
 
-   
+
 
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul *ngIf="auth.isAuthenticated()"  class="nav navbar-nav">
+      <ul *ngIf="auth.isAuthenticated()" class="nav navbar-nav">
         <li>
-          <a class="tstnav" (click)="setUp('books')" [routerLink]="['books']" >All Books</a>
+          <a class="tstnav" (click)="setUp('books')" [routerLink]="['books']">All Books</a>
         </li>
         <li>
           <a class="tstnav" (click)="setUp('book/new')" [routerLink]="['book/new']">Add Book</a>
@@ -40,10 +43,12 @@
         <div class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="tst">
-              <a *ngIf="auth.isAuthenticated()" (click)="logUserOut()" [routerLink]="['user/login']"><span style="color:white;">Logout</span></a>
+              <a *ngIf="auth.isAuthenticated()" (click)="logUserOut()" [routerLink]="['user/login']"><span
+                  style="color:white;">Logout</span></a>
             </li>
             <li class="tst">
-              <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']"><span style="color:white;">Login</span></a>
+              <a *ngIf="!auth.isAuthenticated()" [routerLink]="['user/login']"><span
+                  style="color:white;">Login</span></a>
             </li>
           </ul>
         </div>
@@ -51,23 +56,26 @@
         <div id="loginbox" class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="tst">
-              <a *ngIf="this.auth.isAuthenticated()"   (click)="openProfileDialog()" [routerLink]=""><span style="color:blue;">Welcome
+              <a *ngIf="this.auth.isAuthenticated()" (click)="openProfileDialog()" [routerLink]=""><span
+                  style="color:blue;">Welcome
                   {{this.auth.getusername()}} </span><img
                   src="./assets/images/icons/{{auth.currentUser.avatar | lowercase}}.jpg" height="30px;"></a>
             </li>
           </ul>
         </div>
       </div>
-      
-      <form  *ngIf="this.auth.isAuthenticated()"  id="searchForm" class="navbar-form navbar-right" (ngSubmit)="searchBooks(searchTerm)">
-        <div class="form-group" >
-          <input [disabled]="getSearchTerm() ? true : false" [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control"
-            placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">
+
+      <form *ngIf="this.auth.isAuthenticated()" id="searchForm" class="navbar-form navbar-right"
+        (ngSubmit)="searchBooks(searchTerm)">
+        <div class="form-group">
+          <input [disabled]="getSearchTerm() ? true : false" [(ngModel)]="searchTerm" name="searchTerm" type="text"
+            class="form-control" placeholder="{{getSearchTerm() ? getSearchTerm() : 'Enter search'}}">
         </div>
         <button *ngIf="getSearchTerm() ? false : true" class="btn btn-default btn-navbar">
           Search
         </button>
-        <button *ngIf="getSearchTerm() ? true : false " class="btn btn-default btn-navbar" [routerLink]="['/books/']" (click)="resetSearch()">Clear</button>
+        <button *ngIf="getSearchTerm() ? true : false " class="btn btn-default btn-navbar" [routerLink]="['/books/']"
+          (click)="resetSearch()">Clear</button>
       </form>
     </div>
   </div>

@@ -1,49 +1,74 @@
-.nav.navbar-nav {font-size: 15px;}
-
-.container-fluid {padding-top:20px; padding-bottom:20px;}
-
-.navbar {background-color: #2a4d9f;}
-
-.btn-navbar {background-color: #2a4d9f;}
-
-#searchForm {margin-right: 50px}
-
-.tstnav:active{
-    color:red;
-}
-
-@media (max-width: 1200px) {#searchForm {display:none}
-}
-
-li > a.active { color: #F97924; }
-#loginbox li > a:hover { color:#2a4d9f; 
-    border-radius: 25px;
-    border: 2px solid light-grey;
-   background-color: #fafafa;}
-
-
-   #loginbox li > a { color:#2a4d9f; 
-    border-radius: 25px;
-    border: 2px solid light-grey;
-   background-color: #fafafa;}
-
-li > .tst  { color: #2a4d9f}
-
-#logoutbox li > a  {
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
+.nav.navbar-nav {
     font-size: 15px;
-    color:white;
+}
+
+.container-fluid {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbar {
+    background-color: #2a4d9f;
+}
+
+.btn-navbar {
+    background-color: #2a4d9f;
+}
+
+#searchForm {
+    margin-right: 50px
+}
+
+.tstnav:active {
+    color: red;
+}
+
+@media (max-width: 1200px) {
+    #searchForm {
+        display: none
+    }
+}
+
+li>a.active {
+    color: #F97924;
+}
+
+#loginbox li>a:hover {
+    color: #2a4d9f;
+    border-radius: 25px;
+    border: 2px solid light-grey;
+    background-color: #fafafa;
+}
+
+
+#loginbox li>a {
+    color: #2a4d9f;
+    border-radius: 25px;
+    border: 2px solid light-grey;
+    background-color: #fafafa;
+}
+
+li>.tst {
+    color: #2a4d9f
+}
+
+#logoutbox li>a {
+    font-size: 15px;
+    color: white;
 
 }
 
-a:not([href]){
+a:not([href]) {
     cursor: pointer;
 }
 
-    #loginbox, 
-{   
-    
-    color:#2a4d9f; 
+#loginbox {
+    color: #2a4d9f;
     border-radius: 25px;
     border: 2px solid light-grey;
-   background-color: #fafafa;
+    background-color: #fafafa;
 }

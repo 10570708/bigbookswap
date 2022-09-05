@@ -1,3 +1,5 @@
+<!-- Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2 -->
+
 <div style="background-color:white;">
 
     <!-- <ul>
@@ -32,7 +34,8 @@
             <div class="row" [ngClass]="{oddStyle: odd , evenStyle:even}"
                 style="color: #5090cc;display:flex;align-items:baseline;height:100%">
                 <div class="col-md-2  no-pad" style="text-align:center;"><img
-                        *ngIf="(  (swap.offerMember?.bookCover?.length !== 0) )" style="margin-top:10px;margin-bottom:10px;"
+                        *ngIf="(  (swap.offerMember?.bookCover?.length !== 0) )"
+                        style="margin-top:10px;margin-bottom:10px;"
                         src="https://covers.openlibrary.org/b/id/{{swap.offerMember?.bookCover}}-S.jpg"
                         class="image-fluid">
                     <img *ngIf="!(swap.offerMember?.bookCover) || swap.offerMember?.bookCover === 'cover'"
@@ -120,7 +123,7 @@
 </div>
 
 
-<div *ngIf="swapResults.length === 0 && !searchComplete " class="container-fluid"
+<div *ngIf="!searchComplete " class="container-fluid"
     style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
     <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
 

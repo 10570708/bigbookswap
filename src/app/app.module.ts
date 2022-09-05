@@ -1,11 +1,24 @@
-//import { NgModule } from '@angular/core';
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
 import { NgModule } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './shared/dialog/material.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Router, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+
+import { AppComponent } from './books-app.component';
+import { NavBarComponent } from './nav/navbar.component';
+import { SwapListComponent } from './swaps/swap-list.component';
+import { Error404Component } from './errors/404.component';
+import { AuthService } from './user/shared/service/auth.service';
+import { appRoutes } from './routes';
 
 
 import {
@@ -13,35 +26,22 @@ import {
   BooksThumbnailComponent,
   BookDetailsComponent,
   CreateBookComponent,
-  BookService,
-  SwapService,
-  EventRouteActivator,
-  BookListResolver
-
+  BookLookupComponent,
+  BooksPickComponent
 } from './books/index';
 
-import { AppComponent } from './books-app.component';
-import { NavBarComponent } from './nav/navbar.component';
-import { Error404Component } from './errors/404.component';
-import { TOASTR_TOKEN, Toastr } from './common/index';
-import { Router, RouterModule } from '@angular/router';
-import { appRoutes } from './routes';
-import { AuthService } from './user/shared/service/auth.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAlertComponent } from './common/mat-alert.component';
-import { APIService } from './books/shared/index';
-import { BookLookupComponent } from './books/book-lookup/book-lookup.component';
-import { SwapListComponent } from './swaps/swap-list.component';
-import { BooksPickComponent } from './books/book-swap/books-pick.component';
-import { AuthGuard } from './authGuard';
-import { AuthInterceptor } from './authIntercepter';
-import { StorageService } from './storage-service';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import {
+  AuthGuard,
+  AuthInterceptor,
+  SessionService,
+  OpenLibAPIService,
+  BookService,
+  SwapService,
+  TOASTR_TOKEN, Toastr
+} from './shared/index';
 
 
 declare let toastr:Toastr 
-declare let JQuery:any;
-
 
 @NgModule({
   imports: [
@@ -73,7 +73,6 @@ declare let JQuery:any;
     NavBarComponent,
     BookDetailsComponent,
     Error404Component,
-    MatAlertComponent,
     BookLookupComponent,
     BookDetailsComponent,
     SwapListComponent,
@@ -83,13 +82,11 @@ declare let JQuery:any;
     BookService,
     SwapService,
     { provide: TOASTR_TOKEN, useValue: toastr },
-    EventRouteActivator,
-    APIService,
+    OpenLibAPIService,
     { 
         provide: 'canDeactivateCreateBook',
         useValue: checkDirtyState
     },
-    BookListResolver,
     AuthService,
    {  provide: HTTP_INTERCEPTORS,
         useFactory: function (router: Router) {
@@ -99,10 +96,9 @@ declare let JQuery:any;
         deps: [Router]
     },
     AuthGuard,
-    StorageService
+    SessionService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [MatAlertComponent]
 })
 export class AppModule { }
 

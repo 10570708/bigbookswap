@@ -1,10 +1,12 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
 import { Routes } from "@angular/router";
 import {
     BookDetailsComponent,
-    EventRouteActivator,
     BooksListComponent,
     CreateBookComponent,
-    BookListResolver
 } from './books/index'
 
 
@@ -12,7 +14,7 @@ import {
 
 import { Error404Component } from "./errors/404.component";
 import { SwapListComponent } from "./swaps/swap-list.component";
-import { AuthGuard } from "./authGuard";
+import { AuthGuard } from "./shared/auth/authGuard";
 
 export const appRoutes:Routes= [
     

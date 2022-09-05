@@ -1,16 +1,38 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 div {
     color: #5090cc;
-    background-color:white;
+    background-color: white;
 }
-a { color: #bbb; text-decoration: none;}
 
-#icon {margin-left: 25px;}
-.v-align { vertical-align: text-top; }
-// .mini { color: #bbb; font-size: small; vertical-align: top;}
+a {
+    color: #bbb;
+    text-decoration: none;
+}
 
-.oddStyle{padding-left:0px;padding-right:15px}
-.evenStyle{padding-left:15px;padding-right:0px}
-.top-pad{padding-top:30px;}
+#icon {
+    margin-left: 25px;
+}
 
+.v-align {
+    vertical-align: text-top;
+}
+
+
+.oddStyle {
+    padding-left: 0px;
+    padding-right: 15px
+}
+
+.evenStyle {
+    padding-left: 15px;
+    padding-right: 0px
+}
+
+.top-pad {
+    padding-top: 30px;
+}

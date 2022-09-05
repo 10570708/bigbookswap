@@ -1,12 +1,14 @@
-import { Component } from '@angular/core'
-import { APIService, BookService, BookStatus, StatusType, Swap, SwapService } from '../books/shared/index';
-import { OnInit } from '@angular/core';
-import { IBook, ISwap } from '../books/shared/index';
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* SwapListComponent - controls the search and display of a user's swaps 
+*
+*/
+import { Component, OnInit } from '@angular/core'
+import { BookService, BookStatus, StatusType, Swap, SwapService, IBook, ISwap} from '../shared/index';
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BooksPickComponent } from '../books/book-swap/books-pick.component';
 import { AuthService } from '../user/shared/service/auth.service';
-import { map } from 'rxjs';
 
 
 @Component({
@@ -19,15 +21,11 @@ export class SwapListComponent implements OnInit {
     searchableSwaps: ISwap[] = [];
     visibleSwaps: ISwap[] = [];
     morebooks: any;
-    // filterBy: string = 'all';
-    // filterByOption: string = 'all';
-    // sortBy: string = 'title';
     searchTerm: string = '';
     searchComplete: boolean = false;
     swapResults: Swap[] = [];
     usr = this.authService.currentUser.id;
-
-
+    updateSucceeded = false;
 
     constructor(
         private bookService: BookService,
@@ -36,19 +34,14 @@ export class SwapListComponent implements OnInit {
         private swapService: SwapService,
         private dialog: MatDialog,
         private authService: AuthService,
-        private apiService: APIService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
+    // Filter swaps basd on route param 'filter' 
+
     ngOnInit() {
-        //console.log('Hitting lists with  ' + this.route.snapshot.params['filter']);
-        //this.router.onSameUrlNavigation = 'reload';
-
-        //this.allbooks = this.route.snapshot.data['allbooks'];
-
         this.searchTerm = this.route.snapshot.params['filter'];
-        //console.log('Filter is ' + this.searchTerm);
 
         this.swapService.searchSwaps(this.searchTerm, this.authService.currentUser.id)
             .subscribe({
@@ -56,126 +49,26 @@ export class SwapListComponent implements OnInit {
                     var stringified = JSON.stringify(data);
                     var parsed = JSON.parse(stringified);
                     this.swapResults = parsed;
-                }
-                ,
-                error: () => { 
-                  // console.log('Error'); 
-                    this.searchComplete = true;
                 },
-                complete: () => { 
-                  // console.log('No error');
-                    this.searchComplete = true;
-
-                 }
+                error: () => { this.searchComplete = true; },
+                complete: () => { this.searchComplete = true; }
             });
 
     }
-    // var swapResults = this.getMySwapRequests(id);
-    // else if (this.searchTerm === 'received')
-    // swapResults = this.getMySwapOffers(id);
-    // else if (this.searchTerm === 'pending')
-    // swapResults = this.getMyPendingOffers(id);
-    // else  
-    // swapResults = this.getAllMySwaps(id);
 
-
-    // if (this.searchTerm === 'sent')
-    // {
-    //     this.swapService.getMySwapRequests(this.authService.currentUser.id)
-    //     .subscribe({
-    //         next: data => {
-
-    //             var stringified = JSON.stringify(data);
-    //             var parsed = JSON.parse(stringified);
-    //             this.swapResults = parsed;
-    //           // console.log('Dates are ' + this.swapResults[0].createdDate);
-    //           // console.log('Dates are ' + this.swapResults[1].createdDate);
-
-    //         }
-    //             ,
-    //         error: () => console.log('Error'),
-    //         complete: () => console.log('no error')
-    //     });
-    // }
-    // else if (this.searchTerm === 'received')
-    // {
-    //     this.swapService.getMySwapOffers(this.authService.currentUser.id)
-    //     .subscribe({
-    //         next: data => {
-
-    //             var stringified = JSON.stringify(data);
-    //             var parsed = JSON.parse(stringified);
-    //             this.swapResults = parsed;
-    //           // console.log('Dates are ' + this.swapResults[0].createdDate);
-    //           // console.log('Dates are ' + this.swapResults[1].createdDate);
-
-    //         }
-    //             ,
-    //         error: () => console.log('Error'),
-    //         complete: () => console.log('no error')
-    //     });
-    // }
-    // else if (this.searchTerm === 'all')
-    // {
-    //     this.swapService.getAllMySwaps(this.authService.currentUser.id)
-    //     .subscribe({
-    //         next: data => {
-
-    //             var stringified = JSON.stringify(data);
-    //             var parsed = JSON.parse(stringified);
-    //             this.swapResults = parsed;
-    //           // console.log('Dates are ' + this.swapResults[0].createdDate);
-    //           // console.log('Dates are ' + this.swapResults[1].createdDate);
-
-    //         }
-    //             ,
-    //         error: () => console.log('Error'),
-    //         complete: () => console.log('no error')
-    //     });
-    // }
-
-
-    //this.fetchSwaps();
-
-
-
-    //console.log('****** Got SEARCH books ' + this.searchableBooks);
-    //console.log('****** Got SEARCH ?? ' + this.search);
-    //console.log('Got vis books ' + this.visibleSwaps);
-    //this.visibleSwaps = this.allbooks.slice(0);
-
-
-    handleError() {
-
-    }
-    processData(data: any) {
-
-    }
-
-    handleComplete() { }
-
-
+    // Accept a donate request - called on 'click' of 'Accpt Donate Request' button
     acceptDonate(swap: Swap) {
 
         swap.status = StatusType.Acc;
         swap.type = 'donate';
         this.swapService.acceptSwapRequest(swap)
             .subscribe({
-                next: data => {
-                    // var stringified = JSON.stringify(data);
-                    // var parsed:IBook = JSON.parse(stringified);
-                    // console.log('Loading book' + parsed.title);
-                  // console.log('Got new swap id ' + data.id);
-                    //this.router.navigate(['book/' + this.bookDisplay.id]);
-                },
-                complete: () => {
-
-                    this.router.navigate(['/swaps/all']);
-
-                }
+                complete: () => { this.router.navigate(['/swaps/all']); }
             },
             );
     }
+
+    // Mark swap as 'Complete' - called on 'click' of 'Complete Swap' button 
 
     completeSwap(swap: Swap) {
         swap.status = StatusType.Swap;
@@ -187,7 +80,7 @@ export class SwapListComponent implements OnInit {
                     this.swapResults = parsed;
                 }
                 ,
-                error: () => { console.log('Error'); },
+                error: () => { this.updateSucceeded = false},
                 complete: () => {
 
                     let bookId = 0;
@@ -217,27 +110,22 @@ export class SwapListComponent implements OnInit {
         this.router.navigate(['/swaps', 'done']);
     }
 
+
+    // Update the book status on completion of swap/donate 
+
     updateBook(id: number, status: string){
-        this.apiService.updateBook(id,status)
+        this.bookService.updateBook(id,status)
         .subscribe({
-            next: data => {
-                 var stringified = JSON.stringify(data);
-                 var parsed:IBook = JSON.parse(stringified);
-                //this.router.navigate(['book/' + this.bookDisplay.id]);
-            },
-            complete: () => {
-
-
-            }
+            complete: () => { this.updateSucceeded = true; }
         },
         );
 
         
     }
 
-
+    // Open the mat-dialog to list books available to be swapped 
+    
     openViewAvailableSwapBooksDialog(swapid: number, id?: number) {
-        //console.log('Looking for ' + id);
         const dialogConfig = new MatDialogConfig();
 
         dialogConfig.disableClose = false;
@@ -254,32 +142,7 @@ export class SwapListComponent implements OnInit {
         dialogConfig.width = '900px';
         dialogConfig.panelClass = 'my-class';
 
-        const dialogRef = this.dialog.open(BooksPickComponent, dialogConfig);
+        this.dialog.open(BooksPickComponent, dialogConfig);
 
-        // dialogRef.afterClosed().subscribe({
-        //     next: data => {
-        //         var stringJson = JSON.stringify(data);
-
-        //         //console.log('Return is ' + stringJson); 
-
-        //         if (stringJson === 'true') {}
-        //         else if (stringJson === 'false'){
-        //             this.loadForm = true;
-        //             this.loadForm = true;
-        //             this.manualLoad = true;
-        //             this.bookDisplay = <IBook>{};
-        //             this.bookDisplay.isbn = this.form.value['isbn'];
-        //             this.resetformgroup();
-        //         }
-        //         else{
-        //             // ConvertjSON to an object
-        //             this.loadForm = true;
-        //             var stringObject = JSON.parse(stringJson);
-        //             this.bookDisplay = stringObject;
-        //             this.foundIsbn = this.bookDisplay.isbn;
-        //         }                    
-        //     },
-        //     error: error => console.log(error),
-        // });
     }
 }

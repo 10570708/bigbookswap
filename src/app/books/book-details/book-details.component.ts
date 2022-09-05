@@ -1,9 +1,15 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* BookDetailsComponent : controls the displaying of an individual Book Listing
+*
+*/
+
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { AuthService } from "src/app/user/shared/service/auth.service";
-import { APIService, IBook, ISwap, BookStatus, OptionType, Swap, SwapMember, StatusType } from "../shared/index";
-import { BookService, SwapService } from "../shared/index";
+import { IBook, ISwap, BookStatus, OptionType, Swap, SwapMember, StatusType } from "../../shared/index";
+import { BookService, SwapService } from "../../shared/index";
 
 @Component({
     selector: 'book-details-component',
@@ -14,57 +20,48 @@ import { BookService, SwapService } from "../shared/index";
 export class BookDetailsComponent implements OnInit {
     book?: IBook
     swap: ISwap = <ISwap>{};
-    realBook$!: Observable<IBook>;
     bookStatus = BookStatus;
     bookOption = OptionType;
     ownerId = this.authService.currentUser.id;
+    bookRemovedSuccessfully = false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private swapService: SwapService,
         private authService: AuthService,
-        private apiService: APIService) {
+        private bookService: BookService) {
         this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
     }
 
+    // Use BookService to load the Book from id provided in route params 
+
     ngOnInit() {
 
-        this.getRealBook();
-
-        this.apiService.getRealBook(+this.route.snapshot.params['id'])
+        this.bookService.getBook(+this.route.snapshot.params['id'])
             .subscribe({
                 next: data => { this.book = data; }
             });
     }
 
-
-    getRealBook(): void {
-        this.realBook$ = this.apiService.getRealBook(+this.route.snapshot.params['id']);
-    }
-
-    ngOnDestroy() {
-        this.router.navigated = false;
-    }
-
-    buildBookHref() {
-        window.open('https://openlibrary.org/isbn/' + this.book?.isbn, "_blank");
-    }
+    // Remove Book invoked by click in Book Details Page 
 
     removeBook() {
 
         if (this.book?.id) {
-            this.apiService.deleteBook(this.book.id).subscribe((response) => {
-              // console.log('');
+            this.bookService.deleteBook(this.book.id)
+            .subscribe(() => {
+              this.bookRemovedSuccessfully = true;
             });
 
             this.authService.reduceUserBookCount(this.authService.currentUser.id);
             this.router.navigate(['/books']);
         }
-
     }
+
+    // Request Swap invoked by click in Book Details Page - builds Swap details and calls swapService to process the request
 
     requestSwap(type: string) {
         if (this.book?.id) {
@@ -95,4 +92,17 @@ export class BookDetailsComponent implements OnInit {
                 });
         }
     }
+
+    
+    // Builds the Open Library href for a book lookup 
+    
+    buildBookHref() {
+        window.open('https://openlibrary.org/isbn/' + this.book?.isbn, "_blank");
+    }
+
+
+    ngOnDestroy() {
+        this.router.navigated = false;
+    }
+
 }

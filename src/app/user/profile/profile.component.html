@@ -1,5 +1,7 @@
-    <div mat-dialog-title style="float: right; font-weight: 700; cursor: pointer; margin-bottom: 0px;" (click)="close()"><span
-      style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span></div>
+<!-- Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2 -->
+
+<div mat-dialog-title style="float: right; font-weight: 700; cursor: pointer; margin-bottom: 0px;" (click)="close()">
+  <span style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span></div>
 
 <div>
   <h1>Your Profile: {{ profileUser }} </h1>
@@ -9,12 +11,12 @@
     <div class="col-md-4"> <span class="books">Book Count: {{getAuthenticatedUserBooks()}}</span></div>
     <div class="col-md-4"> <span class="swaps">Swap Count:{{getAuthenticatedUserSwaps()}}</span></div>
     <div class="col-md-4"> <span class="donations">Donations Count: {{getAuthenticatedUserDonations()}}</span></div>
-   </div>
+  </div>
 
 
   <div [formGroup]="profileForm" class="col-md-12">
     <form (ngSubmit)="saveProfile()" autocomplete="off" novalidate>
-     
+
       <div class="form-group">
 
 
@@ -47,14 +49,14 @@
 
       </div>
 
-      
+
 
       <div style="text-align: center;">
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" (click)="close()" class="btn btn-default">Cancel</button>
       </div>
 
-      
+
     </form>
   </div>
 

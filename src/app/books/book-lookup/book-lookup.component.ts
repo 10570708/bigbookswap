@@ -1,8 +1,13 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* BookLookupComponent : controls the OpenLibrary Lookup of the provided ISBN, and the display of the results in a mat-dialog 
+*
+*/
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { BookStatus, IBook } from "../shared/index";
-import { APIService } from "../shared/index";
+import { BookStatus, IBook } from "../../shared/index";
+import { OpenLibAPIService } from "../../shared/index";
 
 @Component({
     templateUrl: './book-lookup.component.html',
@@ -12,6 +17,7 @@ import { APIService } from "../shared/index";
 export class BookLookupComponent implements OnInit {
     covers: any;
     bookFound = false;
+    searchComplete = false;
     bookLoading = true;
     bookDisplay: IBook = <IBook>{};
     isbn: any;
@@ -21,7 +27,7 @@ export class BookLookupComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private apiService: APIService,
+        private apiService: OpenLibAPIService,
         private dialogRef: MatDialogRef<BookLookupComponent>,
         @Inject(MAT_DIALOG_DATA) data: any) {
         this.isbn = data.isbn;
@@ -29,16 +35,16 @@ export class BookLookupComponent implements OnInit {
 
     ngOnInit(): void {
 
+        // Calls the API service with the ISBN provided to perform the book lookup 
+        // process the response and return the results 
+
         this.apiService
             .getBook(this.isbn)
             .subscribe({
                 next: data => {
-                    //this.data = data;
-                    //console.log(data);
                     var stringified = JSON.stringify(data);
                     var parsed = JSON.parse(stringified);
 
-                   
                     this.bookDisplay.title = parsed.title? parsed.title : '-';
                     this.bookDisplay.cover = parsed.covers? parsed.covers : '';
                     this.bookDisplay.numPages = parsed.number_of_pages? parsed.number_of_pages : 0 ;
@@ -64,6 +70,9 @@ export class BookLookupComponent implements OnInit {
             });
     }
 
+    // Called on 'complete' of initial loolup to call a second API with 
+    // data retuned from the first API call 
+
     getBookAuthor()
     {
         if (!this.firstError) {
@@ -81,19 +90,23 @@ export class BookLookupComponent implements OnInit {
                         this.bookLoading = false;
                     },
                     error: error => {
-                      // console.log('Error !!!!' + error);
+                      this.lookupError = error;
                     },
-                    complete: () => console.log('Complted look up 2'),
+                    complete: () => this.searchComplete = true
                 }
                 );
         }
 
     }
 
+
+    // Method to build a href for looking up more info about a book 
+
     buildBookHref() {
         window.open('https://openlibrary.org/isbn/' + this.isbn, "_blank");
     }
 
+    // Helper mthod to parse the list of authors returned from the API call
 
     getAuthorList(authors: any[]) {
         var authorList = "";
@@ -105,15 +118,19 @@ export class BookLookupComponent implements OnInit {
         return authorList;
     }
 
+
+    // Method to save the book details that were returned from the OpenLibrary API call 
+    // into the BBS book system - called onclick of 'Save' button
+
     save() {
         this.bookDisplay.status = BookStatus.Available,  
         this.dialogRef.close(this.bookDisplay);
     }
 
+    // Methods to handle click events for alternative options on the lookup page
     enterdetails() { this.dialogRef.close(false) }
     cancel() { this.router.navigate(['/books']); }
     close() { this.dialogRef.close(true); }
-
 
 }
 

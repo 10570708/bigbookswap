@@ -1,61 +1,62 @@
- .well div {
-     color: #5090cc;
-     background-color: #fafafa;
- }
-
- .thumbnail {
-     min-height: 100px;
-     background-color: #fafafa;
- }
-
-.image{
-    height:150px;
-    max-width:150px;
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
+.well div {
+    color: #5090cc;
+    background-color: #fafafa;
 }
 
-.top-space{
+.thumbnail {
+    min-height: 100px;
+    background-color: #fafafa;
+}
+
+.image {
+    height: 150px;
+    max-width: 140px;
+}
+
+.top-space {
     margin-top: 10px;
 }
 
+.green {
+    color: #26b026 !important;
+}
 
+.bold {
+    font-weight: bold;
+}
 
+.bookbox {
+    border-radius: 25px;
+    border: 2px solid #73AD21;
 
- .green {
-     color: #26b026 !important;
- }
+}
 
- .bold {
-     font-weight: bold;
- }
+.heading {
+    color: #5090cc;
+    margin: 0px;
+}
 
- .bookbox {
-     border-radius: 25px;
-     border: 2px solid #73AD21;
+.reg {
+    color: #5090cc;
+}
 
- }
+a,
+a.active {
+    color: #5090cc
+}
 
- .heading {
-     color: #5090cc;
-     margin: 0px;
- }
+.thumb-text {
+    font-size: 20px;
+}
 
- .reg {
-     color: #5090cc;
- }
+.thumb-content {
+    font-size: 15px;
+}
 
- a,
- a.active {
-     color: #5090cc
- }
-
- .thumb-text {
-     font-size: 20px;
- }
-
- .thumb-content {
-     font-size: 15px;
- }
-
- .no-pad {
-     padding: 0px;
- }
+.no-pad {
+    padding: 0px;
+}

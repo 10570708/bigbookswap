@@ -1,113 +1,102 @@
+<!-- Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2 -->
 
 
-<div style="background-color:white;margin-top:10px;" >
+<div style="background-color:white;margin-top:10px;">
 
-  
+    <mat-dialog-content>
+        <div mat-dialog-title style="float: right; font-weight: 700; cursor: pointer; margin-bottom: 0px;"
+            (click)="close()"><span style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span></div>
 
-<mat-dialog-content>
-    <div mat-dialog-title style="float: right; font-weight: 700; cursor: pointer; margin-bottom: 0px;" (click)="close()"><span
-        style="color:grey;" id="icon" class="glyphicon glyphicon-remove"></span></div>
+        <div class="row" style="margin-top:5px;padding-left:15px;padding-right:15px;">
 
-    <div class="row" style="margin-top:5px;padding-left:15px;padding-right:15px;">
+            <div *ngFor="let book of visibleBooks;" class="col-md-12" style="padding-left:1px;padding-right:1px;">
 
-        <div *ngFor="let book of visibleBooks;" class="col-md-12" style="padding-left:1px;padding-right:1px;">
-
-            <div class="card mb-3">
-                <div>
-                    <h1 class="card-title" align="center"><strong>Book Details: {{ book.title}}</strong></h1>
-                    <hr>
-                </div>
-                <div class="row g-0">
-                    <div class="col-md-2" style="text-align:center">
-                        <img *ngIf="(book.cover.length > 0)" style="width:100px;margin-bottom:40px;"
-                            src="https://covers.openlibrary.org/b/id/{{book.cover}}-M.jpg" class="image-fluid">
-                        <img *ngIf="(book.cover.length === 0)" style="width:100px;margin-bottom:40px;"
-                            src="./assets/images/generic.jpg" class="image-fluid">
-
+                <div class="card mb-3">
+                    <div>
+                        <h1 class="card-title" style="text-align:center"><strong>Book Details: {{ book.title}}</strong></h1>
+                        <hr>
                     </div>
-                    <div class="col-md-10">
-                        <div class="card-body" style="margin-left:10px;">
-                            <h2 class="card-title">{{ book.title}}</h2>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-6" style="margin:0;"><strong>Author:</strong> </div>
-                                        <div class="col-md-6" style="margin:0;">{{ book.author }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong>Publisher: </strong></div>
-                                        <div class="col-md-6">{{ book.publisher }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong>Pages: </strong></div>
-                                        <div class="col-md-6">{{ (book.numPages == 0) ? '-' :  book.numPages }} </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong>ISBN: </strong></div>
-                                        <div class="col-md-6">{{ book.isbn }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                    <div class="row g-0">
+                        <div class="col-md-2" style="text-align:center">
+                            <img *ngIf="(book.cover.length > 0)" style="width:100px;margin-bottom:40px;"
+                                src="https://covers.openlibrary.org/b/id/{{book.cover}}-M.jpg" class="image-fluid">
+                            <img *ngIf="(book.cover.length === 0)" style="width:100px;margin-bottom:40px;"
+                                src="./assets/images/generic.jpg" class="image-fluid">
 
-                                    <div class="row">
-                                        <div class="col-md-6" style="margin:0;"><strong>Condition:</strong> </div>
-                                        <div class="col-md-6" style="margin:0;">{{ book.condition }}</div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body" style="margin-left:10px;">
+                                <h2 class="card-title">{{ book.title}}</h2>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6" style="margin:0;"><strong>Author:</strong> </div>
+                                            <div class="col-md-6" style="margin:0;">{{ book.author }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Publisher: </strong></div>
+                                            <div class="col-md-6">{{ book.publisher }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Pages: </strong></div>
+                                            <div class="col-md-6">{{ (book.numPages == 0) ? '-' : book.numPages }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>ISBN: </strong></div>
+                                            <div class="col-md-6">{{ book.isbn }}</div>
+                                        </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong>Status: </strong></div>
-                                        <div class="col-md-6">{{ book.status }}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6"><strong>Option: </strong></div>
-                                        <div class="col-md-6">{{ book.option }}</div>
-                                    </div>
-                                    <div class="row top-pad">
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6">                
-                                            <mat-dialog-actions align="center">
-                                                <button mat-raised-button
-                                                    class="mat-raised-button" 
-                                                    style="margin-left:10px;background-color: rgb(92, 184, 92);color:white;" 
-                                                    color="success" 
-                                                    (click)="acceptSwap(book)">
-                                                    <mat-icon style="vertical-align: middle;margin-right:5px;">check-icon</mat-icon> Select 
-                                                </button>                                                                                                   
-                                            </mat-dialog-actions>                                            
+                                    <div class="col-md-6">
+
+                                        <div class="row">
+                                            <div class="col-md-6" style="margin:0;"><strong>Condition:</strong> </div>
+                                            <div class="col-md-6" style="margin:0;">{{ book.condition }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Status: </strong></div>
+                                            <div class="col-md-6">{{ book.status }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Option: </strong></div>
+                                            <div class="col-md-6">{{ book.option }}</div>
+                                        </div>
+                                        <div class="row top-pad">
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6">
+                                                <mat-dialog-actions style="text-align:center">
+                                                    <button mat-raised-button class="mat-raised-button"
+                                                        style="margin-left:10px;background-color: rgb(92, 184, 92);color:white;"
+                                                        color="success" (click)="acceptSwap(book)">
+                                                        <mat-icon style="vertical-align: middle;margin-right:5px;">
+                                                            check-icon</mat-icon> Select
+                                                    </button>
+                                                </mat-dialog-actions>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-
-
-
                         </div>
                     </div>
                 </div>
+                <hr>
             </div>
-            <hr>
         </div>
-    </div>
 
 
-    <div *ngIf="visibleBooks.length === 0" class="container-fluid"
-        style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
-        <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
+        <div *ngIf="visibleBooks.length === 0" class="container-fluid"
+            style="height:400px;padding-top:5px;background-color: white;padding-left:10px;padding-right:10px;padding-top:5px;">
+            <div class="row" style="margin-bottom:10px;margin-left:10px;text-align:center">
 
-            <p style="margin-top:30px">
-                <span style="color:grey;margin-top:30px;">There were no search results found. Try again</span>
-            </p>
-            <p style="margin-top:30px">
-                <img margin:auto src="./assets/images/notfound.png" width="100%" style="max-width: 400px;">
-            </p>
+                <p style="margin-top:30px">
+                    <span style="color:grey;margin-top:30px;">There were no search results found. Try again</span>
+                </p>
+                <p style="margin-top:30px">
+                    <img margin:auto src="./assets/images/notfound.png" width="100%" style="max-width: 400px;">
+                </p>
 
 
+            </div>
         </div>
-    </div>
-    <!-- <h3>{{thumbnail.someProperty}}</h3> -->
-    <!-- <button class="btn btn-primary" (click)="thumbnail.logFoo()">Log Foo</button> -->
-    <!-- (eventClick)="handleEventClicked($event)" -->
-</mat-dialog-content>
+    </mat-dialog-content>

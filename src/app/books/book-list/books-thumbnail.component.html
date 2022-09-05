@@ -1,3 +1,5 @@
+<!-- Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2 -->
+
 <div class=" bookbox well thumbnail" style="margin:2px;">
 
     <div class="row" style="clear: right;">
@@ -26,9 +28,11 @@
 
 
                 <div class="col-md-12 no-pad">
-                    <img src="./assets/images/swap1.jpg" width="90px;" *ngIf="(booklist.option | lowercase) === 'swap'">
-                    <img src="./assets/images/donate1.jpg" width="90px;"
-                        *ngIf="(booklist.option | lowercase) === 'donate'">
+                    <img src="./assets/images/swap1.jpg" height="20px;" *ngIf="(booklist.option | lowercase) === 'swap'">
+                    <img src="./assets/images/donate1.jpg" height="20px;" *ngIf="(booklist.option | lowercase) === 'donate'">
+                    <img src="./assets/images/available.jpg" height="20px;" *ngIf="(booklist.status | lowercase) === 'available'">
+                    <img src="./assets/images/swapped.jpg" height="20px;" *ngIf="(booklist.status | lowercase) === 'swapped'">
+                    <img src="./assets/images/donated.jpg" height="20px;" *ngIf="(booklist.status | lowercase) === 'donated'">
                 </div>
             </div>
 
@@ -46,4 +50,3 @@
 
 
 </div>
-

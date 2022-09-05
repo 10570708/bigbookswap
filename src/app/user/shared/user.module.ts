@@ -1,3 +1,7 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
@@ -24,8 +28,6 @@ import { LoginComponent } from "../login/login.component";
     providers: [
 
     ]
-
-
     
 })
 

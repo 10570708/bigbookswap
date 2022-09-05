@@ -1,10 +1,15 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* SessionStorage - client-side session managment
+*
+*/
 import { Injectable } from '@angular/core';
 
 const USER_KEY = 'auth-user';
 
 @Injectable({ providedIn: 'root' })
 
-export class StorageService {
+export class SessionService {
  
   constructor() { }
   

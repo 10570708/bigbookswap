@@ -1,8 +1,13 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* AuthGuard - controls authorisation required to access the routes - both client side (session) and server side (cookie)
+*
+*/
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
-import { Observable, pipe, map, of } from "rxjs";
-import { StorageService } from "./storage-service";
-import { AuthService } from "./user/shared/service/auth.service";
+import { CanActivate, Router } from "@angular/router";
+import { Observable, map, of } from "rxjs";
+import { SessionService } from "./sessionService";
+import { AuthService } from "../../user/shared/service/auth.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -10,13 +15,12 @@ export class AuthGuard implements CanActivate {
     constructor(
         private authService: AuthService,
         private router: Router,
-        private storageService: StorageService) { }
+        private sessionService: SessionService) { }
 
 
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate() {
 
-        if (this.storageService.isLoggedIn()) {
-          // console.log('Returning true for logged in ');
+        if (this.sessionService.isLoggedIn()) {
             return this.isSignedIn();
         }
         else {
@@ -29,7 +33,6 @@ export class AuthGuard implements CanActivate {
         return this.authService.isSignedIn().pipe(
             map((isSignedIn) => {
                 if (!isSignedIn) {
-                    
                     this.router.navigate(['user/login']);
                     return false;
                 }

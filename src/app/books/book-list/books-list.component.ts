@@ -1,7 +1,12 @@
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* BookListComponent : controls the displaying of the Books on 'All Books' Page 
+*
+*/
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router';
-import { IBook } from '../shared/index';
-import { APIService, BookService } from '../shared/index';
+import { IBook } from '../../shared/index';
+import { BookService } from '../../shared/index';
 import { AuthService } from 'src/app/user/shared/service/auth.service';
 
 
@@ -43,10 +48,10 @@ export class BooksListComponent implements OnInit {
     constructor(
         private bookService: BookService,
         private route: ActivatedRoute,
-        private apiService: APIService,
         private authService: AuthService) {
     }
 
+    // The intiial page is st up to display 'All' books or those books matching search ccrireria from the top nav search field
 
     ngOnInit() {
         this.fetchingBooks = true;
@@ -61,6 +66,8 @@ export class BooksListComponent implements OnInit {
             this.search = false;
         }
     }
+
+    // Controls the settings for the Book 'Options' filter i.e. All | Swap | Donates  
 
     filterBooksOption(filter: string) {
         this.p = 1;
@@ -77,7 +84,7 @@ export class BooksListComponent implements OnInit {
         this.findAllBooksWithFilters()
     }
 
-
+    // Controls the settings for the Book 'Condition' filter i.e. All | Good | New | Fair  
 
     filterBooksCondition(filter: string) {
         this.p = 1;
@@ -93,6 +100,8 @@ export class BooksListComponent implements OnInit {
         }
         this.findAllBooksWithFilters();
     }
+
+    // Controls the settings for the Book 'Owner' filter i.e. All | Mine | Others  
 
     filterBooksOwner(filter: string) {
         this.p = 1;
@@ -119,17 +128,14 @@ export class BooksListComponent implements OnInit {
         this.findAllBooksWithFilters();
     }
 
+    // Controls the selection of the bookServic API Call selection basd on the 
+    // various combinations of filters and search options  
+    // There are 16 possible combinations
+
     findAllBooksWithFilters() {
-        // reset the page settings 
         this.fetchingBooks = true;
 
-        // console.log('*Search Categoris');
-        // console.log('Search' + this.search);
-        // console.log('Owner' + this.filterbyOwner);
-        // console.log('Conditionh' + this.filterbyCondition);
-        // console.log('Option' + this.filterbyOptions);
-
-        // No options selected => Full Search
+       // No options selected => Full Search
 
         if (!this.search && !this.filterbyOwner && !this.filterbyCondition && !this.filterbyOptions)
             this.getBooks();
@@ -167,16 +173,13 @@ export class BooksListComponent implements OnInit {
         else if (this.search && this.filterbyOwner && !this.filterbyCondition && !this.filterbyOptions)
             this.getBySearchOwner(this.route.snapshot.params['search']);
 
-
         // Only search by Owner and Condition 
         else if (this.filterbyOwner && this.filterbyCondition && !this.filterbyOptions && !this.search)
             this.getByOwnerCondition();
 
-
         // Only search by Owner and Option
         else if (this.filterbyOwner && this.filterbyOptions && !this.search && !this.filterbyCondition)
             this.getByOwnerOption();
-
 
         // Only search by Condition and Option 
         else if (this.filterbyCondition && this.filterbyOptions && !this.search && !this.filterbyOwner)
@@ -202,10 +205,10 @@ export class BooksListComponent implements OnInit {
             this.getBooks();
     }
 
+    // The appropriate method is called for the combination of filters provided 
 
     getBySearchOwnerCondtionOption(search: string) {
-      // console.log('Gettins ALL 4');
-        this.apiService.getBooksSearchConditionOptionOwner(search, this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksSearchConditionOptionOwner(search, this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -215,7 +218,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearchOwnerOption(search: string) {
-        this.apiService.getBooksSearchOptionOwner(search, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksSearchOptionOwner(search, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -225,7 +228,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearchOwnerCondition(search: string) {
-        this.apiService.getBooksSearchConditionOwner(search, this.filterbyConditionValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksSearchConditionOwner(search, this.filterbyConditionValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -235,7 +238,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearchOwner(searchTerm: string) {
-        this.apiService.getBooksSearchOwner(searchTerm, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksSearchOwner(searchTerm, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -245,7 +248,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getByOwnerOption() {
-        this.apiService.getBooksOptionOwner(this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksOptionOwner(this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -255,7 +258,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getByOwnerCondition() {
-        this.apiService.getBooksConditionOwner(this.filterbyConditionValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksConditionOwner(this.filterbyConditionValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -265,7 +268,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getByOwner() {
-        this.apiService.getSearchBooksOwner(this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getSearchBooksOwner(this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -275,7 +278,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearch(searchTerm: String) {
-        this.apiService.getSearchBooks(searchTerm, this.p - 1)
+        this.bookService.getSearchBooks(searchTerm, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -285,7 +288,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBooks() {
-        this.apiService.getBooks(this.p - 1)
+        this.bookService.getBooks(this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -295,7 +298,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getByOption() {
-        this.apiService.getBooksByOption(this.filterbyOptionsValue, this.p - 1)
+        this.bookService.getBooksByOption(this.filterbyOptionsValue, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -305,7 +308,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getByOwnerConditionOption() {
-        this.apiService.getBooksByConditionOptionOwner(this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
+        this.bookService.getBooksByConditionOptionOwner(this.filterbyConditionValue, this.filterbyOptionsValue, this.filterbyOwnerId, this.filterbyOwnerMatch, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -315,7 +318,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getByConditionOption() {
-        this.apiService.getBooksConditionOption(this.filterbyConditionValue, this.filterbyOptionsValue, this.p - 1)
+        this.bookService.getBooksConditionOption(this.filterbyConditionValue, this.filterbyOptionsValue, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -325,7 +328,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearchConditionOption() {
-        this.apiService.getBooksSearchConditionOption(this.searchTerm, this.filterbyConditionValue, this.filterbyOptionsValue, this.p - 1)
+        this.bookService.getBooksSearchConditionOption(this.searchTerm, this.filterbyConditionValue, this.filterbyOptionsValue, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -335,7 +338,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearchCondition() {
-        this.apiService.getBooksSearchCondition(this.searchTerm, this.filterbyConditionValue, this.p - 1)
+        this.bookService.getBooksSearchCondition(this.searchTerm, this.filterbyConditionValue, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -345,7 +348,7 @@ export class BooksListComponent implements OnInit {
     }
 
     getBySearchOption() {
-        this.apiService.getBooksSearchOption(this.searchTerm, this.filterbyOptionsValue, this.p - 1)
+        this.bookService.getBooksSearchOption(this.searchTerm, this.filterbyOptionsValue, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -353,10 +356,9 @@ export class BooksListComponent implements OnInit {
             }
         );
     }
-
 
     getByCondition() {
-        this.apiService.getBooksByCondition(this.filterbyConditionValue, this.p - 1)
+        this.bookService.getBooksByCondition(this.filterbyConditionValue, this.p - 1)
             .subscribe({
                 next: data => this.processResponse(data),
                 error: () => this.processErrorResponse(),
@@ -364,6 +366,8 @@ export class BooksListComponent implements OnInit {
             }
         );
     }
+
+    // All API calls call this method to set up the list of books to display
 
     setSearchResults(){
         this.searchableBooks = this.realBooks;
@@ -371,10 +375,14 @@ export class BooksListComponent implements OnInit {
         this.fetchingBooks = false;
     }
 
+    // Error handling method called by all API calls for handling errors
+
     processErrorResponse() {
         this.searchError = true;
         this.fetchingBooks = false;
     }
+
+    // Response handling method used by all API calls to process thr rsponse data 
 
     processResponse(data: any) {
         var stringified = JSON.stringify(data);
@@ -385,13 +393,16 @@ export class BooksListComponent implements OnInit {
         this.total = parsed.totalElements;
     }
 
+    // Used for pageination of search / filter results 
+
     pageChangeEvent(event: number) {
         this.p = event;
         this.findAllBooksWithFilters();
     }
 
-    resetSearch() { this.bookService.resetSearchTerm();  }
+    // Helper mthods for get / set search term 
 
+    resetSearch() { this.bookService.resetSearchTerm();  }
     getSearchTerm() { return this.searchTerm; }
 
 }

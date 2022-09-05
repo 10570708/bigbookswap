@@ -1,13 +1,32 @@
-a { color: #bbb; text-decoration: none;}
-
-#icon {margin-left: 25px;}
-.v-align { vertical-align: text-top; }
-// .mini { color: #bbb; font-size: small; vertical-align: top;}
-
-.oddStyle{padding-left:0px;padding-right:15px}
-.evenStyle{padding-left:15px;padding-right:0px}
-.controls{
-    margin:3px;
-    vertical-align:top;
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+*
+*/
+a {
+    color: #bbb;
+    text-decoration: none;
 }
 
+#icon {
+    margin-left: 25px;
+}
+
+.v-align {
+    vertical-align: text-top;
+}
+
+
+.oddStyle {
+    padding-left: 0px;
+    padding-right: 15px
+}
+
+.evenStyle {
+    padding-left: 15px;
+    padding-right: 0px
+}
+
+.controls {
+    margin: 3px;
+    vertical-align: top;
+}

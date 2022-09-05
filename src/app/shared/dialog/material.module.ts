@@ -1,5 +1,8 @@
-// material.module.ts
-
+/*
+* Written By: Lisa Daly (StudentID: 10570708) - DBS 2022 Final Project B8IT131_2122_TME2
+* MAterialModules - required for all mat-dialog components in BBS
+*
+*/
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -9,9 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-// import { MatAlertComponent } from './mat-alert/mat-alert.component';
-// import { MatConfirmComponent } from './mat-confirm/mat-confirm.component';
-// import { MatInputPromptComponent } from './mat-input-prompt/mat-input-prompt.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const MaterialModules = [
