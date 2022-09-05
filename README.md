@@ -2,6 +2,21 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.4.
 
+# About
+
+This Application is a Single Page Application as part of the development of an MVP prototype for an application called 'The Big Book Swap'. It is a final year project entry for Lisa Daly ( 10570708 ) for DBS 2022 Final Project B8IT131_2122_TME2
+
+## To Run the entire application locally :
+
+1. Download the Application 
+2. Go to application directory ( should be /bigbookswap)
+3. Run `npm install`
+4. Run `npm start`
+
+This will start the BBS Front End application on http://localhost:4200
+
+The BBS Rest API application must also be running on http://localhost:8080 for the entire application to be tested.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
