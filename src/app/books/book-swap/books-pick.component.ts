@@ -66,7 +66,7 @@ export class BooksPickComponent implements OnInit {
         swap.createSwapAccept(this.swapid, member, StatusType.Acc);
         this.swapService.acceptSwapRequest(swap)
             .subscribe({
-                complete: () => { this.router.navigate(['/swaps/all']);  }
+                complete: () => { this.searchError = false;  }
             },
             );
 
